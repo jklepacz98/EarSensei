@@ -2,12 +2,12 @@
     <!-- Base application theme. -->
     <style name="Theme.EarSensei" parent="Theme.AppCompat.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">#4361ee</item>
-        <item name="colorPrimaryVariant">#4cc9f0</item>
+        <item name="colorPrimary">#2BA6E4</item>
+        <item name="colorPrimaryVariant">#2D87B5</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">#4cc9f0</item>
-        <item name="colorSecondaryVariant">#4361ee</item>
+        <item name="colorSecondaryVariant">#4297B1</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>

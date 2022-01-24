@@ -2,10 +2,22 @@
     <string name="app_name">EarSensei</string>
     <string name="intervals">Interwały</string>
     <string name="perfect_pitch">Słuch absolutny</string>
-    <string name="scales">Gamy</string>
+    <string name="scales">Skale</string>
     <string name="chords">Akordy</string>
     <string name="music_theory">Teoria muzyki</string>
-    <string name="profile">Profile</string>
+    <string name="profile">Profil</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string-array name="scales_array">
+        <item>Durowa</item>
+        <item>Naturalna Molowa</item>
+        <item>Harmoniczna Molowa</item>
+    </string-array>
+    <string-array name="chords_array">
+        <item>Dur</item>
+        <item>Mol</item>
+        <item>Zmniejszony</item>
+        <item>Zwiększony</item>
+    </string-array>
+
 </resources>

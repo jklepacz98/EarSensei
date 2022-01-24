@@ -5,13 +5,16 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import com.example.earsensei.quiz.ChordsActivity
+import com.example.earsensei.quiz.PerfectPitchActivity
+import com.example.earsensei.quiz.ScalesActivity
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        setupStartNewActivityButton(IntervalsActivity::class.java, findViewById(R.id.button_intervals))
+        setupStartNewActivityButton(IntervalsSettingsActivity::class.java, findViewById(R.id.button_intervals))
         setupStartNewActivityButton(ChordsActivity::class.java, findViewById(R.id.button_chords))
         setupStartNewActivityButton(ScalesActivity::class.java, findViewById(R.id.button_scales))
         setupStartNewActivityButton(PerfectPitchActivity::class.java, findViewById(R.id.button_perfect_pitch))

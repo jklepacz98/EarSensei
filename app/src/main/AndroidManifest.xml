@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.earsensei" >
+    package="com.example.earsensei">
 
     <application
         android:allowBackup="true"
@@ -8,15 +8,15 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.EarSensei" >
-        <activity android:name=".ProfileActivity" >
-        </activity>
+        android:theme="@style/Theme.EarSensei">
+        <activity android:name=".IntervalsSettingsActivity"></activity>
+        <activity android:name=".ProfileActivity"></activity>
         <activity android:name=".MusicTheoryActivity" />
-        <activity android:name=".ChordsActivity" />
-        <activity android:name=".ScalesActivity" />
-        <activity android:name=".PerfectPitchActivity" />
-        <activity android:name=".IntervalsActivity" />
-        <activity android:name=".MainActivity" >
+        <activity android:name=".quiz.ChordsActivity" />
+        <activity android:name=".quiz.ScalesActivity" />
+        <activity android:name=".quiz.PerfectPitchActivity" />
+        <activity android:name=".quiz.IntervalsActivity" />
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

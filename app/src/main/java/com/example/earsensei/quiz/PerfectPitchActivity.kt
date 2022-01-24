@@ -1,4 +1,4 @@
-package com.example.earsensei
+package com.example.earsensei.quiz
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -6,11 +6,12 @@ import android.widget.Button
 import android.widget.GridLayout
 import android.widget.ImageButton
 import android.widget.Toast
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import com.example.earsensei.*
+import kotlinx.coroutines.*
 
-class IntervalsActivity : AppCompatActivity() {
+
+public class PerfectPitchActivity : AppCompatActivity() {
+
     val context = this
     val answerNote : Note = notes.random()
 
@@ -22,11 +23,11 @@ class IntervalsActivity : AppCompatActivity() {
             //MainScope().cancel()
             MainScope().launch {
                 answerNote.play(context);
-                delay(850)
-                notes[18].play(context);
+//                delay(850)
+//                notes[18].play(context);
             }
         }
-        createGrid(intervals)
+        createGrid(notesWithoutOctaveNumber)
 
 
     }
@@ -37,12 +38,12 @@ class IntervalsActivity : AppCompatActivity() {
         }
     }
 
-    fun createButtonInGrid(key : Int, view: GridLayout){
+    fun createButtonInGrid(noteWithoutOctaveNumber : Int, view: GridLayout){
         var button = Button(this)
-        button.setText(intervals.get(key))
+        button.setText(notesWithoutOctaveNumber.get(noteWithoutOctaveNumber))
         button.setOnClickListener{
-            if(checkIfNotesAreTheSame(answerNote.number ,key)) {
-                Toast.makeText(this, "Dobra odpowiedź!", Toast.LENGTH_SHORT).show()
+            if(checkIfNotesAreTheSame(answerNote.number ,noteWithoutOctaveNumber)) {
+               Toast.makeText(this, "Dobra odpowiedź!", Toast.LENGTH_SHORT).show()
             }else{
                 Toast.makeText(this, "Zła odpowiedź", Toast.LENGTH_SHORT).show()
 
@@ -54,4 +55,7 @@ class IntervalsActivity : AppCompatActivity() {
     fun checkIfNotesAreTheSame(correctNote : Int, userNote : Int) :  Boolean{
         return (userNote% OCTAVE_SIZE == correctNote)
     }
+
+
+
 }
