@@ -8,12 +8,14 @@ import android.widget.Button
 import com.example.earsensei.quiz.ChordsActivity
 import com.example.earsensei.quiz.PerfectPitchActivity
 import com.example.earsensei.quiz.ScalesActivity
+import com.example.earsensei.quiz.TestActivity
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        setupStartNewActivityButton(TestActivity::class.java, findViewById(R.id.button_test))
         setupStartNewActivityButton(IntervalsSettingsActivity::class.java, findViewById(R.id.button_intervals))
         setupStartNewActivityButton(ChordsActivity::class.java, findViewById(R.id.button_chords))
         setupStartNewActivityButton(ScalesActivity::class.java, findViewById(R.id.button_scales))

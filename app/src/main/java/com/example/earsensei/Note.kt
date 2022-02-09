@@ -5,6 +5,7 @@ import android.content.res.AssetFileDescriptor
 import android.content.res.Resources
 import android.media.MediaPlayer
 import android.provider.ContactsContract
+import kotlinx.coroutines.delay
 import java.util.*
 
 data class Note(val number : Int , val name : String, val audioResource : Int){
@@ -15,7 +16,13 @@ data class Note(val number : Int , val name : String, val audioResource : Int){
         }
         mediaPlayer.start()
     }
+
+
 }
+
+
+
+
 
 val OCTAVE_SIZE = 12;
 
@@ -35,7 +42,7 @@ val chords = mapOf<String, Array<Int>>(
 
 )
 
-val notes = listOf(
+val notes = arrayOf(
     Note(0, "c3", R.raw.c3),
     Note(1, "cis3", R.raw.cis3),
     Note(2,"d3", R.raw.d3),

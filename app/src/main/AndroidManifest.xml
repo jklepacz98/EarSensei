@@ -9,8 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.EarSensei">
-        <activity android:name=".IntervalsSettingsActivity"></activity>
-        <activity android:name=".ProfileActivity"></activity>
+        <activity
+            android:name=".quiz.TestActivity"
+            android:label="@string/title_activity_test"
+            android:theme="@style/Theme.EarSensei.NoActionBar"></activity>
+        <activity android:name=".IntervalsSettingsActivity" />
+        <activity android:name=".ProfileActivity" />
         <activity android:name=".MusicTheoryActivity" />
         <activity android:name=".quiz.ChordsActivity" />
         <activity android:name=".quiz.ScalesActivity" />

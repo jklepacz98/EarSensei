@@ -2,23 +2,31 @@
     <!-- Base application theme. -->
     <style name="Theme.EarSensei" parent="Theme.AppCompat.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">#2BA6E4</item>
-        <item name="colorPrimaryVariant">#2D87B5</item>
-        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryVariant">@color/primaryVariant</item>
+        <item name="colorOnPrimary">@color/onPrimary</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">#4cc9f0</item>
+        <item name="colorSecondary">@color/secondary</item>
         <item name="colorSecondaryVariant">#4297B1</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorOnSecondary">@color/onSecondary</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
         <!--<item name="android:colorBackground">#ffecb3</item>-->
     </style>
+
+    <style name="Theme.EarSensei.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.EarSensei.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.EarSensei.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
 
 
-
-<!--
+    <!--
 <resources xmlns:tools="http://schemas.android.com/tools">
 &lt;!&ndash; Base application theme. &ndash;&gt;
 <style name="Theme.EarSensei" parent="Theme.MaterialComponents.DayNight.DarkActionBar">

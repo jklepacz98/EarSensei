@@ -2,9 +2,11 @@ package com.example.earsensei.quiz
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.GridLayout
 import android.widget.ImageButton
+import androidx.core.content.ContextCompat
 import com.example.earsensei.Note
 import com.example.earsensei.R
 import com.example.earsensei.chords
@@ -18,6 +20,7 @@ class ChordsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chords)
+
         val playButton : ImageButton = findViewById(R.id.button_play)
         var job : Job = Job()
         playButton.setOnClickListener() {
@@ -39,8 +42,10 @@ class ChordsActivity : AppCompatActivity() {
     }
 
     fun createButtonInGrid(name : String, view: GridLayout){
+
         var button = Button(this)
         button.setText(name)
         view.addView(button)
+        button.setBackground(ContextCompat.getDrawable(context,R.drawable.default_round_button))
     }
 }
