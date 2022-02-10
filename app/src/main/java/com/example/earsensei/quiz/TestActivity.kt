@@ -1,14 +1,9 @@
 package com.example.earsensei.quiz
 
 import android.os.Bundle
-import android.widget.Button
 import android.widget.GridLayout
 import android.widget.ImageButton
-import android.widget.Toast
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import com.example.earsensei.*
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
@@ -17,8 +12,8 @@ import kotlinx.coroutines.launch
 
 class TestActivity : AppCompatActivity() {
 
-    val context = this
-    val answerNote : Note = notes.random()
+
+    val answerNote : NotePlayer = notePlayers.random()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,36 +23,29 @@ class TestActivity : AppCompatActivity() {
         playButton.setOnClickListener() {
             job.cancel()
             job = MainScope().launch {
-                answerNote.play(context)
+                answerNote.play(baseContext)
                 delay(850)
-                notes[1].play(context)
+                notePlayers[1].play(baseContext)
             }
         }
-        createGrid(notesWithoutOctaveNumber)
-
-
+        val gridLayout : GridLayout = findViewById(R.id.buttons_grid)
+        buttonsGridCreator.createButtonsGrid(this, gridLayout, notes.keys.toList());
     }
-
-    fun createGrid(notes : Map<Int, String>){
-        notes.forEach{
-            createButtonInGrid(it.key, findViewById(R.id.buttons_grid))
-        }
-    }
-
-    fun createButtonInGrid(noteWithoutOctaveNumber : Int, view: GridLayout){
-        var button = Button(this)
-        button.setBackground(ContextCompat.getDrawable(context,R.drawable.default_round_button))
-        button.setText(notesWithoutOctaveNumber.get(noteWithoutOctaveNumber))
-        button.setOnClickListener{
-            if(checkIfNotesAreTheSame(answerNote.number ,noteWithoutOctaveNumber)) {
-                Toast.makeText(this, "Dobra odpowiedź!", Toast.LENGTH_SHORT).show()
-            }else{
-                Toast.makeText(this, "Zła odpowiedź", Toast.LENGTH_SHORT).show()
-
-            }
-        }
-        view.addView(button)
-    }
+//
+//    fun createGrid(notes : Map<Int, String>){
+//        val gridLayout : GridLayout = findViewById(R.id.buttons_grid)
+//        notes.forEach{
+//            var button = createButton(it.key, gridLayout)
+//            gridLayout.addView(button)
+//        }
+//    }
+//
+//    fun createButton(noteWithoutOctaveNumber : Int, viewGroup: ViewGroup) : Button{
+//        var inflater : LayoutInflater = layoutInflater
+//        var button = inflater.inflate(R.layout.fragment_button, viewGroup, false) as Button
+//        button.setText(notesWithoutOctaveNumber.get(noteWithoutOctaveNumber))
+//        return button
+//    }
 
     fun checkIfNotesAreTheSame(correctNote : Int, userNote : Int) :  Boolean{
         return (userNote% OCTAVE_SIZE == correctNote)

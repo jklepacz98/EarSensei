@@ -5,16 +5,16 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.GridLayout
 import android.widget.ImageButton
-import com.example.earsensei.Note
+import com.example.earsensei.NotePlayer
 import com.example.earsensei.R
-import com.example.earsensei.notes
+import com.example.earsensei.notePlayers
 import com.example.earsensei.scales
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
 class ScalesActivity : AppCompatActivity() {
     val context = this
-    val answerNote : Note = notes.random()
+    val answerNote : NotePlayer = notePlayers.random()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

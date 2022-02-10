@@ -2,20 +2,19 @@ package com.example.earsensei.quiz
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
 import android.widget.GridLayout
 import android.widget.ImageButton
 import androidx.core.content.ContextCompat
-import com.example.earsensei.Note
+import com.example.earsensei.NotePlayer
 import com.example.earsensei.R
 import com.example.earsensei.chords
-import com.example.earsensei.notes
+import com.example.earsensei.notePlayers
 import kotlinx.coroutines.*
 
 class ChordsActivity : AppCompatActivity() {
     val context = this
-    val answerNote : Note = notes.random()
+    val answerNote : NotePlayer = notePlayers.random()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,7 +27,7 @@ class ChordsActivity : AppCompatActivity() {
             job = MainScope().launch {
                 answerNote.play(context)
                 delay(850)
-                notes[1].play(context)
+                notePlayers[1].play(context)
             }
         }
         createGrid(chords)

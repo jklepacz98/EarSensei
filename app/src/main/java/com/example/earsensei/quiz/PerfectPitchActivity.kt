@@ -9,11 +9,10 @@ import android.widget.Toast
 import com.example.earsensei.*
 import kotlinx.coroutines.*
 
-
-public class PerfectPitchActivity : AppCompatActivity() {
+class PerfectPitchActivity : AppCompatActivity() {
 
     val context = this
-    val answerNote : Note = notes.random()
+    val answerNote : NotePlayer = notePlayers.random()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,30 +26,9 @@ public class PerfectPitchActivity : AppCompatActivity() {
 //                notes[18].play(context);
             }
         }
-        createGrid(notesWithoutOctaveNumber)
-
 
     }
 
-    fun createGrid(notes : Map<Int, String>){
-        notes.forEach{
-            createButtonInGrid(it.key, findViewById(R.id.buttons_grid))
-        }
-    }
-
-    fun createButtonInGrid(noteWithoutOctaveNumber : Int, view: GridLayout){
-        var button = Button(this)
-        button.setText(notesWithoutOctaveNumber.get(noteWithoutOctaveNumber))
-        button.setOnClickListener{
-            if(checkIfNotesAreTheSame(answerNote.number ,noteWithoutOctaveNumber)) {
-               Toast.makeText(this, "Dobra odpowiedź!", Toast.LENGTH_SHORT).show()
-            }else{
-                Toast.makeText(this, "Zła odpowiedź", Toast.LENGTH_SHORT).show()
-
-            }
-        }
-        view.addView(button)
-    }
 
     fun checkIfNotesAreTheSame(correctNote : Int, userNote : Int) :  Boolean{
         return (userNote% OCTAVE_SIZE == correctNote)

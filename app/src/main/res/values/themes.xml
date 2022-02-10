@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.EarSensei" parent="Theme.AppCompat.DayNight.DarkActionBar">
+    <style name="Theme.EarSensei" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryVariant">@color/primaryVariant</item>
@@ -11,8 +11,9 @@
         <item name="colorOnSecondary">@color/onSecondary</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
-        <!--<item name="android:colorBackground">#ffecb3</item>-->
+
+        <item name="buttonStyle">@style/Theme.EarSensei.ButtonOverlay</item>
+
     </style>
 
     <style name="Theme.EarSensei.NoActionBar">
@@ -23,6 +24,12 @@
     <style name="Theme.EarSensei.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.EarSensei.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="Theme.EarSensei.ButtonOverlay" parent="Widget.AppCompat.Button">
+<!--        <item name="android:background">#FF99AA99</item>-->
+<!--        <dimen name="android:layout_margin">20dp</dimen>-->
+        <item name="android:background">@drawable/default_round_button</item>
+    </style>
 </resources>
 
 

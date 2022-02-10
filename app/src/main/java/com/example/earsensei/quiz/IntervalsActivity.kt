@@ -13,17 +13,17 @@ import kotlinx.coroutines.launch
 class IntervalsActivity : AppCompatActivity() {
     val context = this
 
-    val answerNote : Note = notes.random()
+    val answerNote : NotePlayer = notePlayers.random()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_intervals)
 
-        val answerInterval : Int = intervals.keys.random()
+        val answerInterval : Int = intervals.values.random()
 
-        val notesArray : Array<Note> = notes
+        val notesArray : Array<NotePlayer> = notePlayers
 
-        val notesPlayer : NotesPlayer = NotesPlayer(notesArray, context)
+        val notesPlayer : MultipleNotesPlayer = MultipleNotesPlayer(notesArray, context)
 
         val playButton : ImageButton = findViewById(R.id.button_play)
         var job : Job = Job()
@@ -33,29 +33,11 @@ class IntervalsActivity : AppCompatActivity() {
                 notesPlayer.play()
             }
         }
-        createGrid(intervals)
+
     }
 
-    fun createGrid(notes : Map<Int, String>){
-        notes.forEach{
-            createButtonInGrid(it.key, findViewById(R.id.buttons_grid))
-        }
-    }
 
-    fun createButtonInGrid(key : Int, view: GridLayout){
-        var button = Button(this)
-        button.setText(intervals.get(key))
-        button.width = 300
-        button.setOnClickListener{
-//            if(checkIfNotesAreTheSame(answerNote.number ,key)) {
-//                Toast.makeText(this, "Dobra odpowiedź!", Toast.LENGTH_SHORT).show()
-//            }else{
-//                Toast.makeText(this, "Zła odpowiedź", Toast.LENGTH_SHORT).show()
-//
-//            }
-        }
-        view.addView(button)
-    }
+
 
 //    //TODO
 //    fun checkIfNotesAreTheSame(correctNote : Int, userNote : Int) :  Boolean{
