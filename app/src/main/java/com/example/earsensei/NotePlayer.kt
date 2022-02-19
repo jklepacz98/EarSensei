@@ -17,7 +17,7 @@ data class NotePlayer(val number : Int, val name : String, val audioResource : I
 
 val OCTAVE_SIZE = 12;
 
-//TODO the note resource mp3 files are wrong, find good mp3 files in web
+
 val notePlayers = arrayOf(
         NotePlayer(0, "C3", R.raw.c3),
         NotePlayer(1, "Cis3", R.raw.cis3),

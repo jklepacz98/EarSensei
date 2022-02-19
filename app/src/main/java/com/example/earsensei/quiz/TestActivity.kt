@@ -31,21 +31,7 @@ class TestActivity : AppCompatActivity() {
         val gridLayout : GridLayout = findViewById(R.id.buttons_grid)
         buttonsGridCreator.createButtonsGrid(this, gridLayout, notes.keys.toList());
     }
-//
-//    fun createGrid(notes : Map<Int, String>){
-//        val gridLayout : GridLayout = findViewById(R.id.buttons_grid)
-//        notes.forEach{
-//            var button = createButton(it.key, gridLayout)
-//            gridLayout.addView(button)
-//        }
-//    }
-//
-//    fun createButton(noteWithoutOctaveNumber : Int, viewGroup: ViewGroup) : Button{
-//        var inflater : LayoutInflater = layoutInflater
-//        var button = inflater.inflate(R.layout.fragment_button, viewGroup, false) as Button
-//        button.setText(notesWithoutOctaveNumber.get(noteWithoutOctaveNumber))
-//        return button
-//    }
+
 
     fun checkIfNotesAreTheSame(correctNote : Int, userNote : Int) :  Boolean{
         return (userNote% OCTAVE_SIZE == correctNote)
