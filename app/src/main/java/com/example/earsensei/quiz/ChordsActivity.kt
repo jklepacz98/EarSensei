@@ -8,13 +8,11 @@ import android.widget.ImageButton
 import androidx.core.content.ContextCompat
 import com.example.earsensei.NotePlayer
 import com.example.earsensei.R
-import com.example.earsensei.chords
-import com.example.earsensei.notePlayers
 import kotlinx.coroutines.*
 
 class ChordsActivity : AppCompatActivity() {
-    val context = this
-    val answerNote : NotePlayer = notePlayers.random()
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,26 +23,11 @@ class ChordsActivity : AppCompatActivity() {
         playButton.setOnClickListener() {
             job.cancel()
             job = MainScope().launch {
-                answerNote.play(context)
-                delay(850)
-                notePlayers[1].play(context)
+
             }
         }
-        createGrid(chords)
+
     }
 
 
-    fun createGrid(chords : Map<String, Array<Int>>){
-        chords.forEach{
-            createButtonInGrid(it.key, findViewById(R.id.buttons_grid))
-        }
-    }
-
-    fun createButtonInGrid(name : String, view: GridLayout){
-
-        var button = Button(this)
-        button.setText(name)
-        view.addView(button)
-        button.setBackground(ContextCompat.getDrawable(context,R.drawable.default_round_button))
-    }
 }

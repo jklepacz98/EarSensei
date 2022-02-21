@@ -5,6 +5,7 @@ import android.widget.GridLayout
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import com.example.earsensei.*
+import com.example.earsensei.MultipleNotesPlayer
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
@@ -13,7 +14,11 @@ import kotlinx.coroutines.launch
 class TestActivity : AppCompatActivity() {
 
 
-    val answerNote : NotePlayer = notePlayers.random()
+    //val testQuiz : TestQuiz = TestQuiz(intervals)
+
+
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,17 +28,17 @@ class TestActivity : AppCompatActivity() {
         playButton.setOnClickListener() {
             job.cancel()
             job = MainScope().launch {
-                answerNote.play(baseContext)
+                //answerNote.play(baseContext)
                 delay(850)
-                notePlayers[1].play(baseContext)
+                //notePlayers[1].play(baseContext)
             }
         }
         val gridLayout : GridLayout = findViewById(R.id.buttons_grid)
-        buttonsGridCreator.createButtonsGrid(this, gridLayout, notes.keys.toList());
+        //ButtonsGridCreator.createButtonsGrid(this, gridLayout,
     }
 
 
-    fun checkIfNotesAreTheSame(correctNote : Int, userNote : Int) :  Boolean{
-        return (userNote% OCTAVE_SIZE == correctNote)
-    }
+//    fun checkIfNotesAreTheSame(correctNote : Int, userNote : Int) :  Boolean{
+//        return (userNote% OCTAVE_SIZE == correctNote)
+//    }
 }

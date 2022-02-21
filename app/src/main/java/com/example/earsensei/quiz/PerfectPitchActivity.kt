@@ -12,7 +12,7 @@ import kotlinx.coroutines.*
 class PerfectPitchActivity : AppCompatActivity() {
 
     val context = this
-    val answerNote : NotePlayer = notePlayers.random()
+   // val answerNote : NotePlayer = notePlayers.random()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,7 +21,7 @@ class PerfectPitchActivity : AppCompatActivity() {
         playButton.setOnClickListener() {
             //MainScope().cancel()
             MainScope().launch {
-                answerNote.play(context);
+     //           answerNote.play(context);
 //                delay(850)
 //                notes[18].play(context);
             }
@@ -30,9 +30,7 @@ class PerfectPitchActivity : AppCompatActivity() {
     }
 
 
-    fun checkIfNotesAreTheSame(correctNote : Int, userNote : Int) :  Boolean{
-        return (userNote% OCTAVE_SIZE == correctNote)
-    }
+
 
 
 

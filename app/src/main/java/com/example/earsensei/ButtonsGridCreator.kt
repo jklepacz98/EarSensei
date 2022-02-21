@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.GridLayout
 
-object buttonsGridCreator {
+object ButtonsGridCreator {
     fun createButtonsGrid(context: Context, viewGroup: ViewGroup, notes : List<String>){
         notes.forEach{
             var button = createButton(context, viewGroup)

@@ -1,6 +1,7 @@
 package com.example.earsensei
 
 import android.content.Context
+import com.example.earsensei.NotePlayer
 import kotlinx.coroutines.delay
 
 class MultipleNotesPlayer(val notes: Array<NotePlayer>, val context: Context){
