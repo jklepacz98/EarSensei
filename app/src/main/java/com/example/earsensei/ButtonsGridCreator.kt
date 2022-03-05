@@ -4,7 +4,8 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.GridLayout
+import android.widget.LinearLayout
+import androidx.core.view.get
 
 object ButtonsGridCreator {
     fun createButtonsGrid(context: Context, viewGroup: ViewGroup, notes : List<String>){

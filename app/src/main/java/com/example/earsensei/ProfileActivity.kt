@@ -15,11 +15,6 @@ class ProfileActivity : AppCompatActivity() {
 
         val barChart : BarChart = findViewById(R.id.bar_chart)
 
-
-
-
-
-
         val dataValues1 : ArrayList<BarEntry> = arrayListOf()
         dataValues1.add(BarEntry(0.0f, 33.0f))
         dataValues1.add(BarEntry(1.0f, 99.3f))

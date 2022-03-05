@@ -34,7 +34,7 @@ class TestActivity : AppCompatActivity() {
             }
         }
         val gridLayout : GridLayout = findViewById(R.id.buttons_grid)
-        //ButtonsGridCreator.createButtonsGrid(this, gridLayout,
+        ButtonsGridCreator.createButtonsGrid(this, gridLayout, chords.keys.toList())
     }
 
 
