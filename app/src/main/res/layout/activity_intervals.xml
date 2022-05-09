@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context=".quiz.IntervalsActivity">
+    tools:context=".quizActivities.IntervalsQuizActivity">
 
     <ImageButton
         android:layout_margin="16dp"

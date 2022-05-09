@@ -10,16 +10,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EarSensei">
         <activity
-            android:name=".quiz.TestActivity"
+            android:name=".quizActivities.TestQuizActivity"
             android:label="@string/title_activity_test"
             android:theme="@style/Theme.EarSensei.NoActionBar"></activity>
         <activity android:name=".IntervalsSettingsActivity" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".MusicTheoryActivity" />
-        <activity android:name=".quiz.ChordsActivity" />
-        <activity android:name=".quiz.ScalesActivity" />
-        <activity android:name=".quiz.PerfectPitchActivity" />
-        <activity android:name=".quiz.IntervalsActivity" />
+        <activity android:name=".quizActivities.ChordsQuizActivity" />
+        <activity android:name=".quizActivities.ScalesQuizActivity" />
+        <activity android:name=".quizActivities.PerfectPitchQuizActivity" />
+        <activity android:name=".quizActivities.IntervalsQuizActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

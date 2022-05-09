@@ -11,8 +11,6 @@ data class NotePlayer(val number : Int, val name : String, val audioResource : I
         }
         mediaPlayer.start()
     }
-
-
 }
 
 val OCTAVE_SIZE = 12;

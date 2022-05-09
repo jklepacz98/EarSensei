@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:gravity="center"
     android:baselineAligned="false"
-    tools:context=".quiz.IntervalsActivity">
+    tools:context=".quizActivities.IntervalsQuizActivity">
 
     <LinearLayout
         android:layout_width="wrap_content"
