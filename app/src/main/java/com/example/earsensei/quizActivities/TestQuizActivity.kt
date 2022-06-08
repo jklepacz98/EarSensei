@@ -17,8 +17,11 @@ class TestQuizActivity : AppCompatActivity() {
 
     //val testQuiz : TestQuiz = TestQuiz(intervals)
 
-    val listOfNotes : List<Note> = listOf(notePlayers[0], notePlayers[1])
+    val listOfNotes : List<Note> = listOf(Note.notePlayers[0], Note.notePlayers[1], Note.notePlayers[2])
 
+    val nrOfQuizesDone: Int = 0;
+
+    val nrOfAllQuizes: Int = 10;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +32,7 @@ class TestQuizActivity : AppCompatActivity() {
             notesPlayer.playNotes()
         }
         val gridLayout : GridLayout = findViewById(R.id.buttons_grid)
-        ButtonsGridCreator.createButtonsGrid(this, gridLayout, chords.keys.toList())
+        ButtonsGridCreator.createButtonsGrid(this, gridLayout, Note.chords.keys.toList())
     }
 
 

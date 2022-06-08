@@ -5,6 +5,7 @@ import android.content.ContentValues
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import com.example.earsensei.quizActivities.*
 
@@ -13,11 +14,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        //TODO delete line below
+        Log.v("tag", "jezu")
+
         val dbHelper = EarSenseiDBHelper(this)
         dbHelper.addContentValues(dbHelper.createContentValues("C4", "A5", "D3", 0))
         dbHelper.addContentValues(dbHelper.createContentValues("C4", "A5", "D3", 0))
         dbHelper.addContentValues(dbHelper.createContentValues("A4", "A5", "D3", 0))
-
+        dbHelper.readAllData()
 
         setupStartNewActivityButton(TestQuizActivity::class.java, findViewById(R.id.button_test))
         setupStartNewActivityButton(IntervalsQuizActivity::class.java, findViewById(R.id.button_intervals))
