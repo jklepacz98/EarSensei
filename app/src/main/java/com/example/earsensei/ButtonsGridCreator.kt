@@ -1,24 +1,43 @@
 package com.example.earsensei
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.LinearLayout
-import androidx.core.view.get
+import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
+import com.example.earsensei.Note.Companion.notes
+import com.example.earsensei.quiz.TestQuiz
+import com.example.earsensei.quizActivities.TestQuizActivity
 
-object ButtonsGridCreator {
-    fun createButtonsGrid(context: Context, viewGroup: ViewGroup, notes : List<String>){
-        notes.forEach{
-            var button = createButton(context, viewGroup)
-            button.setText(it)
-            viewGroup.addView(button)
-        }
+class ButtonsGridCreator(context: Context, viewGroup: ViewGroup, notes : List<String>)  {
+
+    lateinit var allButtons : List<Button>
+
+    init{
+        allButtons = createButtonsGrid(context, viewGroup, notes)
     }
 
-    fun createButton(context:Context, viewGroup: ViewGroup) : Button {
+
+    fun createButtonsGrid(context: Context, viewGroup: ViewGroup, notes : List<String>) : MutableList<Button>{
+        val buttons : MutableList<Button> = mutableListOf()
+        notes.forEach{
+            var button = createButton(context, viewGroup, it)
+            viewGroup.addView(button)
+            buttons.add(button)
+        }
+        return buttons
+    }
+
+    fun createButton(context:Context, viewGroup: ViewGroup, buttonText: String) : Button {
         var inflater : LayoutInflater = LayoutInflater.from(context)
         var button = inflater.inflate(R.layout.fragment_button, viewGroup, false) as Button
+        button.setText(buttonText)
+//        button.setOnClickListener(){
+//            //Toast.makeText(context, buttonText, Toast.LENGTH_LONG).show()
+//
+//        }
         return button
     }
 }

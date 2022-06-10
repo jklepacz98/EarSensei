@@ -1,12 +1,18 @@
 package com.example.earsensei.quizActivities
 
 import android.content.Context
+import android.content.Intent
 import android.icu.text.TimeZoneNames
 import android.os.Bundle
+import android.view.SurfaceControl
 import android.widget.GridLayout
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import com.example.earsensei.*
+import com.example.earsensei.quiz.TestQuiz
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
@@ -14,14 +20,9 @@ import kotlinx.coroutines.launch
 
 class TestQuizActivity : AppCompatActivity() {
 
-
-    //val testQuiz : TestQuiz = TestQuiz(intervals)
-
     val listOfNotes : List<Note> = listOf(Note.notePlayers[0], Note.notePlayers[1], Note.notePlayers[2])
 
-    val nrOfQuizesDone: Int = 0;
-
-    val nrOfAllQuizes: Int = 10;
+    val testQuiz : TestQuiz = TestQuiz(Note.intervals)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,11 +33,20 @@ class TestQuizActivity : AppCompatActivity() {
             notesPlayer.playNotes()
         }
         val gridLayout : GridLayout = findViewById(R.id.buttons_grid)
-        ButtonsGridCreator.createButtonsGrid(this, gridLayout, Note.chords.keys.toList())
+        val buttons : ButtonsGridCreator = ButtonsGridCreator(this, gridLayout, Note.intervals.keys.toList())
+        buttons.allButtons.forEach(){
+            val buttonText : String = it.text.toString()
+            it.setOnClickListener(){
+//                Toast.makeText(this, buttonText, Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, testQuiz.getCorrectAnswer() + "\n"+ testQuiz.checkAnswer(buttonText).toString(), Toast.LENGTH_SHORT).show()
+                //testQuiz.checkAnswer(buttonText)
+                if(testQuiz.checkAnswer(buttonText)){
+                    val intent = Intent(this, TestQuizActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                    this.startActivity(intent)
+                }
+
+            }
+        }
     }
-
-
-//    fun checkIfNotesAreTheSame(correctNote : Int, userNote : Int) :  Boolean{
-//        return (userNote% OCTAVE_SIZE == correctNote)
-//    }
 }
