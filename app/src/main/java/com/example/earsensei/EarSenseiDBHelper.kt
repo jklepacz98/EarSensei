@@ -45,7 +45,7 @@ class EarSenseiDBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, nu
         onCreate(db)
     }
 
-    fun createContentValues(baseNote: String, correctAnswer: String, userAnswer: String, date: Int) : ContentValues{
+    fun createContentValues(baseNote: String, correctAnswer: String, userAnswer: String, date: Long) : ContentValues{
         val contentValues : ContentValues = ContentValues()
         contentValues.put(BASE_NOTE_COL, baseNote)
         contentValues.put(CORRECT_ANSWER_COL, correctAnswer)
