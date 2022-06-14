@@ -7,6 +7,7 @@ import android.util.Log
 import androidx.core.view.get
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
@@ -30,7 +31,15 @@ class ProfileActivity : AppCompatActivity() {
 
         val ratioHashMap : HashMap<String, Float> = plotDataPreparer.ratioHashMap()
 
-        barChart.setTouchEnabled(false)
+        //barChart.setTouchEnabled(false)
+
+        val xAxis : XAxis = barChart.xAxis
+        val yTopAxis : YAxis = barChart.axisLeft
+        val yBottom : YAxis = barChart.axisRight
+
+        xAxis.setDrawAxisLine(false)
+        xAxis.setDrawGridLines(false)
+        xAxis.position = XAxis.XAxisPosition.BOTTOM
 
         var iterator : Float = 0F
         ratioHashMap.forEach(){
@@ -45,7 +54,7 @@ class ProfileActivity : AppCompatActivity() {
         barDataSet1.setColor(Color.GREEN)
 
         val barData : BarData = BarData(barDataSet1)
-        barData.barWidth = 0.5F
+        barData.barWidth = 0.9F
 
 
         val xAxisLabels : ArrayList<String> = ArrayList(ratioHashMap.keys)
