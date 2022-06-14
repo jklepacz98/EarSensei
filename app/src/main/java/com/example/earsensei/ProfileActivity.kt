@@ -47,7 +47,7 @@ class ProfileActivity : AppCompatActivity() {
             iterator+=1F
         }
 
-        Log.d("TAG", ratioHashMap.keys.toString())
+
 
 
         val barDataSet1 : BarDataSet = BarDataSet(dataValues1, "DataSet 1")

@@ -44,17 +44,9 @@ class TestQuizActivity : AppCompatActivity() {
         buttons.allButtons.forEach(){
             val buttonText : String = it.text.toString()
             it.setOnClickListener(){
-                //TODO
                 val date : Long = Calendar.getInstance().timeInMillis
                 val contentValues : ContentValues = earSenseiDBHelper.createContentValues(Note.notePlayers[7].name, testQuiz.getCorrectAnswer(), buttonText, date)
                 earSenseiDBHelper.addContentValues(contentValues)
-                //TODO
-                earSenseiDBHelper.readAllData().forEach(){Log.d("Tag", it.toString())}
-                //Log.d("TAG", earSenseiDBHelper.readAllData().toString())
-//                Toast.makeText(this, buttonText, Toast.LENGTH_SHORT).show()
-                Toast.makeText(this, testQuiz.getCorrectAnswer() + "\n"+ testQuiz.checkAnswer(buttonText).toString(), Toast.LENGTH_SHORT).show()
-
-                //testQuiz.checkAnswer(buttonText)
                 if(testQuiz.checkAnswer(buttonText)){
                     val intent = Intent(this, TestQuizActivity::class.java)
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
