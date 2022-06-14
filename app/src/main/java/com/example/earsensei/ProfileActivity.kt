@@ -5,7 +5,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.core.view.get
+import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.components.Description
+import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.BarData
@@ -17,6 +20,11 @@ class ProfileActivity : AppCompatActivity() {
 
     val earSenseiDBHelper : EarSenseiDBHelper = EarSenseiDBHelper(this)
 
+    companion object{
+        val barDistance : Float = 1F
+        val barWidth : Float = 0.9F
+        val maxVisibleXAxisLabels : Int = 20
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,18 +41,33 @@ class ProfileActivity : AppCompatActivity() {
 
         //barChart.setTouchEnabled(false)
 
+
+        barChart.setDrawValueAboveBar(false)
+        barChart.setDrawBarShadow(true)
+
+
+        val description : Description = barChart.description
+        description.isEnabled = false
+
+        val legend : Legend = barChart.legend
+        legend.isEnabled = false
+
         val xAxis : XAxis = barChart.xAxis
         val yTopAxis : YAxis = barChart.axisLeft
         val yBottom : YAxis = barChart.axisRight
 
+        xAxis.labelCount = maxVisibleXAxisLabels
+        xAxis.granularity = barDistance
         xAxis.setDrawAxisLine(false)
         xAxis.setDrawGridLines(false)
         xAxis.position = XAxis.XAxisPosition.BOTTOM
+        //xAxis.axisMinimum = 10F
+        xAxis.axisMaximum = 20F
 
         var iterator : Float = 0F
         ratioHashMap.forEach(){
             dataValues1.add(BarEntry(iterator, it.value))
-            iterator+=1F
+            iterator+= barDistance
         }
 
 
@@ -54,18 +77,21 @@ class ProfileActivity : AppCompatActivity() {
         barDataSet1.setColor(Color.GREEN)
 
         val barData : BarData = BarData(barDataSet1)
-        barData.barWidth = 0.9F
+        barData.barWidth = barWidth
 
 
         val xAxisLabels : ArrayList<String> = ArrayList(ratioHashMap.keys)
 //        val xAxisLabels : ArrayList<String> = arrayListOf("1", "cps", "fun")
         barChart.xAxis.valueFormatter = IndexAxisValueFormatter(xAxisLabels)
 
+
+
         barChart.data = barData
         //TODO
         //barChart.xAxis.axisMinimum = -barData.barWidth
         //barChart.xAxis.axisMaximum = ratioHashMap.size as Float
         barChart.setFitBars(true)
+        barChart.animateY(750, Easing.EaseInOutQuad)
         barChart.invalidate()
     }
 }
