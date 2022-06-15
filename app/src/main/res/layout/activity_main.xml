@@ -68,6 +68,13 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
                 android:text="@string/profile"/>
+
+            <Button
+                android:id="@+id/button_add_data_to_database"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:text="Add 10 entries to database"/>
         </LinearLayout>
 
     </LinearLayout>

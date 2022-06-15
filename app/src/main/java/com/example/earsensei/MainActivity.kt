@@ -8,6 +8,8 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import com.example.earsensei.quizActivities.*
+import java.util.*
+import kotlin.text.Typography.times
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,6 +24,22 @@ class MainActivity : AppCompatActivity() {
         setupStartNewActivityButton(MusicTheoryActivity::class.java, findViewById(R.id.button_music_theory))
         setupStartNewActivityButton(ProfileActivity::class.java, findViewById(R.id.button_profile))
 
+        val earSenseiDBHelper : EarSenseiDBHelper = EarSenseiDBHelper(this)
+
+        val buttonAddEntries : Button = findViewById(R.id.button_add_data_to_database)
+        buttonAddEntries.setOnClickListener(){
+            for (i in 0..20){
+                val dateTime : Long = Calendar.getInstance().timeInMillis
+                val contentValues : ContentValues = earSenseiDBHelper.createContentValues(Note.notes.keys.random(), Note.intervals.keys.random(), Note.intervals.keys.random(), dateTime)
+                earSenseiDBHelper.addContentValues(contentValues)
+            }
+            for (i in 0..2){
+                val dateTime : Long = Calendar.getInstance().timeInMillis
+                val randomInterval = Note.intervals.keys.random()
+                val contentValues : ContentValues = earSenseiDBHelper.createContentValues(Note.notes.keys.random(), randomInterval, randomInterval, dateTime)
+                earSenseiDBHelper.addContentValues(contentValues)
+            }
+        }
 
     }
 
