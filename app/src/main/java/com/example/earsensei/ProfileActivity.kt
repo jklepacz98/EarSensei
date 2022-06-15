@@ -92,6 +92,7 @@ class ProfileActivity : AppCompatActivity() {
         barChart.data = barData
         barChart.setFitBars(true)
         barChart.isScaleXEnabled = false
+        barChart.isDoubleTapToZoomEnabled = false
         barChart.setExtraOffsets(0F, 0F, rightOffset, 0F)
         barChart.animateY(animationLengthInMs, Easing.EaseInOutQuad)
         barChart.invalidate()
