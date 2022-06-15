@@ -23,7 +23,9 @@ class PlotDataPreparer(val testModels : ArrayList<TestModel>, val plotX : ArrayL
                 }
             }
         }
-        return correctAnswers as Float / allAnswers as Float
+        var correctAnswerRatio : Float = correctAnswers as Float / allAnswers as Float
+        if(correctAnswerRatio.isNaN()) return 0F
+        return correctAnswerRatio
     }
 
 }

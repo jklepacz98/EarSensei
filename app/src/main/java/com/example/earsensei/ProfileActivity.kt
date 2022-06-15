@@ -23,6 +23,12 @@ class ProfileActivity : AppCompatActivity() {
         val barDistance : Float = 1F
         val barWidth : Float = 0.9F
         val maxVisibleXAxisLabels : Int = 20
+        val animationLengthInMs : Int = 750
+        val yAxisMinimum : Float = 0F
+        val yAxisMaximum : Float = 1F + 0.001F //0.001F addition is to show last grid line
+        val rightOffset : Float = 32F
+        val xAxisLabelTextSize : Float = 16F
+        val barTextSize : Float = 12F
     }
 
 
@@ -36,14 +42,14 @@ class ProfileActivity : AppCompatActivity() {
 
         val dataValues1 : ArrayList<BarEntry> = arrayListOf()
 
-        val ratioHashMap : HashMap<String, Float> = plotDataPreparer.ratioHashMap()
-
-        //barChart.setTouchEnabled(false)
+        val ratioHashMap : LinkedHashMap<String, Float> = plotDataPreparer.ratioHashMap()
 
 
-        //barChart.setDrawValueAboveBar(false)
-        barChart.setDrawBarShadow(true)
-
+        var iterator : Float = 0F
+        ratioHashMap.forEach(){
+            dataValues1.add(BarEntry(iterator, it.value))
+            iterator+= barDistance
+        }
 
         val description : Description = barChart.description
         description.isEnabled = false
@@ -51,60 +57,43 @@ class ProfileActivity : AppCompatActivity() {
         val legend : Legend = barChart.legend
         legend.isEnabled = false
 
+
+
         val xAxis : XAxis = barChart.xAxis
-        val yTopAxis : YAxis = barChart.axisLeft
-        val yBottomAxis : YAxis = barChart.axisRight
-
-        yBottomAxis.isEnabled = false
-
-
-        yTopAxis.axisMinimum = 0F
-        yTopAxis.axisMaximum = 1F
-        yTopAxis.spaceTop = 100F
-
-
         xAxis.labelCount = maxVisibleXAxisLabels
         xAxis.granularity = barDistance
         xAxis.setDrawAxisLine(false)
         xAxis.setDrawGridLines(false)
         xAxis.position = XAxis.XAxisPosition.BOTTOM
-        //xAxis.axisMinimum = 10F
-        //xAxis.axisMaximum = 150F
+        xAxis.textSize = xAxisLabelTextSize
 
-        var iterator : Float = 0F
-        ratioHashMap.forEach(){
-            if(it.value != Float.NaN) {
-                dataValues1.add(BarEntry(iterator, it.value))
-                Log.d("lol", it.value.toString())
-            }
-            else{
-                dataValues1.add(BarEntry(iterator, 0F))
-            }
-            iterator+= barDistance
-        }
+        val yTopAxis : YAxis = barChart.axisLeft
+        yTopAxis.axisMinimum = yAxisMinimum
+        yTopAxis.axisMaximum = yAxisMaximum
+        //yTopAxis.setDrawLabels(false)
 
 
+        val yBottomAxis : YAxis = barChart.axisRight
+        yBottomAxis.axisMinimum = yAxisMinimum
+        yBottomAxis.axisMaximum = yAxisMaximum
+        yBottomAxis.setDrawGridLines(false)
+        yBottomAxis.setDrawLabels(false)
 
+        val xAxisLabels : ArrayList<String> = ArrayList(ratioHashMap.keys)
+        barChart.xAxis.valueFormatter = IndexAxisValueFormatter(xAxisLabels)
 
         val barDataSet1 : BarDataSet = BarDataSet(dataValues1, "DataSet 1")
         barDataSet1.setColor(Color.GREEN)
 
         val barData : BarData = BarData(barDataSet1)
         barData.barWidth = barWidth
-
-
-        val xAxisLabels : ArrayList<String> = ArrayList(ratioHashMap.keys)
-//        val xAxisLabels : ArrayList<String> = arrayListOf("1", "cps", "fun")
-        barChart.xAxis.valueFormatter = IndexAxisValueFormatter(xAxisLabels)
-
-
+        barData.setValueTextSize(barTextSize)
 
         barChart.data = barData
-        //TODO
-        //barChart.xAxis.axisMinimum = -barData.barWidth
-        //barChart.xAxis.axisMaximum = ratioHashMap.size as Float
         barChart.setFitBars(true)
-        barChart.animateY(750, Easing.EaseInOutQuad)
+        barChart.isScaleXEnabled = false
+        barChart.setExtraOffsets(0F, 0F, rightOffset, 0F)
+        barChart.animateY(animationLengthInMs, Easing.EaseInOutQuad)
         barChart.invalidate()
     }
 }
