@@ -2,8 +2,8 @@ package com.example.earsensei
 
 class PlotDataPreparer(val testModels : ArrayList<TestModel>, val plotX : ArrayList<String>) {
 
-    fun ratioHashMap() : HashMap<String, Float> {
-        val ratio : HashMap<String, Float> = hashMapOf()
+    fun ratioHashMap() : LinkedHashMap<String, Float> {
+        val ratio : LinkedHashMap<String, Float> = linkedMapOf()
         plotX.forEach(){
 
             ratio.put(it, countCorrectAnswerRatio(it))

@@ -75,7 +75,7 @@ data class Note(val number: Int, val name: String, val audioResource: Int) {
         )
 
 
-        val intervals = mapOf<String, Int>(
+        val intervals : LinkedHashMap<String, Int> = linkedMapOf<String, Int>(
             "Perfect 1st" to 0,
             "Minor 2nd" to 1,
             "Major 2nd" to 2,

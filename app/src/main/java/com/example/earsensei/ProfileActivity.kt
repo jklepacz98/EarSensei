@@ -4,7 +4,6 @@ import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import androidx.core.view.get
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.Description
@@ -42,7 +41,7 @@ class ProfileActivity : AppCompatActivity() {
         //barChart.setTouchEnabled(false)
 
 
-        barChart.setDrawValueAboveBar(false)
+        //barChart.setDrawValueAboveBar(false)
         barChart.setDrawBarShadow(true)
 
 
@@ -54,7 +53,15 @@ class ProfileActivity : AppCompatActivity() {
 
         val xAxis : XAxis = barChart.xAxis
         val yTopAxis : YAxis = barChart.axisLeft
-        val yBottom : YAxis = barChart.axisRight
+        val yBottomAxis : YAxis = barChart.axisRight
+
+        yBottomAxis.isEnabled = false
+
+
+        yTopAxis.axisMinimum = 0F
+        yTopAxis.axisMaximum = 1F
+        yTopAxis.spaceTop = 100F
+
 
         xAxis.labelCount = maxVisibleXAxisLabels
         xAxis.granularity = barDistance
@@ -62,11 +69,17 @@ class ProfileActivity : AppCompatActivity() {
         xAxis.setDrawGridLines(false)
         xAxis.position = XAxis.XAxisPosition.BOTTOM
         //xAxis.axisMinimum = 10F
-        xAxis.axisMaximum = 20F
+        //xAxis.axisMaximum = 150F
 
         var iterator : Float = 0F
         ratioHashMap.forEach(){
-            dataValues1.add(BarEntry(iterator, it.value))
+            if(it.value != Float.NaN) {
+                dataValues1.add(BarEntry(iterator, it.value))
+                Log.d("lol", it.value.toString())
+            }
+            else{
+                dataValues1.add(BarEntry(iterator, 0F))
+            }
             iterator+= barDistance
         }
 
