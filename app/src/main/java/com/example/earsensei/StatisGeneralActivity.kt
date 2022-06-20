@@ -1,9 +1,9 @@
 package com.example.earsensei
 
+import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.Description
@@ -13,9 +13,12 @@ import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+import com.github.mikephil.charting.highlight.Highlight
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 
-class ProfileActivity : AppCompatActivity() {
+class StatisGeneralActivity : AppCompatActivity() {
 
     val earSenseiDBHelper : EarSenseiDBHelper = EarSenseiDBHelper(this)
 
@@ -42,7 +45,10 @@ class ProfileActivity : AppCompatActivity() {
 
         val dataValues1 : ArrayList<BarEntry> = arrayListOf()
 
+
+
         val ratioHashMap : LinkedHashMap<String, Float> = plotDataPreparer.ratioHashMap()
+
 
 
         var iterator : Float = 0F
@@ -57,6 +63,17 @@ class ProfileActivity : AppCompatActivity() {
         val legend : Legend = barChart.legend
         legend.isEnabled = false
 
+
+        barChart.setOnChartValueSelectedListener(object : OnChartValueSelectedListener{
+            override fun onValueSelected(e: Entry?, h: Highlight?) {
+                val intent : Intent = Intent(this@StatisGeneralActivity, StatisGeneralActivity::class.java)
+                startActivity(intent)
+            }
+
+            override fun onNothingSelected() {
+
+            }
+        })
 
 
         val xAxis : XAxis = barChart.xAxis
