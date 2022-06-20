@@ -16,7 +16,7 @@
             android:label="@string/title_activity_test"
             android:theme="@style/Theme.EarSensei.NoActionBar" />
         <activity android:name=".IntervalsSettingsActivity" />
-        <activity android:name=".StatisGeneralActivity" />
+        <activity android:name=".StatsGeneralActivity" />
         <activity android:name=".MusicTheoryActivity" />
         <activity android:name=".quizActivities.ChordsQuizActivity" />
         <activity android:name=".quizActivities.ScalesQuizActivity" />

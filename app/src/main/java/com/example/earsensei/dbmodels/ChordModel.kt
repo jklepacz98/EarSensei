@@ -1,6 +1,6 @@
-package com.example.earsensei
+package com.example.earsensei.dbmodels
 
-data class TestModel(
+data class ChordModel(
     var id: Int,
     var baseNote: String,
     var correctAnswer : String,

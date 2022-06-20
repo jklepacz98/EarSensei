@@ -18,7 +18,7 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 
-class StatisGeneralActivity : AppCompatActivity() {
+class StatsGeneralActivity : AppCompatActivity() {
 
     val earSenseiDBHelper : EarSenseiDBHelper = EarSenseiDBHelper(this)
 
@@ -37,9 +37,9 @@ class StatisGeneralActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_profile)
+        setContentView(R.layout.activity_stats_general)
 
-        val plotDataPreparer : PlotDataPreparer = PlotDataPreparer(earSenseiDBHelper.readAllData(), ArrayList(Note.intervals.keys))
+        val plotDataPreparer : TestGraphPreparer = TestGraphPreparer(earSenseiDBHelper.readAllTestData(), ArrayList(Note.intervals.keys))
 
         val barChart : BarChart = findViewById(R.id.bar_chart)
 
@@ -47,7 +47,7 @@ class StatisGeneralActivity : AppCompatActivity() {
 
 
 
-        val ratioHashMap : LinkedHashMap<String, Float> = plotDataPreparer.ratioHashMap()
+        val ratioHashMap : LinkedHashMap<String, Float> = plotDataPreparer.prepareHashMap()
 
 
 
@@ -66,7 +66,7 @@ class StatisGeneralActivity : AppCompatActivity() {
 
         barChart.setOnChartValueSelectedListener(object : OnChartValueSelectedListener{
             override fun onValueSelected(e: Entry?, h: Highlight?) {
-                val intent : Intent = Intent(this@StatisGeneralActivity, StatisGeneralActivity::class.java)
+                val intent : Intent = Intent(this@StatsGeneralActivity, StatsDetailsActivity::class.java)
                 startActivity(intent)
             }
 

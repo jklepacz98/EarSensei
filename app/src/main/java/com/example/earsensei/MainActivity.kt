@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         setupStartNewActivityButton(ScalesQuizActivity::class.java, findViewById(R.id.button_scales))
         setupStartNewActivityButton(PerfectPitchQuizActivity::class.java, findViewById(R.id.button_perfect_pitch))
         setupStartNewActivityButton(MusicTheoryActivity::class.java, findViewById(R.id.button_music_theory))
-        setupStartNewActivityButton(StatisGeneralActivity::class.java, findViewById(R.id.button_profile))
+        setupStartNewActivityButton(StatsGeneralActivity::class.java, findViewById(R.id.button_profile))
 
         val earSenseiDBHelper : EarSenseiDBHelper = EarSenseiDBHelper(this)
 
@@ -28,14 +28,14 @@ class MainActivity : AppCompatActivity() {
         buttonAddEntries.setOnClickListener(){
             for (i in 0..20){
                 val dateTime : Long = Calendar.getInstance().timeInMillis
-                val contentValues : ContentValues = earSenseiDBHelper.createContentValues(Note.notes.keys.random(), Note.intervals.keys.random(), Note.intervals.keys.random(), dateTime)
-                earSenseiDBHelper.addContentValues(contentValues)
+                val contentValues : ContentValues = earSenseiDBHelper.createTestContentValues(Note.notes.keys.random(), Note.intervals.keys.random(), Note.intervals.keys.random(), dateTime)
+                earSenseiDBHelper.addTestContentValues(contentValues)
             }
             for (i in 0..2){
                 val dateTime : Long = Calendar.getInstance().timeInMillis
                 val randomInterval = Note.intervals.keys.random()
-                val contentValues : ContentValues = earSenseiDBHelper.createContentValues(Note.notes.keys.random(), randomInterval, randomInterval, dateTime)
-                earSenseiDBHelper.addContentValues(contentValues)
+                val contentValues : ContentValues = earSenseiDBHelper.createTestContentValues(Note.notes.keys.random(), randomInterval, randomInterval, dateTime)
+                earSenseiDBHelper.addTestContentValues(contentValues)
             }
         }
 
