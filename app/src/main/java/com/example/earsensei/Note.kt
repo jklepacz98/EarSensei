@@ -1,60 +1,58 @@
 package com.example.earsensei
 
-import android.content.ContentValues.TAG
 import android.content.Context
 import android.media.MediaPlayer
-import android.util.Log
+import com.example.earsensei.Note.Companion.notes
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-data class Note(val number: Int, val name: String, val audioResource: Int) {
+data class Note(val name: String, val number: Int, val audioResource: Int) {
     companion object {
-        val OCTAVE_SIZE = 12;
-
+        val OCTAVE_SIZE = 12
 
         val notePlayers = arrayOf(
-            Note(0, "C3", R.raw.c3),
-            Note(1, "Cis3", R.raw.cis3),
-            Note(2, "D3", R.raw.d3),
-            Note(3, "Dis3", R.raw.dis3),
-            Note(4, "E3", R.raw.e3),
-            Note(5, "F3", R.raw.f3),
-            Note(6, "Fis3", R.raw.fis3),
-            Note(7, "G3", R.raw.g3),
-            Note(8, "Gis3", R.raw.gis3),
-            Note(9, "A3", R.raw.a3),
-            Note(10, "Ais3", R.raw.ais3),
-            Note(11, "B3", R.raw.b3),
+            Note("C3", 0, R.raw.c3),
+            Note("Cis3", 1, R.raw.cis3),
+            Note("D3", 2, R.raw.d3),
+            Note("Dis3", 3, R.raw.dis3),
+            Note("E3", 4, R.raw.e3),
+            Note("F3", 5, R.raw.f3),
+            Note("Fis3", 6, R.raw.fis3),
+            Note("G3", 7, R.raw.g3),
+            Note("Gis3", 8, R.raw.gis3),
+            Note("A3", 9, R.raw.a3),
+            Note("Ais3", 10, R.raw.ais3),
+            Note("B3", 11, R.raw.b3),
 
-            Note(12, "C4", R.raw.c4),
-            Note(13, "Cis4", R.raw.cis4),
-            Note(14, "D4", R.raw.d4),
-            Note(15, "Dis4", R.raw.dis4),
-            Note(16, "E4", R.raw.e4),
-            Note(17, "F4", R.raw.f4),
-            Note(18, "Fis4", R.raw.fis4),
-            Note(19, "G4", R.raw.g4),
-            Note(20, "Gis4", R.raw.gis4),
-            Note(21, "A4", R.raw.a4),
-            Note(22, "Ais4", R.raw.ais4),
-            Note(23, "B4", R.raw.b4),
+            Note("C4", 12, R.raw.c4),
+            Note("Cis4", 13, R.raw.cis4),
+            Note("D4", 14, R.raw.d4),
+            Note("Dis4", 15, R.raw.dis4),
+            Note("E4", 16, R.raw.e4),
+            Note("F4", 17, R.raw.f4),
+            Note("Fis4", 18, R.raw.fis4),
+            Note("G4", 19, R.raw.g4),
+            Note("Gis4", 20, R.raw.gis4),
+            Note("A4", 21, R.raw.a4),
+            Note("Ais4", 22, R.raw.ais4),
+            Note("B4", 23, R.raw.b4),
 
-            Note(24, "C5", R.raw.c5),
-            Note(25, "Cis5", R.raw.cis5),
-            Note(26, "D5", R.raw.d5),
-            Note(27, "Dis5", R.raw.dis5),
-            Note(28, "E5", R.raw.e5),
-            Note(29, "F5", R.raw.f5),
-            Note(30, "Fis5", R.raw.fis5),
-            Note(31, "G5", R.raw.g5),
-            Note(32, "Gis5", R.raw.gis5),
-            Note(33, "A5", R.raw.a5),
-            Note(34, "Ais5", R.raw.ais5),
-            Note(35, "B5", R.raw.b5),
+            Note("C5", 24, R.raw.c5),
+            Note("Cis5", 25, R.raw.cis5),
+            Note("D5", 26, R.raw.d5),
+            Note("Dis5", 27, R.raw.dis5),
+            Note("E5", 28, R.raw.e5),
+            Note("F5", 29, R.raw.f5),
+            Note("Fis5", 30, R.raw.fis5),
+            Note("G5", 31, R.raw.g5),
+            Note("Gis5", 32, R.raw.gis5),
+            Note("A5", 33, R.raw.a5),
+            Note("Ais5", 34, R.raw.ais5),
+            Note("B5", 35, R.raw.b5),
 
-            Note(36, "C6", R.raw.c6)
+            Note("C6", 36, R.raw.c6)
         )
 
 
@@ -107,7 +105,51 @@ data class Note(val number: Int, val name: String, val audioResource: Int) {
             "Ais" to 10,
             "B" to 11,
         )
+
+         val notesWithOctave = mapOf<String, Int>(
+             "C3" to 0,
+             "Cis3" to 1,
+             "D3" to 2,
+             "Dis3" to 3,
+             "E3" to 4,
+             "F3" to 5,
+             "Fis3" to 6,
+             "G3" to 7,
+             "Gis3" to 8,
+             "A3" to 9,
+             "Ais3" to 10,
+             "B3" to 11,
+
+             "C4" to 12,
+             "Cis4" to 13,
+             "D4" to 14,
+             "Dis4" to 15,
+             "E4" to 16,
+             "F4" to 17,
+             "Fis4" to 18,
+             "G4" to 19,
+             "Gis4" to 20,
+             "A4" to 21,
+             "Ais4" to 22,
+             "B4" to 23,
+
+             "C5" to 24,
+             "Cis5" to 25,
+             "D5" to 26,
+             "Dis5" to 27,
+             "E5" to 28,
+             "F5" to 29,
+             "Fis5" to 30,
+             "G5" to 31,
+             "Gis5" to 32,
+             "A5" to 33,
+             "Ais5" to 34,
+             "B5" to 35,
+
+             "C6" to 36
+         )
     }
+
 }
 
 class NotesPlayer(val context: Context, val notes: List<Note>) {

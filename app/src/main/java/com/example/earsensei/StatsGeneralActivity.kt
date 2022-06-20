@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.Description
@@ -50,10 +51,14 @@ class StatsGeneralActivity : AppCompatActivity() {
         val ratioHashMap : LinkedHashMap<String, Float> = plotDataPreparer.prepareHashMap()
 
 
+        val orderHashMap : LinkedHashMap<Float, String> = linkedMapOf()
+
+
 
         var iterator : Float = 0F
         ratioHashMap.forEach(){
             dataValues1.add(BarEntry(iterator, it.value))
+            orderHashMap.put(iterator, it.key)
             iterator+= barDistance
         }
 
@@ -67,6 +72,8 @@ class StatsGeneralActivity : AppCompatActivity() {
         barChart.setOnChartValueSelectedListener(object : OnChartValueSelectedListener{
             override fun onValueSelected(e: Entry?, h: Highlight?) {
                 val intent : Intent = Intent(this@StatsGeneralActivity, StatsDetailsActivity::class.java)
+                val intervalName : String = orderHashMap[e?.x] ?: "error"
+                intent.putExtra("NAME", intervalName)
                 startActivity(intent)
             }
 

@@ -34,8 +34,19 @@ class StatsDetailsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_stats_details)
 
+        val filter : String = intent.getStringExtra("NAME") ?: "major 9th"
 
-        val plotDataPreparer : TestGraphPreparer = TestGraphPreparer(earSenseiDBHelper.readAllTestData(), ArrayList(Note.intervals.keys))
+
+//        val noteNames : ArrayList<String> = arrayListOf()
+//        Note.notePlayers.forEach {
+//            noteNames.add(it.name)
+//        }
+//
+//        val plotDataPreparer : TestDetailsGraphPreparer = TestDetailsGraphPreparer(earSenseiDBHelper.readAllTestData(), ArrayList(noteNames))
+
+        //val filter: String = "Major 9th"
+
+        val plotDataPreparer : TestDetailsGraphPreparer = TestDetailsGraphPreparer(earSenseiDBHelper.readAllTestData(), ArrayList(Note.notes.keys), filter)
 
         val barChart : BarChart = findViewById(R.id.bar_chart)
 
