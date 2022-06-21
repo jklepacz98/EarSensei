@@ -19,6 +19,7 @@ class StatsMenuActivity : AppCompatActivity() {
     fun setupStartNewActivityButton(activityClass: Class<out Activity>, button: Button){
         button.setOnClickListener(){
             val intent = Intent(this, activityClass)
+            intent.putExtra("TITLE", "Test")
             startActivity(intent)
         }
     }

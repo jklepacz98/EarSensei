@@ -43,6 +43,10 @@ class StatsGeneralActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_stats_general)
 
+        val actionBarTitle : String? = intent.getStringExtra("TITLE")
+        actionBar?.setTitle(actionBarTitle)
+        supportActionBar?.setTitle(actionBarTitle)
+
         val plotDataPreparer : TestGraphPreparer = TestGraphPreparer(earSenseiDBHelper.readAllTestData(), ArrayList(
             Note.intervals.keys))
 
@@ -77,7 +81,7 @@ class StatsGeneralActivity : AppCompatActivity() {
             override fun onValueSelected(e: Entry?, h: Highlight?) {
                 val intent : Intent = Intent(this@StatsGeneralActivity, StatsDetailsActivity::class.java)
                 val intervalName : String = orderHashMap[e?.x] ?: "error"
-                intent.putExtra("NAME", intervalName)
+                intent.putExtra("FILTER", intervalName)
                 startActivity(intent)
             }
 

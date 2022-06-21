@@ -17,10 +17,13 @@ import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+import kotlinx.coroutines.handleCoroutineException
+import java.lang.Exception
 
 class StatsDetailsActivity : AppCompatActivity() {
 
     val earSenseiDBHelper : EarSenseiDBHelper = EarSenseiDBHelper(this)
+
 
     companion object{
         val barDistance : Float = 1F
@@ -38,17 +41,12 @@ class StatsDetailsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_stats_details)
 
-        val filter : String = intent.getStringExtra("NAME") ?: "major 9th"
+
+        val filter : String = intent.getStringExtra("FILTER") ?: "Extra was null"
+        actionBar?.setTitle(filter)
+        supportActionBar?.setTitle(filter)
 
 
-//        val noteNames : ArrayList<String> = arrayListOf()
-//        Note.notePlayers.forEach {
-//            noteNames.add(it.name)
-//        }
-//
-//        val plotDataPreparer : TestDetailsGraphPreparer = TestDetailsGraphPreparer(earSenseiDBHelper.readAllTestData(), ArrayList(noteNames))
-
-        //val filter: String = "Major 9th"
 
         val plotDataPreparer : TestDetailsGraphPreparer = TestDetailsGraphPreparer(earSenseiDBHelper.readAllTestData(), ArrayList(
             Note.notes.keys), filter)
