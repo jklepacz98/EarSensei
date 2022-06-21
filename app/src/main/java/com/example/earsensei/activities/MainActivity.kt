@@ -1,4 +1,4 @@
-package com.example.earsensei
+package com.example.earsensei.activities
 
 import android.app.Activity
 import android.content.ContentValues
@@ -6,7 +6,10 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
-import com.example.earsensei.quizActivities.*
+import com.example.earsensei.EarSenseiDBHelper
+import com.example.earsensei.Note
+import com.example.earsensei.R
+import com.example.earsensei.activities.quizactivities.*
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -20,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         setupStartNewActivityButton(ScalesQuizActivity::class.java, findViewById(R.id.button_scales))
         setupStartNewActivityButton(PerfectPitchQuizActivity::class.java, findViewById(R.id.button_perfect_pitch))
         setupStartNewActivityButton(MusicTheoryActivity::class.java, findViewById(R.id.button_music_theory))
-        setupStartNewActivityButton(StatsGeneralActivity::class.java, findViewById(R.id.button_profile))
+        setupStartNewActivityButton(StatsMenuActivity::class.java, findViewById(R.id.button_profile))
 
         val earSenseiDBHelper : EarSenseiDBHelper = EarSenseiDBHelper(this)
 

@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_centerHorizontal="true"
-    tools:context=".activities.MainActivity">
+    tools:context=".activities.StatsMenuActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -55,26 +54,6 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
                 android:text="@string/perfect_pitch" />
-
-            <Button
-                android:id="@+id/button_music_theory"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:text="@string/music_theory" />
-            <Button
-                android:id="@+id/button_profile"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:text="@string/profile"/>
-
-            <Button
-                android:id="@+id/button_add_data_to_database"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:text="Add 10 entries to database"/>
         </LinearLayout>
 
     </LinearLayout>

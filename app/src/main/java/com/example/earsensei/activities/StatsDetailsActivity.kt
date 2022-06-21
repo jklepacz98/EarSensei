@@ -1,8 +1,12 @@
-package com.example.earsensei
+package com.example.earsensei.activities
 
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.earsensei.EarSenseiDBHelper
+import com.example.earsensei.Note
+import com.example.earsensei.R
+import com.example.earsensei.TestDetailsGraphPreparer
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.Description
@@ -46,7 +50,8 @@ class StatsDetailsActivity : AppCompatActivity() {
 
         //val filter: String = "Major 9th"
 
-        val plotDataPreparer : TestDetailsGraphPreparer = TestDetailsGraphPreparer(earSenseiDBHelper.readAllTestData(), ArrayList(Note.notes.keys), filter)
+        val plotDataPreparer : TestDetailsGraphPreparer = TestDetailsGraphPreparer(earSenseiDBHelper.readAllTestData(), ArrayList(
+            Note.notes.keys), filter)
 
         val barChart : BarChart = findViewById(R.id.bar_chart)
 

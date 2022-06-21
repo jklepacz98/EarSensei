@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context=".quizActivities.ChordsQuizActivity">
+    tools:context=".activities.quizactivities.ChordsQuizActivity">
 
     <ImageButton
         android:layout_margin="16dp"

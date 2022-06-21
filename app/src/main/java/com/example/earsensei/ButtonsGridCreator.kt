@@ -1,15 +1,9 @@
 package com.example.earsensei
 
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.Toast
-import androidx.core.content.ContextCompat.startActivity
-import com.example.earsensei.Note.Companion.notes
-import com.example.earsensei.quiz.TestQuiz
-import com.example.earsensei.quizActivities.TestQuizActivity
 
 class ButtonsGridCreator(context: Context, viewGroup: ViewGroup, notes : List<String>)  {
 

@@ -1,10 +1,13 @@
-package com.example.earsensei
+package com.example.earsensei.activities
 
 import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
+import com.example.earsensei.EarSenseiDBHelper
+import com.example.earsensei.Note
+import com.example.earsensei.R
+import com.example.earsensei.TestGraphPreparer
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.Description
@@ -40,7 +43,8 @@ class StatsGeneralActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_stats_general)
 
-        val plotDataPreparer : TestGraphPreparer = TestGraphPreparer(earSenseiDBHelper.readAllTestData(), ArrayList(Note.intervals.keys))
+        val plotDataPreparer : TestGraphPreparer = TestGraphPreparer(earSenseiDBHelper.readAllTestData(), ArrayList(
+            Note.intervals.keys))
 
         val barChart : BarChart = findViewById(R.id.bar_chart)
 

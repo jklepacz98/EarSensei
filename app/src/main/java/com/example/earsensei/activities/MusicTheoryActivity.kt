@@ -1,7 +1,8 @@
-package com.example.earsensei
+package com.example.earsensei.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.earsensei.R
 
 class MusicTheoryActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
