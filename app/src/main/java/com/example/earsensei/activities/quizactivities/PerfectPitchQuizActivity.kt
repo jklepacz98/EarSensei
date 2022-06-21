@@ -1,4 +1,4 @@
-package com.example.earsensei.quizActivities
+package com.example.earsensei.activities.quizactivities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

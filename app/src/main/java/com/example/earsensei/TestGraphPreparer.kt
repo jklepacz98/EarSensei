@@ -1,8 +1,10 @@
 package com.example.earsensei
 
-class PlotDataPreparer(val testModels : ArrayList<TestModel>, val plotX : ArrayList<String>) {
+import com.example.earsensei.dbmodels.TestModel
 
-    fun ratioHashMap() : LinkedHashMap<String, Float> {
+class TestGraphPreparer(val testModels : ArrayList<TestModel>, val plotX : ArrayList<String>) : GraphPreparer{
+
+    override fun prepareHashMap() : LinkedHashMap<String, Float> {
         val ratio : LinkedHashMap<String, Float> = linkedMapOf()
         plotX.forEach(){
 

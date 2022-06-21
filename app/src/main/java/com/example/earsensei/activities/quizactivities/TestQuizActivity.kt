@@ -1,26 +1,14 @@
-package com.example.earsensei.quizActivities
+package com.example.earsensei.activities.quizactivities
 
 import android.content.ContentValues
-import android.content.Context
 import android.content.Intent
-import android.icu.text.TimeZoneNames
 import android.os.Bundle
-import android.util.Log
-import android.view.SurfaceControl
 import android.widget.GridLayout
 import android.widget.ImageButton
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import com.example.earsensei.*
+import com.example.earsensei.EarSenseiDBHelper
 import com.example.earsensei.quiz.TestQuiz
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import java.sql.Timestamp
-import java.time.LocalDateTime
 import java.util.*
 
 class TestQuizActivity : AppCompatActivity() {
@@ -45,8 +33,8 @@ class TestQuizActivity : AppCompatActivity() {
             val buttonText : String = it.text.toString()
             it.setOnClickListener(){
                 val date : Long = Calendar.getInstance().timeInMillis
-                val contentValues : ContentValues = earSenseiDBHelper.createContentValues(Note.notePlayers[7].name, testQuiz.getCorrectAnswer(), buttonText, date)
-                earSenseiDBHelper.addContentValues(contentValues)
+                val contentValues : ContentValues = earSenseiDBHelper.createTestContentValues(Note.notePlayers[7].name, testQuiz.getCorrectAnswer(), buttonText, date)
+                earSenseiDBHelper.addTestContentValues(contentValues)
                 if(testQuiz.checkAnswer(buttonText)){
                     val intent = Intent(this, TestQuizActivity::class.java)
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)

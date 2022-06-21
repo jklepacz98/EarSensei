@@ -4,8 +4,10 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/layout/activity_intervals.xml" value="0.12228260869565218" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.17325227963525835" />
         <entry key="app/src/main/res/layout/activity_profile.xml" value="0.23143115942028986" />
         <entry key="app/src/main/res/layout/activity_scales.xml" value="0.12228260869565218" />
+        <entry key="app/src/main/res/layout/activity_stats_menu.xml" value="0.17325227963525835" />
       </map>
     </option>
   </component>
