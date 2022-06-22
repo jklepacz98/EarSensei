@@ -9,6 +9,7 @@ import android.widget.Button
 import com.example.earsensei.EarSenseiDBHelper
 import com.example.earsensei.Note
 import com.example.earsensei.R
+import com.example.earsensei.SetupIntent
 import com.example.earsensei.activities.quizactivities.*
 import java.util.*
 
@@ -46,8 +47,7 @@ class MainActivity : AppCompatActivity() {
 
     fun setupStartNewActivityButton(activityClass: Class<out Activity>, button: Button){
         button.setOnClickListener(){
-            val intent = Intent(this, activityClass)
-            startActivity(intent)
+            SetupIntent.startNewActivity(this@MainActivity, activityClass)
         }
     }
 }
