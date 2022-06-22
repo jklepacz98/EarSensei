@@ -1,4 +1,5 @@
 package com.example.earsensei
 
-class LessonManager {
+class QuizManager {
+
 }
