@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.earsensei.*
+import com.example.earsensei.activities.graphpreparers.TestGraphPreparer
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.components.Legend
@@ -67,9 +68,7 @@ class StatsGeneralActivity : AppCompatActivity() {
                 intent.putExtra("FILTER", intervalName)
                 startActivity(intent)
             }
-
             override fun onNothingSelected() {
-
             }
         })
 

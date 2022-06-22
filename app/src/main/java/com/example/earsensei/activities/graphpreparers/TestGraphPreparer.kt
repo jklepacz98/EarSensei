@@ -1,8 +1,9 @@
-package com.example.earsensei
+package com.example.earsensei.activities.graphpreparers
 
 import com.example.earsensei.dbmodels.TestModel
 
-class TestDetailsGraphPreparer(val testModels : ArrayList<TestModel>, val plotX : ArrayList<String>, val filter: String) : GraphPreparer{
+class TestGraphPreparer(val testModels : ArrayList<TestModel>, val plotX : ArrayList<String>) :
+    GraphPreparer {
 
     override fun prepareHashMap() : LinkedHashMap<String, Float> {
         val ratio : LinkedHashMap<String, Float> = linkedMapOf()
@@ -14,11 +15,11 @@ class TestDetailsGraphPreparer(val testModels : ArrayList<TestModel>, val plotX 
         return ratio
     }
 
-    private fun countCorrectAnswerRatio(answer : String) : Float{
+    fun countCorrectAnswerRatio(answer : String) : Float{
         var correctAnswers : Float = 0F
         var allAnswers : Float = 0F
-        filterTestModels().forEach(){
-            if(answer == it.baseNote){
+        testModels.forEach(){
+            if(answer == it.correctAnswer){
                 allAnswers++
                 if(it.correctAnswer == it.userAnswer){
                     correctAnswers++
@@ -28,16 +29,6 @@ class TestDetailsGraphPreparer(val testModels : ArrayList<TestModel>, val plotX 
         var correctAnswerRatio : Float = correctAnswers as Float / allAnswers as Float
         if(correctAnswerRatio.isNaN()) return 0F
         return correctAnswerRatio
-    }
-
-    private fun filterTestModels() : ArrayList<TestModel>{
-        val filteredTestModels : ArrayList<TestModel> = arrayListOf()
-        testModels.forEach(){
-            if (it.correctAnswer == filter){
-                filteredTestModels.add(it)
-            }
-        }
-        return filteredTestModels
     }
 
 }

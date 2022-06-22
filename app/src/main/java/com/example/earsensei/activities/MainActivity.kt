@@ -6,10 +6,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
-import com.example.earsensei.EarSenseiDBHelper
-import com.example.earsensei.Note
-import com.example.earsensei.R
-import com.example.earsensei.SetupIntent
+import com.example.earsensei.*
 import com.example.earsensei.activities.quizactivities.*
 import java.util.*
 
@@ -30,17 +27,12 @@ class MainActivity : AppCompatActivity() {
 
         val buttonAddEntries : Button = findViewById(R.id.button_add_data_to_database)
         buttonAddEntries.setOnClickListener(){
-            for (i in 0..20){
-                val dateTime : Long = Calendar.getInstance().timeInMillis
-                val contentValues : ContentValues = earSenseiDBHelper.createTestContentValues(Note.notes.keys.random(), Note.intervals.keys.random(), Note.intervals.keys.random(), dateTime)
-                earSenseiDBHelper.addTestContentValues(contentValues)
-            }
-            for (i in 0..2){
-                val dateTime : Long = Calendar.getInstance().timeInMillis
-                val randomInterval = Note.intervals.keys.random()
-                val contentValues : ContentValues = earSenseiDBHelper.createTestContentValues(Note.notes.keys.random(), randomInterval, randomInterval, dateTime)
-                earSenseiDBHelper.addTestContentValues(contentValues)
-            }
+            val addEntriesToDB : AddEntriesToDB = AddEntriesToDB(this@MainActivity)
+            addEntriesToDB.addTestEntries(20)
+            addEntriesToDB.addIntervalEntries(100)
+            addEntriesToDB.addChordEntries(2)
+            addEntriesToDB.addScaleEntries(100)
+            addEntriesToDB.addPerfectPitchEntries(100)
         }
 
     }

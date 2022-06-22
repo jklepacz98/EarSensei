@@ -3,6 +3,7 @@ package com.example.earsensei.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.earsensei.*
+import com.example.earsensei.activities.graphpreparers.GivenTestBaseNoteGraphPreparer
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.data.BarEntry
 
@@ -34,7 +35,7 @@ class StatsDetailsActivity : AppCompatActivity() {
 
 
 
-        val plotDataPreparer : TestDetailsGraphPreparer = TestDetailsGraphPreparer(earSenseiDBHelper.readAllTestData(), ArrayList(
+        val plotDataPreparer : GivenTestBaseNoteGraphPreparer = GivenTestBaseNoteGraphPreparer(earSenseiDBHelper.readAllTestData(), ArrayList(
             Note.notes.keys), filter)
 
         val barChart : BarChart = findViewById(R.id.bar_chart)
