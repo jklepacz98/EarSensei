@@ -1,24 +1,10 @@
 package com.example.earsensei.activities
 
-import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.earsensei.EarSenseiDBHelper
-import com.example.earsensei.Note
-import com.example.earsensei.R
-import com.example.earsensei.TestDetailsGraphPreparer
-import com.github.mikephil.charting.animation.Easing
+import com.example.earsensei.*
 import com.github.mikephil.charting.charts.BarChart
-import com.github.mikephil.charting.components.Description
-import com.github.mikephil.charting.components.Legend
-import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.components.YAxis
-import com.github.mikephil.charting.data.BarData
-import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
-import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
-import kotlinx.coroutines.handleCoroutineException
-import java.lang.Exception
 
 class StatsDetailsActivity : AppCompatActivity() {
 
@@ -52,11 +38,8 @@ class StatsDetailsActivity : AppCompatActivity() {
             Note.notes.keys), filter)
 
         val barChart : BarChart = findViewById(R.id.bar_chart)
-
+        val barChartManager : BarChartManager = BarChartManager(barChart)
         val dataValues1 : ArrayList<BarEntry> = arrayListOf()
-
-
-
         val ratioHashMap : LinkedHashMap<String, Float> = plotDataPreparer.prepareHashMap()
 
 
@@ -67,47 +50,10 @@ class StatsDetailsActivity : AppCompatActivity() {
             iterator+= StatsGeneralActivity.barDistance
         }
 
-        val description : Description = barChart.description
-        description.isEnabled = false
-
-        val legend : Legend = barChart.legend
-        legend.isEnabled = false
-
-        val xAxis : XAxis = barChart.xAxis
-        xAxis.labelCount = StatsGeneralActivity.maxVisibleXAxisLabels
-        xAxis.granularity = StatsGeneralActivity.barDistance
-        xAxis.setDrawAxisLine(false)
-        xAxis.setDrawGridLines(false)
-        xAxis.position = XAxis.XAxisPosition.BOTTOM
-        xAxis.textSize = StatsGeneralActivity.xAxisLabelTextSize
-
-        val yTopAxis : YAxis = barChart.axisLeft
-        yTopAxis.axisMinimum = StatsGeneralActivity.yAxisMinimum
-        yTopAxis.axisMaximum = StatsGeneralActivity.yAxisMaximum
-        //yTopAxis.setDrawLabels(false)
-
-
-        val yBottomAxis : YAxis = barChart.axisRight
-        yBottomAxis.axisMinimum = StatsGeneralActivity.yAxisMinimum
-        yBottomAxis.axisMaximum = StatsGeneralActivity.yAxisMaximum
-        yBottomAxis.setDrawGridLines(false)
-        yBottomAxis.setDrawLabels(false)
-
         val xAxisLabels : ArrayList<String> = ArrayList(ratioHashMap.keys)
-        barChart.xAxis.valueFormatter = IndexAxisValueFormatter(xAxisLabels)
 
-        val barDataSet1 : BarDataSet = BarDataSet(dataValues1, "DataSet 1")
-        barDataSet1.setColor(Color.GREEN)
-
-        val barData : BarData = BarData(barDataSet1)
-        barData.barWidth = StatsGeneralActivity.barWidth
-        barData.setValueTextSize(StatsGeneralActivity.barTextSize)
-
-        barChart.data = barData
-        barChart.setFitBars(true)
-        barChart.isScaleXEnabled = false
-        barChart.setExtraOffsets(0F, 0F, StatsGeneralActivity.rightOffset, 0F)
-        barChart.animateY(StatsGeneralActivity.animationLengthInMs, Easing.EaseInOutQuad)
-        barChart.invalidate()
+        barChartManager.setupBarChart()
+        barChartManager.setXAxisLabels(xAxisLabels)
+        barChartManager.setDataValues(dataValues1)
     }
 }
