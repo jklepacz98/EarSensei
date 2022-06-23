@@ -6,13 +6,6 @@ import java.util.*
 
 class AddEntriesToDB(context: Context) {
     val earSenseiDBHelper : EarSenseiDBHelper = EarSenseiDBHelper(context)
-    fun addTestEntries(numberOfEntries : Int){
-        for (i in 0..20){
-            val dateTime : Long = Calendar.getInstance().timeInMillis
-            val contentValues : ContentValues = earSenseiDBHelper.createTestContentValues(Note.notes.keys.random(), Note.intervals.keys.random(), Note.intervals.keys.random(), dateTime)
-            earSenseiDBHelper.addTestContentValues(contentValues)
-        }
-    }
 
     fun addIntervalEntries(numberOfEntries: Int){
         for (i in 0..numberOfEntries){

@@ -12,7 +12,7 @@ class StatsMenuActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_stats_menu)
 
-        setupStartNewActivityButton(StatsGeneralActivity::class.java, findViewById(R.id.button_test))
+        setupStartNewActivityButton(StatsGeneralActivity::class.java, findViewById(R.id.button_intervals))
     }
 
     fun setupStartNewActivityButton(activityClass: Class<out Activity>, button: Button){

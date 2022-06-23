@@ -32,8 +32,8 @@ class IntervalsQuizActivity : AppCompatActivity() {
             val buttonText : String = it.text.toString()
             it.setOnClickListener(){
                 val date : Long = Calendar.getInstance().timeInMillis
-                val contentValues : ContentValues = earSenseiDBHelper.createTestContentValues(Note.notePlayers[7].name, intervalsQuiz.getCorrectAnswer(), buttonText, date)
-                earSenseiDBHelper.addTestContentValues(contentValues)
+                val contentValues : ContentValues = earSenseiDBHelper.createIntervalsContentValues(Note.notePlayers[7].name, intervalsQuiz.getCorrectAnswer(), buttonText, date)
+                earSenseiDBHelper.addIntervalsContentValues(contentValues)
                 if(intervalsQuiz.checkAnswer(buttonText)){
                     val intent = Intent(this, IntervalsQuizActivity::class.java)
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)

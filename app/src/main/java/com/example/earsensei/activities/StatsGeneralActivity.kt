@@ -38,7 +38,7 @@ class StatsGeneralActivity : AppCompatActivity() {
         actionBar?.setTitle(actionBarTitle)
         supportActionBar?.setTitle(actionBarTitle)
 
-        val plotDataPreparer : GraphPreparer = GraphPreparer(earSenseiDBHelper.readAllTestData(), ArrayList(
+        val plotDataPreparer : GraphPreparer = GraphPreparer(earSenseiDBHelper.readAllIntervalsData(), ArrayList(
             Note.intervals.keys))
         val barChart : BarChart = findViewById(R.id.bar_chart)
         val dataValues1 : ArrayList<BarEntry> = arrayListOf()

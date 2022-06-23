@@ -35,7 +35,7 @@ class StatsDetailsActivity : AppCompatActivity() {
 
 
 
-        val plotDataPreparer : GraphPreparer = GraphPreparer(earSenseiDBHelper.readAllTestData(), ArrayList(
+        val plotDataPreparer : GraphPreparer = GraphPreparer(earSenseiDBHelper.readAllIntervalsData(), ArrayList(
             Note.notes.keys))
 
         val barChart : BarChart = findViewById(R.id.bar_chart)
