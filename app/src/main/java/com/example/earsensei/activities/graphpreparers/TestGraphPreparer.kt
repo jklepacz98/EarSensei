@@ -1,34 +1,27 @@
 package com.example.earsensei.activities.graphpreparers
 
 import com.example.earsensei.dbmodels.TestModel
+import kotlin.math.log
 
-class TestGraphPreparer(val testModels : ArrayList<TestModel>, val plotX : ArrayList<String>) :
-    GraphPreparer {
+class TestGraphPreparer(val testModels : ArrayList<TestModel>, val xLabels : ArrayList<String>)  {
 
-    override fun prepareHashMap() : LinkedHashMap<String, Float> {
-        val ratio : LinkedHashMap<String, Float> = linkedMapOf()
-        plotX.forEach(){
 
-            ratio.put(it, countCorrectAnswerRatio(it))
-
+    fun prepareHashMap() : LinkedHashMap<String, Float> {
+        val ratioHashMap : LinkedHashMap<String, Float> = linkedMapOf()
+        for(xLabel in xLabels){
+            //val filteredTestModels : ArrayList<TestModel> = ArrayList(testModels.filter { it.userAnswer == xLabel })
+            //val xValue : Float = correctAnswerRatio(filteredTestModels)
+            val xValue : Float = correctAnswerRatio(testModels)
+            ratioHashMap.put(xLabel, xValue)
         }
-        return ratio
+        return ratioHashMap
     }
 
-    fun countCorrectAnswerRatio(answer : String) : Float{
-        var correctAnswers : Float = 0F
-        var allAnswers : Float = 0F
-        testModels.forEach(){
-            if(answer == it.correctAnswer){
-                allAnswers++
-                if(it.correctAnswer == it.userAnswer){
-                    correctAnswers++
-                }
-            }
-        }
-        var correctAnswerRatio : Float = correctAnswers as Float / allAnswers as Float
-        if(correctAnswerRatio.isNaN()) return 0F
-        return correctAnswerRatio
+    fun correctAnswerRatio(testModels : ArrayList<TestModel>) : Float{
+        var allAnswers : Float = testModels.size.toFloat()
+        var correctAnswers : Float = testModels.filter { it.userAnswer == it.correctAnswer }.size.toFloat()
+        return correctAnswers / allAnswers
     }
+
 
 }
