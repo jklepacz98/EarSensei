@@ -5,7 +5,7 @@ import org.junit.Assert.*
 import org.junit.Test
 import kotlin.collections.ArrayList
 
-class TestGraphPreparerTest{
+class GraphPreparerTest{
     @Test
     fun `Ratio should be 0`(){
 
@@ -17,8 +17,8 @@ class TestGraphPreparerTest{
             TestModel(4, "baseNote", "goodAnswer", "badAnswer", 0)
         )
         val xLabels : ArrayList<String> = arrayListOf()
-        val testGraphPreparer : TestGraphPreparer = TestGraphPreparer(testModels, xLabels)
-        val ratio : Float = testGraphPreparer.correctAnswerRatio(testModels)
+        val graphPreparer : GraphPreparer = GraphPreparer(testModels, xLabels)
+        val ratio : Float = graphPreparer.correctAnswerRatio(testModels)
         assertEquals(0F, ratio)
     }
 
@@ -32,8 +32,8 @@ class TestGraphPreparerTest{
             TestModel(4, "baseNote", "goodAnswer", "goodAnswer", 0)
         )
         val xLabels : ArrayList<String> = arrayListOf()
-        val testGraphPreparer : TestGraphPreparer = TestGraphPreparer(testModels, xLabels)
-        val ratio : Float = testGraphPreparer.correctAnswerRatio(testModels)
+        val graphPreparer : GraphPreparer = GraphPreparer(testModels, xLabels)
+        val ratio : Float = graphPreparer.correctAnswerRatio(testModels)
         assertEquals(1F, ratio)
     }
 
@@ -47,8 +47,8 @@ class TestGraphPreparerTest{
             TestModel(4, "baseNote", "goodAnswer", "badAnswer", 0)
         )
         val xLabels : ArrayList<String> = arrayListOf()
-        val testGraphPreparer : TestGraphPreparer = TestGraphPreparer(testModels, xLabels)
-        val ratio : Float = testGraphPreparer.correctAnswerRatio(testModels)
+        val graphPreparer : GraphPreparer = GraphPreparer(testModels, xLabels)
+        val ratio : Float = graphPreparer.correctAnswerRatio(testModels)
         assertEquals(0.2F, ratio)
     }
 }

@@ -14,10 +14,6 @@
         <activity
             android:name=".activities.StatsDetailsActivity"
             android:exported="false" />
-        <activity
-            android:name=".activities.quizactivities.TestQuizActivity"
-            android:label="@string/title_activity_test"
-            android:theme="@style/Theme.EarSensei.NoActionBar" />
         <activity android:name=".activities.IntervalsSettingsActivity" />
         <activity android:name=".activities.StatsGeneralActivity" />
         <activity android:name=".activities.MusicTheoryActivity" />

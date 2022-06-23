@@ -1,6 +1,6 @@
 package com.example.earsensei.quiz
 
-class TestQuiz(val answers : Map<String, Int>) : Quizable {
+class IntervalsQuiz(val answers : Map<String, Int>) : Quizable {
     private val correctAnswer = answers.keys.random()
 
     override fun getAnswers(): Array<String> {

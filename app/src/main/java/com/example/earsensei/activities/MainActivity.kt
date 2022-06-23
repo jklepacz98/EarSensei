@@ -15,7 +15,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        setupStartNewActivityButton(TestQuizActivity::class.java, findViewById(R.id.button_test))
         setupStartNewActivityButton(IntervalsQuizActivity::class.java, findViewById(R.id.button_intervals))
         setupStartNewActivityButton(ChordsQuizActivity::class.java, findViewById(R.id.button_chords))
         setupStartNewActivityButton(ScalesQuizActivity::class.java, findViewById(R.id.button_scales))

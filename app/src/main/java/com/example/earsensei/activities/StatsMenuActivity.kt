@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import com.example.earsensei.R
-import com.example.earsensei.activities.quizactivities.TestQuizActivity
 
 class StatsMenuActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

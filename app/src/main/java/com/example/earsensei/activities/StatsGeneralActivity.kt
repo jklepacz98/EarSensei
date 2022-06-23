@@ -4,7 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.earsensei.*
-import com.example.earsensei.activities.graphpreparers.TestGraphPreparer
+import com.example.earsensei.activities.graphpreparers.GraphPreparer
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.components.Legend
@@ -38,7 +38,7 @@ class StatsGeneralActivity : AppCompatActivity() {
         actionBar?.setTitle(actionBarTitle)
         supportActionBar?.setTitle(actionBarTitle)
 
-        val plotDataPreparer : TestGraphPreparer = TestGraphPreparer(earSenseiDBHelper.readAllTestData(), ArrayList(
+        val plotDataPreparer : GraphPreparer = GraphPreparer(earSenseiDBHelper.readAllTestData(), ArrayList(
             Note.intervals.keys))
         val barChart : BarChart = findViewById(R.id.bar_chart)
         val dataValues1 : ArrayList<BarEntry> = arrayListOf()

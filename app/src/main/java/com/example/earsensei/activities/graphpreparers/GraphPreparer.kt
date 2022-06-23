@@ -3,7 +3,7 @@ package com.example.earsensei.activities.graphpreparers
 import com.example.earsensei.dbmodels.TestModel
 import kotlin.math.log
 
-class TestGraphPreparer(val testModels : ArrayList<TestModel>, val xLabels : ArrayList<String>)  {
+class GraphPreparer(val testModels : ArrayList<TestModel>, val xLabels : ArrayList<String>)  {
 
 
     fun prepareHashMap() : LinkedHashMap<String, Float> {
