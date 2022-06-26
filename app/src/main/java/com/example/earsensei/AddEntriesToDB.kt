@@ -7,37 +7,23 @@ import java.util.*
 class AddEntriesToDB(context: Context) {
     val earSenseiDBHelper : EarSenseiDBHelper = EarSenseiDBHelper(context)
 
-    fun addIntervalEntries(numberOfEntries: Int){
+    fun addRandomIntervalEntries(numberOfEntries: Int){
         for (i in 0..numberOfEntries){
             val dateTime : Long = Calendar.getInstance().timeInMillis
-            val contentValues : ContentValues = earSenseiDBHelper.createIntervalsContentValues(Note.notes.keys.random(), Note.intervals.keys.random(), Note.intervals.keys.random(), dateTime)
+            val contentValues : ContentValues = earSenseiDBHelper.createIntervalsContentValues(Note.notes.keys.random(), "Intervals", Note.intervals.keys.random(), Note.intervals.keys.random(), dateTime)
             earSenseiDBHelper.addIntervalsContentValues(contentValues)
         }
     }
 
-    fun addChordEntries(numberOfEntries: Int){
+    fun addCorrectIntervalEntries(numberOfEntries: Int){
         for (i in 0..numberOfEntries){
             val dateTime : Long = Calendar.getInstance().timeInMillis
-            val contentValues : ContentValues = earSenseiDBHelper.createChordsContentValues(Note.notes.keys.random(), Note.intervals.keys.random(), Note.intervals.keys.random(), dateTime)
-            earSenseiDBHelper.addChordsContentValues(contentValues)
+            val correctAnswer : String = Note.intervals.keys.random()
+            val contentValues : ContentValues = earSenseiDBHelper.createIntervalsContentValues(Note.notes.keys.random(), "Intervals", correctAnswer, correctAnswer, dateTime)
+            earSenseiDBHelper.addIntervalsContentValues(contentValues)
         }
     }
 
-    fun addScaleEntries(numberOfEntries: Int){
-        for (i in 0..numberOfEntries){
-            val dateTime : Long = Calendar.getInstance().timeInMillis
-            val contentValues : ContentValues = earSenseiDBHelper.createScalesContentValues(Note.notes.keys.random(), Note.intervals.keys.random(), Note.intervals.keys.random(), dateTime)
-            earSenseiDBHelper.addScalesContentValues(contentValues)
-        }
-    }
-
-    fun addPerfectPitchEntries(numberOfEntries: Int){
-        for (i in 0..numberOfEntries){
-            val dateTime : Long = Calendar.getInstance().timeInMillis
-            val contentValues : ContentValues = earSenseiDBHelper.createPerfectPitchContentValues(Note.notes.keys.random(), Note.intervals.keys.random(), Note.intervals.keys.random(), dateTime)
-            earSenseiDBHelper.addPerfectPitchContentValues(contentValues)
-        }
-    }
 
 
 }

@@ -32,7 +32,7 @@ class IntervalsQuizActivity : AppCompatActivity() {
             val buttonText : String = it.text.toString()
             it.setOnClickListener(){
                 val date : Long = Calendar.getInstance().timeInMillis
-                val contentValues : ContentValues = earSenseiDBHelper.createIntervalsContentValues(Note.notePlayers[7].name, intervalsQuiz.getCorrectAnswer(), buttonText, date)
+                val contentValues : ContentValues = earSenseiDBHelper.createIntervalsContentValues(Note.notePlayers[7].name, QuizType.INTERVALS ,intervalsQuiz.getCorrectAnswer(), buttonText, date)
                 earSenseiDBHelper.addIntervalsContentValues(contentValues)
                 if(intervalsQuiz.checkAnswer(buttonText)){
                     val intent = Intent(this, IntervalsQuizActivity::class.java)

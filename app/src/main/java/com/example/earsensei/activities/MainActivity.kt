@@ -1,14 +1,11 @@
 package com.example.earsensei.activities
 
 import android.app.Activity
-import android.content.ContentValues
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import com.example.earsensei.*
 import com.example.earsensei.activities.quizactivities.*
-import java.util.*
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,12 +24,9 @@ class MainActivity : AppCompatActivity() {
         val buttonAddEntries : Button = findViewById(R.id.button_add_data_to_database)
         buttonAddEntries.setOnClickListener(){
             val addEntriesToDB : AddEntriesToDB = AddEntriesToDB(this@MainActivity)
-            addEntriesToDB.addIntervalEntries(100)
-            addEntriesToDB.addChordEntries(2)
-            addEntriesToDB.addScaleEntries(100)
-            addEntriesToDB.addPerfectPitchEntries(100)
+            addEntriesToDB.addRandomIntervalEntries(20)
+            addEntriesToDB.addCorrectIntervalEntries(6)
         }
-
     }
 
     fun setupStartNewActivityButton(activityClass: Class<out Activity>, button: Button){
