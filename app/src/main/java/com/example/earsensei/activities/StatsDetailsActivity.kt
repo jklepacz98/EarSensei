@@ -3,11 +3,6 @@ package com.example.earsensei.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.earsensei.*
-import com.example.earsensei.activities.graphpreparers.GraphPreparer
-import com.example.earsensei.dbmodels.QuizRecordModel
-import com.example.earsensei.dbmodels.TestModel
-import com.github.mikephil.charting.charts.BarChart
-import com.github.mikephil.charting.data.BarEntry
 
 class StatsDetailsActivity : AppCompatActivity() {
 
