@@ -3,14 +3,12 @@ package com.example.earsensei.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import com.example.earsensei.*
 import com.example.earsensei.activities.graphpreparers.GraphPreparer
-import com.example.earsensei.dbmodels.QuizRecordModel
+import com.example.earsensei.dbmodels.QuizModel
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.components.Legend
-import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
@@ -31,7 +29,7 @@ class StatsGeneralActivity : AppCompatActivity() {
         supportActionBar?.setTitle(actionBarTitle)
 
         val plotDataPreparer : GraphPreparer = GraphPreparer(earSenseiDBHelper.readAllIntervalsData(), ArrayList(
-            Note.intervals.keys), {quizRecordModel : QuizRecordModel -> quizRecordModel.correctAnswer})
+            Note.intervals.keys), { quizModel : QuizModel -> quizModel.correctAnswer})
         val barChart : BarChart = findViewById(R.id.bar_chart)
         val ratioHashMap : LinkedHashMap<String, Float> = plotDataPreparer.prepareHashMap()
         var orderHashMap : LinkedHashMap<Float, String> = linkedMapOf()

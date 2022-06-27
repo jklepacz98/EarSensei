@@ -1,6 +1,6 @@
 package com.example.earsensei.dbmodels
 
-data class QuizRecordModel(
+data class QuizModel(
     var id: Int,
     var quizType : String,
     var baseNote: String,
