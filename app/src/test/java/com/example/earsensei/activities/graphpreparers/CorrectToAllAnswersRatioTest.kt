@@ -1,12 +1,13 @@
 package com.example.earsensei.activities.graphpreparers
 
+import com.example.earsensei.CorrectToAllAnswersRatio
 import com.example.earsensei.QuizType
 import com.example.earsensei.dbmodels.QuizRecordModel
 import org.junit.Assert.*
 import org.junit.Test
 import kotlin.collections.ArrayList
 
-class GraphPreparerTest{
+class CorrectToAllAnswersRatioTest{
     @Test
     fun `Ratio should be 0`(){
 
@@ -17,9 +18,8 @@ class GraphPreparerTest{
             QuizRecordModel(3, QuizType.INTERVALS,"baseNote", "goodAnswer", "badAnswer", 0),
             QuizRecordModel(4, QuizType.INTERVALS,"baseNote", "goodAnswer", "badAnswer", 0)
         )
-        val xLabels : ArrayList<String> = arrayListOf()
-        val graphPreparer : GraphPreparer = GraphPreparer(quizRecordModels, xLabels,{quizRecordModel : QuizRecordModel -> quizRecordModel.correctAnswer})
-        val ratio : Float = graphPreparer.correctAnswerRatio(quizRecordModels)
+        val correctToAllAnswersRatio : CorrectToAllAnswersRatio = CorrectToAllAnswersRatio()
+        val ratio : Float = correctToAllAnswersRatio.calculateRatio(quizRecordModels)
         assertEquals(0F, ratio)
     }
 
@@ -32,9 +32,8 @@ class GraphPreparerTest{
             QuizRecordModel(3, QuizType.INTERVALS,"baseNote", "goodAnswer", "goodAnswer", 0),
             QuizRecordModel(4, QuizType.INTERVALS,"baseNote", "goodAnswer", "goodAnswer", 0)
         )
-        val xLabels : ArrayList<String> = arrayListOf()
-        val graphPreparer : GraphPreparer = GraphPreparer(quizRecordModels, xLabels, {quizRecordModel : QuizRecordModel -> quizRecordModel.correctAnswer})
-        val ratio : Float = graphPreparer.correctAnswerRatio(quizRecordModels)
+        val correctToAllAnswersRatio : CorrectToAllAnswersRatio = CorrectToAllAnswersRatio()
+        val ratio : Float = correctToAllAnswersRatio.calculateRatio(quizRecordModels)
         assertEquals(1F, ratio)
     }
 
@@ -47,9 +46,8 @@ class GraphPreparerTest{
             QuizRecordModel(3, QuizType.INTERVALS,"baseNote", "goodAnswer", "badAnswer", 0),
             QuizRecordModel(4, QuizType.INTERVALS,"baseNote", "goodAnswer", "badAnswer", 0)
         )
-        val xLabels : ArrayList<String> = arrayListOf()
-        val graphPreparer : GraphPreparer = GraphPreparer(quizRecordModels, xLabels, {quizRecordModel : QuizRecordModel -> quizRecordModel.correctAnswer})
-        val ratio : Float = graphPreparer.correctAnswerRatio(quizRecordModels)
+        val correctToAllAnswersRatio : CorrectToAllAnswersRatio = CorrectToAllAnswersRatio()
+        val ratio : Float = correctToAllAnswersRatio.calculateRatio(quizRecordModels)
         assertEquals(0.2F, ratio)
     }
 }
