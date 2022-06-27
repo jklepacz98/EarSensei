@@ -1,13 +1,13 @@
-package com.example.earsensei.activities.graphpreparers
+package com.example.earsensei.graphdatapreparers
 
 import com.example.earsensei.CorrectToAllAnswersRatio
 import com.example.earsensei.dbmodels.QuizModel
 
-class GraphPreparer(val quizModels : ArrayList<QuizModel>, val xLabels : ArrayList<String>, val f : (QuizModel) -> String)  {
+class GraphDataPreparer(val quizModels : ArrayList<QuizModel>, val xLabels : ArrayList<String>, val f : (QuizModel) -> String)  {
 
     val correctToAllAnswersRatio : CorrectToAllAnswersRatio = CorrectToAllAnswersRatio()
 
-    fun prepareHashMap() : LinkedHashMap<String, Float> {
+    fun prepareXYHashMap() : LinkedHashMap<String, Float> {
         val ratioHashMap : LinkedHashMap<String, Float> = linkedMapOf()
         for(xLabel in xLabels){
             val filteredQuizModels : ArrayList<QuizModel> = ArrayList(quizModels.filter { f(it) == xLabel })

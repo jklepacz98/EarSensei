@@ -1,4 +1,4 @@
-package com.example.earsensei.activities.graphpreparers
+package com.example.earsensei.graphdatapreparers
 
 import com.example.earsensei.QuizType
 import com.example.earsensei.SpecificAnswerToAllAnswersRatio

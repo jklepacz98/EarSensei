@@ -7,4 +7,4 @@ data class QuizModel(
     var correctAnswer : String,
     var userAnswer: String,
     var date: Int,
-){}
+)
