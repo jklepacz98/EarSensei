@@ -24,8 +24,8 @@ class MainActivity : AppCompatActivity() {
         val buttonAddEntries : Button = findViewById(R.id.button_add_data_to_database)
         buttonAddEntries.setOnClickListener(){
             val addEntriesToDB : AddEntriesToDB = AddEntriesToDB(this@MainActivity)
-            addEntriesToDB.addRandomIntervalEntries(20)
-            addEntriesToDB.addCorrectIntervalEntries(6)
+            addEntriesToDB.addRandomIntervalEntries(10)
+            addEntriesToDB.addCorrectIntervalEntries(40)
         }
     }
 
