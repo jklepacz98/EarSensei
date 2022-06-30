@@ -1,6 +1,5 @@
 package com.example.earsensei.activities
 
-import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -31,7 +30,7 @@ class StatsGeneralActivity : AppCompatActivity() {
 
         val barChart : BarChart = findViewById(R.id.bar_chart)
         var ratioHashMap : LinkedHashMap<String, Float> = GraphDataPreparer.prepareIntervalsHashMap(earSenseiDBHelper.readAllIntervalsData(), ArrayList(
-            Note.intervals.keys), { quizModel : QuizModel -> quizModel.correctAnswer})
+            MusicTerminology.intervals.keys), { quizModel : QuizModel -> quizModel.correctAnswer})
         val barChartManager : BarChartManager = BarChartManager(barChart)
 
         var orderHashMap : LinkedHashMap<Float, String> = linkedMapOf()
@@ -73,12 +72,12 @@ class StatsGeneralActivity : AppCompatActivity() {
                 //TODO
                 if (chosenOption == "All"){
                     ratioHashMap = GraphDataPreparer.prepareIntervalsHashMap(earSenseiDBHelper.readAllIntervalsData(), ArrayList(
-                        Note.intervals.keys), { quizModel : QuizModel -> quizModel.correctAnswer})
+                        MusicTerminology.intervals.keys), { quizModel : QuizModel -> quizModel.correctAnswer})
 
                 } else{
                     Toast.makeText(this@StatsGeneralActivity, chosenOption.toInt().toString(), Toast.LENGTH_SHORT).show()
                     ratioHashMap = GraphDataPreparer.prepareIntervalsHashMap(chosenOption.toInt() ,earSenseiDBHelper.readAllIntervalsData(), ArrayList(
-                        Note.intervals.keys), { quizModel : QuizModel -> quizModel.correctAnswer})
+                        MusicTerminology.intervals.keys), { quizModel : QuizModel -> quizModel.correctAnswer})
                 }
                 orderHashMap = barChartManager.setOrderdHashMap(xAxisLabels)
                 barChartManager.setupBarChart()

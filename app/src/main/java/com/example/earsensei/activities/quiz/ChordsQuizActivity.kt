@@ -1,10 +1,8 @@
-package com.example.earsensei.activities.quizactivities
+package com.example.earsensei.activities.quiz
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ImageButton
 import com.example.earsensei.R
-import kotlinx.coroutines.*
 
 class ChordsQuizActivity : AppCompatActivity() {
 

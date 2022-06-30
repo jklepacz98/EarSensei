@@ -1,5 +1,9 @@
 package com.example.earsensei
 
-class QuizManager {
+import java.util.*
+
+object QuizManager {
+
+    val quizQuestions : Stack<List<Note>> = Stack()
 
 }

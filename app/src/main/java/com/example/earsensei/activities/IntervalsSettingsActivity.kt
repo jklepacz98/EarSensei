@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import com.example.earsensei.R
-import com.example.earsensei.activities.quizactivities.IntervalsQuizActivity
+import com.example.earsensei.activities.quiz.IntervalsQuizActivity
 
 class IntervalsSettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

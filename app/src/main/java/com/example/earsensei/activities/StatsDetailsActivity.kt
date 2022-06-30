@@ -2,7 +2,6 @@ package com.example.earsensei.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import com.example.earsensei.*
 import com.example.earsensei.dbmodels.QuizModel
 import com.example.earsensei.graphdatapreparers.DetailsGraphDataPreparer
@@ -23,7 +22,7 @@ class StatsDetailsActivity : AppCompatActivity() {
         val filteredIntervalsData : ArrayList<QuizModel> = ArrayList(earSenseiDBHelper.readAllIntervalsData())
 
         val graphDataPreparer : DetailsGraphDataPreparer = DetailsGraphDataPreparer(filteredIntervalsData, ArrayList(
-            Note.intervals.keys), {quizModel : QuizModel -> quizModel.correctAnswer}, filter)
+            MusicTerminology.intervals.keys), { quizModel : QuizModel -> quizModel.correctAnswer}, filter)
         val barChart : BarChart = findViewById(R.id.bar_chart)
         val ratioHashMap : LinkedHashMap<String, Float> = graphDataPreparer.prepareXYHashMap()
         val barChartManager : BarChartManager = BarChartManager(barChart)
