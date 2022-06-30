@@ -29,15 +29,15 @@ class StatsGeneralActivity : AppCompatActivity() {
         actionBar?.setTitle(actionBarTitle)
         supportActionBar?.setTitle(actionBarTitle)
 
-        val graphDataPreparer : GraphDataPreparer = GraphDataPreparer(earSenseiDBHelper.readAllIntervalsData(), ArrayList(
-            Note.intervals.keys), { quizModel : QuizModel -> quizModel.correctAnswer})
         val barChart : BarChart = findViewById(R.id.bar_chart)
-        val ratioHashMap : LinkedHashMap<String, Float> = graphDataPreparer.prepareIntervalsHashMap()
+        var ratioHashMap : LinkedHashMap<String, Float> = GraphDataPreparer.prepareIntervalsHashMap(earSenseiDBHelper.readAllIntervalsData(), ArrayList(
+            Note.intervals.keys), { quizModel : QuizModel -> quizModel.correctAnswer})
         val barChartManager : BarChartManager = BarChartManager(barChart)
 
         var orderHashMap : LinkedHashMap<Float, String> = linkedMapOf()
         val xAxisLabels : ArrayList<String> = ArrayList(ratioHashMap.keys)
         orderHashMap = barChartManager.setOrderdHashMap(xAxisLabels)
+
 
         barChartManager.setupBarChart()
         barChartManager.setXAxisLabels(xAxisLabels)
@@ -72,8 +72,18 @@ class StatsGeneralActivity : AppCompatActivity() {
                 val chosenOption : String = adapterView?.getItemAtPosition(position).toString()
                 //TODO
                 if (chosenOption == "All"){
+                    ratioHashMap = GraphDataPreparer.prepareIntervalsHashMap(earSenseiDBHelper.readAllIntervalsData(), ArrayList(
+                        Note.intervals.keys), { quizModel : QuizModel -> quizModel.correctAnswer})
 
+                } else{
+                    Toast.makeText(this@StatsGeneralActivity, chosenOption.toInt().toString(), Toast.LENGTH_SHORT).show()
+                    ratioHashMap = GraphDataPreparer.prepareIntervalsHashMap(chosenOption.toInt() ,earSenseiDBHelper.readAllIntervalsData(), ArrayList(
+                        Note.intervals.keys), { quizModel : QuizModel -> quizModel.correctAnswer})
                 }
+                orderHashMap = barChartManager.setOrderdHashMap(xAxisLabels)
+                barChartManager.setupBarChart()
+                barChartManager.setXAxisLabels(xAxisLabels)
+                barChartManager.setDataValues(ArrayList(ratioHashMap.values))
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -82,4 +92,6 @@ class StatsGeneralActivity : AppCompatActivity() {
         }
 
     }
+
+
 }
