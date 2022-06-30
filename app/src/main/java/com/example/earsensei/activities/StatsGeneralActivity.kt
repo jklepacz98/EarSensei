@@ -1,8 +1,14 @@
 package com.example.earsensei.activities
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
+import android.widget.Toast
 import com.example.earsensei.*
 import com.example.earsensei.graphdatapreparers.GraphDataPreparer
 import com.example.earsensei.dbmodels.QuizModel
@@ -26,7 +32,7 @@ class StatsGeneralActivity : AppCompatActivity() {
         val graphDataPreparer : GraphDataPreparer = GraphDataPreparer(earSenseiDBHelper.readAllIntervalsData(), ArrayList(
             Note.intervals.keys), { quizModel : QuizModel -> quizModel.correctAnswer})
         val barChart : BarChart = findViewById(R.id.bar_chart)
-        val ratioHashMap : LinkedHashMap<String, Float> = graphDataPreparer.prepareXYHashMap()
+        val ratioHashMap : LinkedHashMap<String, Float> = graphDataPreparer.prepareIntervalsHashMap()
         val barChartManager : BarChartManager = BarChartManager(barChart)
 
         var orderHashMap : LinkedHashMap<Float, String> = linkedMapOf()
@@ -49,7 +55,31 @@ class StatsGeneralActivity : AppCompatActivity() {
             }
         })
 
-        
+        val spinner : Spinner = findViewById(R.id.date_spinner)
+        ArrayAdapter.createFromResource(
+            this,
+            R.array.quantity_array,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            // Specify the layout to use when the list of choices appears
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            // Apply the adapter to the spinner
+            spinner.adapter = adapter
+        }
+
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(adapterView: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val chosenOption : String = adapterView?.getItemAtPosition(position).toString()
+                //TODO
+                if (chosenOption == "All"){
+
+                }
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+            }
+
+        }
 
     }
 }
