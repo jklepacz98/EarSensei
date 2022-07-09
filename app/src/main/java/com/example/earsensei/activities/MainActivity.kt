@@ -12,7 +12,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        setupStartNewActivityButton(IntervalsQuizActivity::class.java, findViewById(R.id.button_intervals))
+        //todo
+        setupStartNewActivityButton(QuizActivity::class.java, findViewById(R.id.button_intervals))
+        //setupStartNewActivityButton(IntervalsQuizActivity::class.java, findViewById(R.id.button_intervals))
         setupStartNewActivityButton(ChordsQuizActivity::class.java, findViewById(R.id.button_chords))
         setupStartNewActivityButton(ScalesQuizActivity::class.java, findViewById(R.id.button_scales))
         setupStartNewActivityButton(PerfectPitchQuizActivity::class.java, findViewById(R.id.button_perfect_pitch))

@@ -9,6 +9,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EarSensei">
         <activity
+            android:name=".activities.quiz.QuizActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.StatsMenuActivity"
             android:exported="false" />
         <activity
