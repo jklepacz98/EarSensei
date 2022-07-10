@@ -19,7 +19,7 @@ class StatsDetailsActivity : AppCompatActivity() {
         actionBar?.setTitle(filter)
         supportActionBar?.setTitle(filter)
 
-        val filteredIntervalsData : ArrayList<QuizRecordModel> = ArrayList(earSenseiDBHelper.readAllIntervalsData())
+        val filteredIntervalsData : ArrayList<QuizRecordModel> = ArrayList(earSenseiDBHelper.readAllQuizData())
 
         val graphDataPreparer : DetailsGraphDataPreparer = DetailsGraphDataPreparer(filteredIntervalsData, ArrayList(
             MusicTerminology.intervals.keys), { quizRecordModel : QuizRecordModel -> quizRecordModel.correctAnswer}, filter)

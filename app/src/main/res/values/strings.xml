@@ -43,6 +43,7 @@
     <string name="minor9th">Nona mała</string>
     <string name="major9th">Nona wielka</string>
 
+    <string name="is_null">is null</string>
 
     <string-array name="quantity_array">
         <item>All</item>

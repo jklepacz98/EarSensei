@@ -11,7 +11,7 @@
         <entry key="app/src/main/res/drawable/play_round_button.xml" value="0.2255" />
         <entry key="app/src/main/res/layout/activity_chords.xml" value="0.24003623188405798" />
         <entry key="app/src/main/res/layout/activity_intervals.xml" value="0.12228260869565218" />
-        <entry key="app/src/main/res/layout/activity_intervals_quiz.xml" value="0.17798913043478262" />
+        <entry key="app/src/main/res/layout/activity_intervals_quiz.xml" value="0.18" />
         <entry key="app/src/main/res/layout/activity_intervals_settings.xml" value="0.24003623188405798" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.17325227963525835" />
         <entry key="app/src/main/res/layout/activity_music_theory_menu.xml" value="0.24003623188405798" />

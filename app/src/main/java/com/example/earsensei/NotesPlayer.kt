@@ -2,22 +2,13 @@ package com.example.earsensei
 
 import android.content.Context
 import android.media.MediaPlayer
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
-class NotesPlayer(val context: Context, val notes: List<Note>) {
+class NotesPlayer(val context: Context) {
 
     var job: Job = Job()
-    var mediaPlayers: MutableList<MediaPlayer> = mutableListOf()
+    val mediaPlayers: MutableList<MediaPlayer> = mutableListOf()
 
-    init {
-        notes.forEach() {
-            var mediaPlayer: MediaPlayer = MediaPlayer.create(context, it.audioResource)
-            mediaPlayers.add(mediaPlayer)
-        }
-    }
 
     suspend fun playSingleNote() {
         mediaPlayers.forEach() {
@@ -28,13 +19,21 @@ class NotesPlayer(val context: Context, val notes: List<Note>) {
             it.start()
             delay(850)
         }
-
     }
 
     fun playMultipleNotes() {
         job.cancel()
         job = MainScope().launch {
             playSingleNote()
+        }
+    }
+
+    fun setNotes(notes: List<Note>){
+        job.cancel()
+        mediaPlayers.clear()
+        notes.forEach(){
+            val mediaPlayer: MediaPlayer = MediaPlayer.create(context, it.audioResource)
+            mediaPlayers.add(mediaPlayer)
         }
     }
 }

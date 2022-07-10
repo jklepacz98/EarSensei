@@ -10,8 +10,8 @@ class AddEntriesToDB(context: Context) {
     fun addRandomIntervalEntries(numberOfEntries: Int){
         for (i in 0..numberOfEntries){
             val dateTime : Long = Calendar.getInstance().timeInMillis
-            val contentValues : ContentValues = earSenseiDBHelper.createIntervalsContentValues(MusicTerminology.notes.keys.random(), QuizType.INTERVALS, MusicTerminology.intervals.keys.random(), MusicTerminology.intervals.keys.random(), dateTime)
-            earSenseiDBHelper.addIntervalsContentValues(contentValues)
+            val contentValues : ContentValues = earSenseiDBHelper.createQuizContentValues(MusicTerminology.notes.keys.random(), QuizType.INTERVALS, MusicTerminology.intervals.keys.random(), MusicTerminology.intervals.keys.random(), dateTime)
+            earSenseiDBHelper.addQuizContentValues(contentValues)
         }
     }
 
@@ -19,8 +19,8 @@ class AddEntriesToDB(context: Context) {
         for (i in 0..numberOfEntries){
             val dateTime : Long = Calendar.getInstance().timeInMillis
             val correctAnswer : String = MusicTerminology.intervals.keys.random()
-            val contentValues : ContentValues = earSenseiDBHelper.createIntervalsContentValues(MusicTerminology.notes.keys.random(), QuizType.INTERVALS, correctAnswer, correctAnswer, dateTime)
-            earSenseiDBHelper.addIntervalsContentValues(contentValues)
+            val contentValues : ContentValues = earSenseiDBHelper.createQuizContentValues(MusicTerminology.notes.keys.random(), QuizType.INTERVALS, correctAnswer, correctAnswer, dateTime)
+            earSenseiDBHelper.addQuizContentValues(contentValues)
         }
     }
 

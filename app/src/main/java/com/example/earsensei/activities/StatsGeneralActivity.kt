@@ -29,7 +29,7 @@ class StatsGeneralActivity : AppCompatActivity() {
         supportActionBar?.setTitle(actionBarTitle)
 
         val barChart : BarChart = findViewById(R.id.bar_chart)
-        var ratioHashMap : LinkedHashMap<String, Float> = GraphDataPreparer.prepareIntervalsHashMap(earSenseiDBHelper.readAllIntervalsData(), ArrayList(
+        var ratioHashMap : LinkedHashMap<String, Float> = GraphDataPreparer.prepareIntervalsHashMap(earSenseiDBHelper.readAllQuizData(), ArrayList(
             MusicTerminology.intervals.keys), { quizRecordModel : QuizRecordModel -> quizRecordModel.correctAnswer})
         val barChartManager : BarChartManager = BarChartManager(barChart)
 
@@ -71,12 +71,12 @@ class StatsGeneralActivity : AppCompatActivity() {
                 val chosenOption : String = adapterView?.getItemAtPosition(position).toString()
                 //TODO
                 if (chosenOption == "All"){
-                    ratioHashMap = GraphDataPreparer.prepareIntervalsHashMap(earSenseiDBHelper.readAllIntervalsData(), ArrayList(
+                    ratioHashMap = GraphDataPreparer.prepareIntervalsHashMap(earSenseiDBHelper.readAllQuizData(), ArrayList(
                         MusicTerminology.intervals.keys), { quizRecordModel : QuizRecordModel -> quizRecordModel.correctAnswer})
 
                 } else{
                     Toast.makeText(this@StatsGeneralActivity, chosenOption.toInt().toString(), Toast.LENGTH_SHORT).show()
-                    ratioHashMap = GraphDataPreparer.prepareIntervalsHashMap(chosenOption.toInt() ,earSenseiDBHelper.readAllIntervalsData(), ArrayList(
+                    ratioHashMap = GraphDataPreparer.prepareIntervalsHashMap(chosenOption.toInt() ,earSenseiDBHelper.readAllQuizData(), ArrayList(
                         MusicTerminology.intervals.keys), { quizRecordModel : QuizRecordModel -> quizRecordModel.correctAnswer})
                 }
                 orderHashMap = barChartManager.setOrderdHashMap(xAxisLabels)

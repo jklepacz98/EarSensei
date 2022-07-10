@@ -1,8 +1,9 @@
 package com.example.earsensei.intervalsquiz.View
 
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ProgressBar
 import android.widget.Toast
@@ -15,64 +16,92 @@ import com.example.earsensei.intervalsquiz.ViewModel.IntervalsQuizViewModel
 
 class IntervalsQuizActivity : AppCompatActivity(), IntervalsQuizAdapter.RecyclerViewClickListener {
 
+    var answers: ArrayList<AnswerModel> = arrayListOf()
 
-    val answers: ArrayList<AnswerModel> = arrayListOf()
+    val viewModel: IntervalsQuizViewModel by lazy {
+        ViewModelProvider(this).get(IntervalsQuizViewModel::class.java)
+    }
 
-    val notes: ArrayList<Int> = arrayListOf()
+    val notesPlayer: NotesPlayer = NotesPlayer(this)
 
-    val earSenseiDBHelper: EarSenseiDBHelper = EarSenseiDBHelper(this)
-
-    val answersAdapter: IntervalsQuizAdapter = IntervalsQuizAdapter(answers, this)
 
     override fun onClick(position: Int) {
-        answersAdapter.changeList(arrayListOf())
-        Toast.makeText(this, position.toString(), Toast.LENGTH_SHORT).show()
+        //todo
+        //makeToast(position.toString())
+        viewModel.checkAnswer(answers[position])
+    }
+
+    fun makeToast(text: String) {
+        Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_intervals_quiz)
 
-        //
-//        val recordModels = earSenseiDBHelper.readAllIntervalsData()
-//
-//        val quizManager: QuizManager = QuizManager(recordModels, QuizType.INTERVALS, 100, earSenseiDBHelper)
-//
-//        val viewModel = ViewModelProvider(this).get(IntervalsQuizViewModel::class.java)
-//
-//        val progressBar: ProgressBar = findViewById(R.id.progress_bar)
-//        progressBar.max = 20
-//        progressBar.progress = 0
-//
+        //todo
+        //viewModel = ViewModelProvider(this).get(IntervalsQuizViewModel::class.java)
 
-        val arrayList: ArrayList<AnswerModel> = arrayListOf()
-        for (i in 0..20) {
-            val randomKey = MusicTerminology.intervals.keys.random()
-            arrayList.add(AnswerModel(randomKey,
-                MusicTerminology.Translations.intervals[randomKey]
-                    ?: R.string.hello_blank_fragment
-            )
-            )
-        }
+        //todo
+        //earSenseiDBHelper.prepareBasicQuestions()
+
+        val progressBar: ProgressBar = findViewById(R.id.progress_bar)
+
+
+        //todo
+        //answers = viewModel.answers.value ?: arrayListOf()
+        val answersAdapter: IntervalsQuizAdapter = IntervalsQuizAdapter(answers, this)
 
         val rvAnswers: RecyclerView = findViewById(R.id.rv_answers)
-        val answers: ArrayList<AnswerModel> = ArrayList<AnswerModel>(arrayList.sortedBy { MusicTerminology.intervals.get(it.name) })
         rvAnswers.adapter = answersAdapter
         rvAnswers.layoutManager = GridLayoutManager(this, 3)
 
-        //todo
-        answersAdapter.changeList(answers)
+        viewModel.toastMessage.observe(this) {
+            makeToast(it)
+        }
 
-//        notes.addAll(MusicTerminology.scales.get("Major")!!.toList())
-//        var listOfNotes: ArrayList<Note> = arrayListOf()
-//        notes?.forEach {
-//            Note.notes[it]?.let { listOfNotes.add(it) }
-//        }
-//
-//        val playButton: ImageButton? = findViewById(R.id.button_play)
-//        val notesPlayer: NotesPlayer = NotesPlayer(this, listOfNotes)
-//        playButton?.setOnClickListener() {
-//            notesPlayer.playMultipleNotes()
-//        }
+        viewModel.answers.observe(this) {
+            answers =viewModel.answers.value ?: arrayListOf()
+            answersAdapter.changeList(answers)
+        }
+
+        viewModel.progress.observe(this) {
+            progressBar.progress = it
+        }
+
+        viewModel.progressMax.observe(this) {
+            progressBar.max = it
+        }
+
+        viewModel.state.observe(this) {
+            //todo
+            if (viewModel.state.value == QuizState.ANSWERED_CORRECT) {
+                window.decorView.setBackgroundColor(Color.rgb(200, 255, 200))
+            } else if (viewModel.state.value == QuizState.ANSWERED_WRONG) {
+                window.decorView.setBackgroundColor(Color.rgb(255, 200, 200))
+            } else {
+                window.decorView.setBackgroundColor(resources.getColor(R.color.design_default_color_background))
+            }
+        }
+//todo
+        viewModel.quizModel.observe(this) {
+            notesPlayer.setNotes(viewModel.getNotes())
+        }
+
+
+        notesPlayer.setNotes(viewModel.getNotes())
+
+
+        val nextButton: Button = findViewById(R.id.next_button)
+        nextButton.setOnClickListener {
+            viewModel.nextQuiz()
+            notesPlayer.playMultipleNotes()
+        }
+
+        val playButton: ImageButton = findViewById(R.id.button_play)
+        playButton.setOnClickListener() {
+            notesPlayer.playMultipleNotes()
+        }
+
     }
 }
