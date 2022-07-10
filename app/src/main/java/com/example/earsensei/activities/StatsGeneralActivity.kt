@@ -10,7 +10,7 @@ import android.widget.Spinner
 import android.widget.Toast
 import com.example.earsensei.*
 import com.example.earsensei.graphdatapreparers.GraphDataPreparer
-import com.example.earsensei.dbmodels.QuizModel
+import com.example.earsensei.dbmodels.QuizRecordModel
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.highlight.Highlight
@@ -30,7 +30,7 @@ class StatsGeneralActivity : AppCompatActivity() {
 
         val barChart : BarChart = findViewById(R.id.bar_chart)
         var ratioHashMap : LinkedHashMap<String, Float> = GraphDataPreparer.prepareIntervalsHashMap(earSenseiDBHelper.readAllIntervalsData(), ArrayList(
-            MusicTerminology.intervals.keys), { quizModel : QuizModel -> quizModel.correctAnswer})
+            MusicTerminology.intervals.keys), { quizRecordModel : QuizRecordModel -> quizRecordModel.correctAnswer})
         val barChartManager : BarChartManager = BarChartManager(barChart)
 
         var orderHashMap : LinkedHashMap<Float, String> = linkedMapOf()
@@ -72,12 +72,12 @@ class StatsGeneralActivity : AppCompatActivity() {
                 //TODO
                 if (chosenOption == "All"){
                     ratioHashMap = GraphDataPreparer.prepareIntervalsHashMap(earSenseiDBHelper.readAllIntervalsData(), ArrayList(
-                        MusicTerminology.intervals.keys), { quizModel : QuizModel -> quizModel.correctAnswer})
+                        MusicTerminology.intervals.keys), { quizRecordModel : QuizRecordModel -> quizRecordModel.correctAnswer})
 
                 } else{
                     Toast.makeText(this@StatsGeneralActivity, chosenOption.toInt().toString(), Toast.LENGTH_SHORT).show()
                     ratioHashMap = GraphDataPreparer.prepareIntervalsHashMap(chosenOption.toInt() ,earSenseiDBHelper.readAllIntervalsData(), ArrayList(
-                        MusicTerminology.intervals.keys), { quizModel : QuizModel -> quizModel.correctAnswer})
+                        MusicTerminology.intervals.keys), { quizRecordModel : QuizRecordModel -> quizRecordModel.correctAnswer})
                 }
                 orderHashMap = barChartManager.setOrderdHashMap(xAxisLabels)
                 barChartManager.setupBarChart()

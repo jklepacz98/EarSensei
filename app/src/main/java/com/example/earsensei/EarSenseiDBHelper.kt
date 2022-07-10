@@ -9,7 +9,7 @@ import android.database.SQLException
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.provider.BaseColumns
-import com.example.earsensei.dbmodels.QuizModel
+import com.example.earsensei.dbmodels.QuizRecordModel
 
 class EarSenseiDBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION) {
 
@@ -54,7 +54,7 @@ class EarSenseiDBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, nu
         onCreate(db)
     }
 
-    fun dropAllTables(db: SQLiteDatabase?){
+    private fun dropAllTables(db: SQLiteDatabase?){
         val tables : List<String> = getAllTableNames(db)
         // call DROP TABLE on every table name
         for (table in tables) {
@@ -63,7 +63,7 @@ class EarSenseiDBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, nu
         }
     }
 
-    fun getAllTableNames(db: SQLiteDatabase?) : List<String>{
+    private fun getAllTableNames(db: SQLiteDatabase?) : List<String>{
         val c : Cursor = db!!.rawQuery("SELECT name FROM sqlite_master WHERE type='table'", null)
         val tables: MutableList<String> = ArrayList()
         while (c.moveToNext()) {
@@ -94,8 +94,8 @@ class EarSenseiDBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, nu
 
 
     @SuppressLint("Range")
-    fun readAllIntervalsData() : ArrayList<QuizModel>{
-        val quizModelLists : ArrayList<QuizModel> = ArrayList<QuizModel>()
+    fun readAllIntervalsData() : ArrayList<QuizRecordModel>{
+        val quizRecordModelLists : ArrayList<QuizRecordModel> = ArrayList<QuizRecordModel>()
         val selectQuery : String = "SELECT * FROM " + TABLE_NAME
         val db : SQLiteDatabase = this.readableDatabase
         var cursor: Cursor? = null
@@ -121,11 +121,11 @@ class EarSenseiDBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, nu
                 correctAnswer = cursor.getString(cursor.getColumnIndex(CORRECT_ANSWER_COL))
                 userAnswer = cursor.getString(cursor.getColumnIndex(USER_ANSWER_COL))
                 date = cursor.getInt(cursor.getColumnIndex(DATE_COL))
-                val quizModel : QuizModel = QuizModel(id, quizType, baseNote, correctAnswer, userAnswer, date)
-                quizModelLists.add(quizModel)
+                val quizRecordModel : QuizRecordModel = QuizRecordModel(id, quizType, baseNote, correctAnswer, userAnswer, date)
+                quizRecordModelLists.add(quizRecordModel)
             } while (cursor.moveToNext())
         }
-        return quizModelLists
+        return quizRecordModelLists
     }
 
 
