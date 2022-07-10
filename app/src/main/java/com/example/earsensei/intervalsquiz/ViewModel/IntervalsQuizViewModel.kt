@@ -17,7 +17,7 @@ class IntervalsQuizViewModel(application: Application) : AndroidViewModel(applic
     val toastMessage: MutableLiveData<String> = MutableLiveData<String>()
     val state: MutableLiveData<String> = MutableLiveData<String>(QuizState.UNANSWERED)
     val earSenseiDBHelper: EarSenseiDBHelper = EarSenseiDBHelper(application.applicationContext)
-
+    val intervalProgress: ArrayList<ProgressModel> = arrayListOf()
 
     var quizModel: MutableLiveData<QuizModel> = MutableLiveData(generateQuizModel())
 
@@ -26,12 +26,12 @@ class IntervalsQuizViewModel(application: Application) : AndroidViewModel(applic
         setAnswers(generateAnswers())
     }
 
-    fun getIntervalRecords(): ArrayList<QuizRecordModel> {
+    fun getIntervalRecordsFromDB(): ArrayList<QuizRecordModel> {
         return ArrayList(earSenseiDBHelper.readAllQuizData()
             .filter { it.quizType == QuizType.INTERVALS })
     }
 
-    fun getIntervalProgress(): ArrayList<ProgressModel> {
+    fun getIntervalProgressFromDB(): ArrayList<ProgressModel> {
         return ArrayList(earSenseiDBHelper.readAllProgressData()
             .filter { it.type == QuizType.INTERVALS })
     }
@@ -39,11 +39,11 @@ class IntervalsQuizViewModel(application: Application) : AndroidViewModel(applic
     fun generateQuizModel(): QuizModel {
 
         //todo
-        val interval = getIntervalProgress().map { it.question }.random()
+        val interval = getIntervalProgressFromDB().map { it.question }.random()
         val notes = MusicTerminology.notesWithOctave
         val filteredNotes = notes.filter { it.value < notes.size - (MusicTerminology.intervals[interval] ?: 0)}
         val baseNote = filteredNotes.keys.random()
-        val questionPool = getIntervalProgress().map { it.question }
+        val questionPool = getIntervalProgressFromDB().map { it.question }
         //todo
         return QuizModel(QuizType.INTERVALS ,baseNote, interval, questionPool)
     }
