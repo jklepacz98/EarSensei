@@ -1,23 +1,25 @@
 package com.example.earsensei.intervalsquiz.View
 
-import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.earsensei.*
+import com.example.earsensei.NotesPlayer
+import com.example.earsensei.QuizState
+import com.example.earsensei.R
 import com.example.earsensei.intervalsquiz.Model.AnswerModel
 import com.example.earsensei.intervalsquiz.ViewModel.IntervalsQuizViewModel
 
 class IntervalsQuizActivity : AppCompatActivity(), IntervalsQuizAdapter.RecyclerViewClickListener {
 
-    var answers: ArrayList<AnswerModel> = arrayListOf()
+    var answers: List<AnswerModel> = listOf()
 
     val viewModel: IntervalsQuizViewModel by lazy {
         ViewModelProvider(this).get(IntervalsQuizViewModel::class.java)
@@ -29,7 +31,7 @@ class IntervalsQuizActivity : AppCompatActivity(), IntervalsQuizAdapter.Recycler
     override fun onClick(position: Int) {
         //todo
         //makeToast(position.toString())
-        viewModel.checkAnswer(answers[position])
+        viewModel.checkAnswer(position)
     }
 
     fun makeToast(text: String) {
@@ -54,14 +56,15 @@ class IntervalsQuizActivity : AppCompatActivity(), IntervalsQuizAdapter.Recycler
         }
 
         viewModel.answers.observe(this) {
-            answers =viewModel.answers.value ?: arrayListOf()
+            Toast.makeText(this, "obserwnąłem zmiany answers", Toast.LENGTH_SHORT).show()
+            answers = viewModel.answers.value ?: listOf()
             answersAdapter.changeList(answers)
         }
 
         viewModel.progress.observe(this) {
             progressBar.progress = it
             //todo
-            if (progressBar.progress >= progressBar.max){
+            if (progressBar.progress >= progressBar.max) {
                 this.finish()
             }
         }
@@ -71,23 +74,20 @@ class IntervalsQuizActivity : AppCompatActivity(), IntervalsQuizAdapter.Recycler
         }
 
         viewModel.state.observe(this) {
-            if (viewModel.state.value == QuizState.ANSWERED_CORRECT) {
-                window.decorView.setBackgroundColor(Color.rgb(200, 255, 200))
-                nextButton.visibility = View.VISIBLE
-            } else if (viewModel.state.value == QuizState.ANSWERED_WRONG) {
-                window.decorView.setBackgroundColor(Color.rgb(255, 200, 200))
+            if (viewModel.state.value == QuizState.ANSWERED) {
                 nextButton.visibility = View.VISIBLE
             } else {
-                window.decorView.setBackgroundColor(resources.getColor(R.color.design_default_color_background))
                 nextButton.visibility = View.INVISIBLE
             }
         }
+
         viewModel.quizModel.observe(this) {
             notesPlayer.setNotes(viewModel.getNotes())
         }
 
 
         notesPlayer.setNotes(viewModel.getNotes())
+        Log.d("cos1", viewModel.getNotes().toString())
         notesPlayer.playMultipleNotes()
 
 
