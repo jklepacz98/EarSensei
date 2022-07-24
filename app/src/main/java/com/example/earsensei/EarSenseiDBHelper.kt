@@ -1,5 +1,6 @@
 package com.example.earsensei
 
+
 import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
@@ -8,376 +9,209 @@ import android.database.SQLException
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.provider.BaseColumns
-import com.example.earsensei.dbmodels.*
+import com.example.earsensei.dbmodels.QuizRecordModel
 
+class EarSenseiDBHelper(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION) {
 
-import kotlin.collections.ArrayList
-
-class EarSenseiDBHelper(context: Context): SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION) {
-
-    companion object{
-        const val DB_VERSION  = 2
-        const val DB_NAME  = "EarSensei.db"
+    companion object {
+        const val DB_VERSION = 15
+        const val DB_NAME = "EarSensei.db"
     }
 
-    object TestTable{
-        const val TABLE_NAME = "test_table"
+    object Records {
+        const val TABLE_NAME = "quiz_table"
         const val KEY_ID = "_id"
+        const val QUIZ_TYPE_COL = "QUIZ_TYPE"
         const val BASE_NOTE_COL = "BASE_NOTE"
         const val CORRECT_ANSWER_COL = "CORRECT_ANSWER"
         const val USER_ANSWER_COL = "USER_ANSWER"
         const val DATE_COL = "DATE"
     }
 
-    object IntervalsTable{
-        const val TABLE_NAME = "intervals_table"
+    object Progress {
+        const val TABLE_NAME = "progress_table"
         const val KEY_ID = "_id"
-        const val BASE_NOTE_COL = "BASE_NOTE"
-        const val CORRECT_ANSWER_COL = "CORRECT_ANSWER"
-        const val USER_ANSWER_COL = "USER_ANSWER"
-        const val DATE_COL = "DATE"
-    }
-
-    object ChordsTable{
-        const val TABLE_NAME = "chords_table"
-        const val KEY_ID = "_id"
-        const val BASE_NOTE_COL = "BASE_NOTE"
-        const val CORRECT_ANSWER_COL = "CORRECT_ANSWER"
-        const val USER_ANSWER_COL = "USER_ANSWER"
-        const val DATE_COL = "DATE"
-    }
-
-    object ScalesTable{
-        const val TABLE_NAME = "scales_table"
-        const val KEY_ID = "_id"
-        const val BASE_NOTE_COL = "BASE_NOTE"
-        const val CORRECT_ANSWER_COL = "CORRECT_ANSWER"
-        const val USER_ANSWER_COL = "USER_ANSWER"
-        const val DATE_COL = "DATE"
-    }
-
-    object PerfectPitchTable{
-        const val TABLE_NAME = "perfect_pitch_table"
-        const val KEY_ID = "_id"
-        const val BASE_NOTE_COL = "BASE_NOTE"
-        const val CORRECT_ANSWER_COL = "CORRECT_ANSWER"
-        const val USER_ANSWER_COL = "USER_ANSWER"
+        const val QUIZ_TYPE_COL = "QUIZ_TYPE"
+        const val QUESTION_COL = "QUESTION"
         const val DATE_COL = "DATE"
     }
 
 
-    object BasicComand{
-        const val SQL_CREATE_TEST_TABLE =
-                "CREATE TABLE ${TestTable.TABLE_NAME} (" +
-                "${BaseColumns._ID} INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "${TestTable.TABLE_NAME} BASE_NOTE_COL TEXT," +
-                "${TestTable.TABLE_NAME} CORRECT_ANSWER_COL TEXT, " +
-                "${TestTable.TABLE_NAME} USER_ANSWER_COL TEXT, " +
-                "${TestTable.TABLE_NAME} DATE_COL INTEGER);"
-        const val SQL_DELETE_TEST_TABLE = "DROP TABLE IF EXISTS ${TestTable.TABLE_NAME}"
-
-        const val SQL_CREATE_INTERVALS_TABLE =
-            "CREATE TABLE ${IntervalsTable.TABLE_NAME} (" +
+    object BasicComand {
+        const val SQL_CREATE_QUIZ_TABLE =
+            "CREATE TABLE ${Records.TABLE_NAME} (" +
                     "${BaseColumns._ID} INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    "${IntervalsTable.TABLE_NAME} BASE_NOTE_COL TEXT," +
-                    "${IntervalsTable.TABLE_NAME} CORRECT_ANSWER_COL TEXT, " +
-                    "${IntervalsTable.TABLE_NAME} USER_ANSWER_COL TEXT, " +
-                    "${IntervalsTable.TABLE_NAME} DATE_COL INTEGER);"
-        const val SQL_DELETE_INTERVALS_TABLE = "DROP TABLE IF EXISTS ${IntervalsTable.TABLE_NAME}"
-
-        const val SQL_CREATE_CHORDS_TABLE =
-            "CREATE TABLE ${ChordsTable.TABLE_NAME} (" +
+                    "${Records.QUIZ_TYPE_COL} TEXT," +
+                    "${Records.BASE_NOTE_COL} TEXT," +
+                    "${Records.CORRECT_ANSWER_COL}  TEXT, " +
+                    "${Records.USER_ANSWER_COL} TEXT, " +
+                    "${Records.DATE_COL} INTEGER);"
+        const val SQL_CREATE_PROGRESS_TABLE =
+            "CREATE TABLE ${Progress.TABLE_NAME} (" +
                     "${BaseColumns._ID} INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    "${ChordsTable.TABLE_NAME} BASE_NOTE_COL TEXT," +
-                    "${ChordsTable.TABLE_NAME} CORRECT_ANSWER_COL TEXT, " +
-                    "${ChordsTable.TABLE_NAME} USER_ANSWER_COL TEXT, " +
-                    "${ChordsTable.TABLE_NAME} DATE_COL INTEGER);"
-        const val SQL_DELETE_CHORDS_TABLE = "DROP TABLE IF EXISTS ${ChordsTable.TABLE_NAME}"
+                    "${Progress.QUIZ_TYPE_COL} TEXT," +
+                    "${Progress.QUESTION_COL} TEXT UNIQUE," +
+                    "${Progress.DATE_COL}  INTEGER);"
+    //todo
+    //const val SQL_DELETE_QUIZ_TABLE = "DROP TABLE IF EXISTS ${Records.TABLE_NAME}"
 
-        const val SQL_CREATE_SCALES_TABLE =
-            "CREATE TABLE ${ScalesTable.TABLE_NAME} (" +
-                    "${BaseColumns._ID} INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    "${ScalesTable.TABLE_NAME} BASE_NOTE_COL TEXT," +
-                    "${ScalesTable.TABLE_NAME} CORRECT_ANSWER_COL TEXT, " +
-                    "${ScalesTable.TABLE_NAME} USER_ANSWER_COL TEXT, " +
-                    "${ScalesTable.TABLE_NAME} DATE_COL INTEGER);"
-        const val SQL_DELETE_SCALES_TABLE = "DROP TABLE IF EXISTS ${ScalesTable.TABLE_NAME}"
-
-        const val SQL_CREATE_PERFECT_PITCH_TABLE =
-            "CREATE TABLE ${PerfectPitchTable.TABLE_NAME} (" +
-                    "${BaseColumns._ID} INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    "${PerfectPitchTable.TABLE_NAME} BASE_NOTE_COL TEXT," +
-                    "${PerfectPitchTable.TABLE_NAME} CORRECT_ANSWER_COL TEXT, " +
-                    "${PerfectPitchTable.TABLE_NAME} USER_ANSWER_COL TEXT, " +
-                    "${PerfectPitchTable.TABLE_NAME} DATE_COL INTEGER);"
-        const val SQL_DELETE_PERFECT_PITCH_TABLE = "DROP TABLE IF EXISTS ${PerfectPitchTable.TABLE_NAME}"
     }
 
     override fun onCreate(db: SQLiteDatabase?) {
-        db?.execSQL(BasicComand.SQL_CREATE_TEST_TABLE)
-        db?.execSQL(BasicComand.SQL_CREATE_INTERVALS_TABLE)
-        db?.execSQL(BasicComand.SQL_CREATE_CHORDS_TABLE)
-        db?.execSQL(BasicComand.SQL_CREATE_SCALES_TABLE)
-        db?.execSQL(BasicComand.SQL_CREATE_PERFECT_PITCH_TABLE)
+        db?.execSQL(BasicComand.SQL_CREATE_QUIZ_TABLE)
+        db?.execSQL(BasicComand.SQL_CREATE_PROGRESS_TABLE)
+    }
+
+    fun prepareBasicQuestions(){
+        //todo
+        var intervalQuestions : List<String> = listOf(
+            MusicTerminology.Intervals.MAJOR_3RD,
+            MusicTerminology.Intervals.PERFECT_5TH,
+            MusicTerminology.Intervals.OCATVE,
+        )
+        intervalQuestions.forEach{
+            val contentValues = createProgressContentValues(QuizType.INTERVALS, it, 0)
+            addProgressContentValues(contentValues)
+        }
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, p1: Int, p2: Int) {
-        db?.execSQL(BasicComand.SQL_DELETE_TEST_TABLE)
-        db?.execSQL(BasicComand.SQL_DELETE_INTERVALS_TABLE)
-        db?.execSQL(BasicComand.SQL_DELETE_CHORDS_TABLE)
-        db?.execSQL(BasicComand.SQL_DELETE_SCALES_TABLE)
-        db?.execSQL(BasicComand.SQL_DELETE_PERFECT_PITCH_TABLE)
+        dropAllTables(db)
+        //todo
+        //db?.execSQL(BasicComand.SQL_DELETE_QUIZ_TABLE)
         onCreate(db)
     }
 
-    fun createTestContentValues(baseNote: String, correctAnswer: String, userAnswer: String, date: Long) : ContentValues{
-        val contentValues : ContentValues = ContentValues()
-        contentValues.put(TestTable.BASE_NOTE_COL, baseNote)
-        contentValues.put(TestTable.CORRECT_ANSWER_COL, correctAnswer)
-        contentValues.put(TestTable.USER_ANSWER_COL, userAnswer)
-        contentValues.put(TestTable.DATE_COL, date)
-        return contentValues
+    private fun dropAllTables(db: SQLiteDatabase?) {
+        val tables: List<String> = getAllTableNames(db)
+        // call DROP TABLE on every table name
+        for (table in tables) {
+            val dropQuery = "DROP TABLE IF EXISTS $table"
+            db!!.execSQL(dropQuery)
+        }
     }
 
-    fun createIntervalsContentValues(baseNote: String, correctAnswer: String, userAnswer: String, date: Long) : ContentValues{
-        val contentValues : ContentValues = ContentValues()
-        contentValues.put(IntervalsTable.BASE_NOTE_COL, baseNote)
-        contentValues.put(IntervalsTable.CORRECT_ANSWER_COL, correctAnswer)
-        contentValues.put(IntervalsTable.USER_ANSWER_COL, userAnswer)
-        contentValues.put(IntervalsTable.DATE_COL, date)
-        return contentValues
-    }
-
-    fun createChordsContentValues(baseNote: String, correctAnswer: String, userAnswer: String, date: Long) : ContentValues{
-        val contentValues : ContentValues = ContentValues()
-        contentValues.put(ChordsTable.BASE_NOTE_COL, baseNote)
-        contentValues.put(ChordsTable.CORRECT_ANSWER_COL, correctAnswer)
-        contentValues.put(ChordsTable.USER_ANSWER_COL, userAnswer)
-        contentValues.put(ChordsTable.DATE_COL, date)
-        return contentValues
-    }
-
-    fun createScalesContentValues(baseNote: String, correctAnswer: String, userAnswer: String, date: Long) : ContentValues{
-        val contentValues : ContentValues = ContentValues()
-        contentValues.put(ScalesTable.BASE_NOTE_COL, baseNote)
-        contentValues.put(ScalesTable.CORRECT_ANSWER_COL, correctAnswer)
-        contentValues.put(ScalesTable.USER_ANSWER_COL, userAnswer)
-        contentValues.put(ScalesTable.DATE_COL, date)
-        return contentValues
-    }
-
-    fun createPerfectPitchContentValues(baseNote: String, correctAnswer: String, userAnswer: String, date: Long) : ContentValues{
-        val contentValues : ContentValues = ContentValues()
-        contentValues.put(PerfectPitchTable.BASE_NOTE_COL, baseNote)
-        contentValues.put(PerfectPitchTable.CORRECT_ANSWER_COL, correctAnswer)
-        contentValues.put(PerfectPitchTable.USER_ANSWER_COL, userAnswer)
-        contentValues.put(PerfectPitchTable.DATE_COL, date)
-        return contentValues
+    private fun getAllTableNames(db: SQLiteDatabase?): List<String> {
+        val c: Cursor = db!!.rawQuery("SELECT name FROM sqlite_master WHERE type='table'", null)
+        val tables: MutableList<String> = ArrayList()
+        while (c.moveToNext()) {
+            tables.add(c.getString(0))
+        }
+        val filteredTables: List<String> = tables.filter { it != "sqlite_sequence" }
+        return filteredTables
     }
 
 
+    fun createQuizContentValues(
+        baseNote: String,
+        type: String,
+        correctAnswer: String,
+        userAnswer: String,
+        date: Long
+    ): ContentValues {
+        val contentValues: ContentValues = ContentValues()
+        contentValues.put(Records.QUIZ_TYPE_COL, type)
+        contentValues.put(Records.BASE_NOTE_COL, baseNote)
+        contentValues.put(Records.CORRECT_ANSWER_COL, correctAnswer)
+        contentValues.put(Records.USER_ANSWER_COL, userAnswer)
+        contentValues.put(Records.DATE_COL, date)
+        return contentValues
+    }
 
+    fun createProgressContentValues(
+        type: String,
+        question: String,
+        date: Long
+    ): ContentValues{
+        val contentValues: ContentValues = ContentValues()
+        contentValues.put(Progress.QUIZ_TYPE_COL, type)
+        contentValues.put(Progress.QUESTION_COL, question)
+        contentValues.put(Progress.DATE_COL, date)
+        return contentValues
+    }
 
-
-    fun addTestContentValues(contentValues : ContentValues) : Boolean{
-        val db : SQLiteDatabase = this.writableDatabase
-        val insert : Long = db.insert(TestTable.TABLE_NAME, null, contentValues)
+    fun addQuizContentValues(contentValues: ContentValues): Boolean {
+        val db: SQLiteDatabase = this.writableDatabase
+        val insert: Long = db.insert(Records.TABLE_NAME, null, contentValues)
         db.close()
         return insert != -1L
     }
 
-    fun addIntervalsContentValues(contentValues : ContentValues) : Boolean{
-        val db : SQLiteDatabase = this.writableDatabase
-        val insert : Long = db.insert(IntervalsTable.TABLE_NAME, null, contentValues)
-        db.close()
-        return insert != -1L
-    }
-
-    fun addChordsContentValues(contentValues : ContentValues) : Boolean{
-        val db : SQLiteDatabase = this.writableDatabase
-        val insert : Long = db.insert(ChordsTable.TABLE_NAME, null, contentValues)
-        db.close()
-        return insert != -1L
-    }
-
-    fun addScalesContentValues(contentValues : ContentValues) : Boolean{
-        val db : SQLiteDatabase = this.writableDatabase
-        val insert : Long = db.insert(ScalesTable.TABLE_NAME, null, contentValues)
-        db.close()
-        return insert != -1L
-    }
-
-    fun addPerfectPitchContentValues(contentValues : ContentValues) : Boolean{
-        val db : SQLiteDatabase = this.writableDatabase
-        val insert : Long = db.insert(PerfectPitchTable.TABLE_NAME, null, contentValues)
+    fun addProgressContentValues(contentValues: ContentValues) : Boolean {
+        val db: SQLiteDatabase = this.writableDatabase
+        val insert: Long = db.insert(Progress.TABLE_NAME, null,contentValues)
         db.close()
         return insert != -1L
     }
 
     @SuppressLint("Range")
-    fun readAllTestData() : ArrayList<TestModel>{
-        val testModelList : ArrayList<TestModel> = ArrayList<TestModel>()
-        val selectQuery : String = "SELECT * FROM " + TestTable.TABLE_NAME
-        val db : SQLiteDatabase = this.readableDatabase
+    fun readAllQuizData(): ArrayList<QuizRecordModel> {
+        val quizRecordModelLists: ArrayList<QuizRecordModel> = ArrayList<QuizRecordModel>()
+        val selectQuery: String = "SELECT * FROM " + Records.TABLE_NAME
+        val db: SQLiteDatabase = this.readableDatabase
         var cursor: Cursor? = null
 
         try {
             cursor = db?.rawQuery(selectQuery, null)
-        }catch (e: SQLException){
+        } catch (e: SQLException) {
             db.execSQL(selectQuery)
             return ArrayList()
         }
         var id: Int
+        var quizType: String
         var baseNote: String
-        var correctAnswer : String
+        var correctAnswer: String
         var userAnswer: String
         var date: Int
 
-        if(cursor.moveToFirst()){
+        if (cursor.moveToFirst()) {
             do {
-                id = cursor.getInt(cursor.getColumnIndex(TestTable.KEY_ID))
-                baseNote = cursor.getString(cursor.getColumnIndex(TestTable.BASE_NOTE_COL))
-                correctAnswer = cursor.getString(cursor.getColumnIndex(TestTable.CORRECT_ANSWER_COL))
-                userAnswer = cursor.getString(cursor.getColumnIndex(TestTable.USER_ANSWER_COL))
-                date = cursor.getInt(cursor.getColumnIndex(TestTable.DATE_COL))
-                val testModel : TestModel = TestModel(id, baseNote, correctAnswer, userAnswer, date)
-                testModelList.add(testModel)
+                id = cursor.getInt(cursor.getColumnIndex(Records.KEY_ID))
+                quizType = cursor.getString(cursor.getColumnIndex(Records.QUIZ_TYPE_COL))
+                baseNote = cursor.getString(cursor.getColumnIndex(Records.BASE_NOTE_COL))
+                correctAnswer = cursor.getString(cursor.getColumnIndex(Records.CORRECT_ANSWER_COL))
+                userAnswer = cursor.getString(cursor.getColumnIndex(Records.USER_ANSWER_COL))
+                date = cursor.getInt(cursor.getColumnIndex(Records.DATE_COL))
+                val quizRecordModel: QuizRecordModel =
+                    QuizRecordModel(id, quizType, baseNote, correctAnswer, userAnswer, date)
+                quizRecordModelLists.add(quizRecordModel)
             } while (cursor.moveToNext())
         }
-        return testModelList
+        return quizRecordModelLists
     }
+
+    //todo
+    //sprawdzic czy progress dziala
 
     @SuppressLint("Range")
-    fun readAllIntervalsData() : ArrayList<IntervalModel>{
-        val intervalModelList : ArrayList<IntervalModel> = ArrayList<IntervalModel>()
-        val selectQuery : String = "SELECT * FROM " + IntervalsTable.TABLE_NAME
-        val db : SQLiteDatabase = this.readableDatabase
+    fun readAllProgressData() : ArrayList<ProgressModel>{
+        val progressModels : ArrayList<ProgressModel> = ArrayList<ProgressModel>()
+        val selectQuery: String = "SELECT * FROM " + Progress.TABLE_NAME
+        val db: SQLiteDatabase = this.readableDatabase
         var cursor: Cursor? = null
-
         try {
             cursor = db?.rawQuery(selectQuery, null)
-        }catch (e: SQLException){
+        } catch (e: SQLException) {
             db.execSQL(selectQuery)
             return ArrayList()
         }
         var id: Int
-        var baseNote: String
-        var correctAnswer : String
-        var userAnswer: String
+        var type: String
+        var question: String
         var date: Int
 
-        if(cursor.moveToFirst()){
-            do {
-                id = cursor.getInt(cursor.getColumnIndex(IntervalsTable.KEY_ID))
-                baseNote = cursor.getString(cursor.getColumnIndex(IntervalsTable.BASE_NOTE_COL))
-                correctAnswer = cursor.getString(cursor.getColumnIndex(IntervalsTable.CORRECT_ANSWER_COL))
-                userAnswer = cursor.getString(cursor.getColumnIndex(IntervalsTable.USER_ANSWER_COL))
-                date = cursor.getInt(cursor.getColumnIndex(IntervalsTable.DATE_COL))
-                val intervalModel : IntervalModel = IntervalModel(id, baseNote, correctAnswer, userAnswer, date)
-                intervalModelList.add(intervalModel)
-            } while (cursor.moveToNext())
+        if (cursor.moveToFirst()){
+            do{
+                id = cursor.getInt(cursor.getColumnIndex(Progress.KEY_ID))
+                type = cursor.getString(cursor.getColumnIndex(Progress.QUIZ_TYPE_COL))
+                question = cursor.getString(cursor.getColumnIndex(Progress.QUESTION_COL))
+                date = cursor.getInt(cursor.getColumnIndex(Progress.DATE_COL))
+                val progressModel: ProgressModel = ProgressModel(id, type, question, date)
+                progressModels.add(progressModel)
+            }while (cursor.moveToNext())
         }
-        return intervalModelList
+        return progressModels
     }
 
-    @SuppressLint("Range")
-    fun readAllChordsData() : ArrayList<ChordModel>{
-        val chordModelList : ArrayList<ChordModel> = ArrayList<ChordModel>()
-        val selectQuery : String = "SELECT * FROM " + ChordsTable.TABLE_NAME
-        val db : SQLiteDatabase = this.readableDatabase
-        var cursor: Cursor? = null
-
-        try {
-            cursor = db?.rawQuery(selectQuery, null)
-        }catch (e: SQLException){
-            db.execSQL(selectQuery)
-            return ArrayList()
-        }
-        var id: Int
-        var baseNote: String
-        var correctAnswer : String
-        var userAnswer: String
-        var date: Int
-
-        if(cursor.moveToFirst()){
-            do {
-                id = cursor.getInt(cursor.getColumnIndex(ChordsTable.KEY_ID))
-                baseNote = cursor.getString(cursor.getColumnIndex(ChordsTable.BASE_NOTE_COL))
-                correctAnswer = cursor.getString(cursor.getColumnIndex(ChordsTable.CORRECT_ANSWER_COL))
-                userAnswer = cursor.getString(cursor.getColumnIndex(ChordsTable.USER_ANSWER_COL))
-                date = cursor.getInt(cursor.getColumnIndex(ChordsTable.DATE_COL))
-                val chordModel : ChordModel = ChordModel(id, baseNote, correctAnswer, userAnswer, date)
-                chordModelList.add(chordModel)
-            } while (cursor.moveToNext())
-        }
-        return chordModelList
-    }
-
-    @SuppressLint("Range")
-    fun readAllScalesData() : ArrayList<ScaleModel>{
-        val scaleModelList : ArrayList<ScaleModel> = ArrayList<ScaleModel>()
-        val selectQuery : String = "SELECT * FROM " + ScalesTable.TABLE_NAME
-        val db : SQLiteDatabase = this.readableDatabase
-        var cursor: Cursor? = null
-
-        try {
-            cursor = db?.rawQuery(selectQuery, null)
-        }catch (e: SQLException){
-            db.execSQL(selectQuery)
-            return ArrayList()
-        }
-        var id: Int
-        var baseNote: String
-        var correctAnswer : String
-        var userAnswer: String
-        var date: Int
-
-        if(cursor.moveToFirst()){
-            do {
-                id = cursor.getInt(cursor.getColumnIndex(ScalesTable.KEY_ID))
-                baseNote = cursor.getString(cursor.getColumnIndex(ScalesTable.BASE_NOTE_COL))
-                correctAnswer = cursor.getString(cursor.getColumnIndex(ScalesTable.CORRECT_ANSWER_COL))
-                userAnswer = cursor.getString(cursor.getColumnIndex(ScalesTable.USER_ANSWER_COL))
-                date = cursor.getInt(cursor.getColumnIndex(ScalesTable.DATE_COL))
-                val scaleModel : ScaleModel = ScaleModel(id, baseNote, correctAnswer, userAnswer, date)
-                scaleModelList.add(scaleModel)
-            } while (cursor.moveToNext())
-        }
-        return scaleModelList
-    }
-
-
-    @SuppressLint("Range")
-    fun readAllPerfectPitchData() : ArrayList<PerfectPitchModel>{
-        val perfectPitchModelList : ArrayList<PerfectPitchModel> = ArrayList<PerfectPitchModel>()
-        val selectQuery : String = "SELECT * FROM " + PerfectPitchTable.TABLE_NAME
-        val db : SQLiteDatabase = this.readableDatabase
-        var cursor: Cursor? = null
-
-        try {
-            cursor = db?.rawQuery(selectQuery, null)
-        }catch (e: SQLException){
-            db.execSQL(selectQuery)
-            return ArrayList()
-        }
-        var id: Int
-        var baseNote: String
-        var correctAnswer : String
-        var userAnswer: String
-        var date: Int
-
-        if(cursor.moveToFirst()){
-            do {
-                id = cursor.getInt(cursor.getColumnIndex(PerfectPitchTable.KEY_ID))
-                baseNote = cursor.getString(cursor.getColumnIndex(PerfectPitchTable.BASE_NOTE_COL))
-                correctAnswer = cursor.getString(cursor.getColumnIndex(PerfectPitchTable.CORRECT_ANSWER_COL))
-                userAnswer = cursor.getString(cursor.getColumnIndex(PerfectPitchTable.USER_ANSWER_COL))
-                date = cursor.getInt(cursor.getColumnIndex(PerfectPitchTable.DATE_COL))
-                val perfectPitchModel : PerfectPitchModel = PerfectPitchModel(id, baseNote, correctAnswer, userAnswer, date)
-                perfectPitchModelList.add(perfectPitchModel)
-            } while (cursor.moveToNext())
-        }
-        return perfectPitchModelList
-    }
 
 }

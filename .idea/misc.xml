@@ -3,11 +3,31 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../layout/custom_preview.xml" value="0.13219424460431656" />
+        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2255" />
+        <entry key="app/src/main/res/drawable/default_round_button.xml" value="0.2255" />
+        <entry key="app/src/main/res/drawable/ic_baseline_play_arrow_24.xml" value="0.2255" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.2255" />
+        <entry key="app/src/main/res/drawable/play_round_button.xml" value="0.2255" />
+        <entry key="app/src/main/res/layout/activity_chords.xml" value="0.24003623188405798" />
         <entry key="app/src/main/res/layout/activity_intervals.xml" value="0.12228260869565218" />
+        <entry key="app/src/main/res/layout/activity_intervals_quiz.xml" value="0.18" />
+        <entry key="app/src/main/res/layout/activity_intervals_settings.xml" value="0.24003623188405798" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.17325227963525835" />
+        <entry key="app/src/main/res/layout/activity_music_theory_menu.xml" value="0.24003623188405798" />
+        <entry key="app/src/main/res/layout/activity_perfect_pitch.xml" value="0.24003623188405798" />
         <entry key="app/src/main/res/layout/activity_profile.xml" value="0.23143115942028986" />
+        <entry key="app/src/main/res/layout/activity_quiz.xml" value="0.18177083333333333" />
         <entry key="app/src/main/res/layout/activity_scales.xml" value="0.12228260869565218" />
+        <entry key="app/src/main/res/layout/activity_stats_general.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_stats_menu.xml" value="0.17325227963525835" />
+        <entry key="app/src/main/res/layout/activity_test.xml" value="0.24003623188405798" />
+        <entry key="app/src/main/res/layout/content_quiz.xml" value="0.24003623188405798" />
+        <entry key="app/src/main/res/layout/fragment_button.xml" value="0.20260416666666667" />
+        <entry key="app/src/main/res/layout/fragment_first.xml" value="0.24003623188405798" />
+        <entry key="app/src/main/res/layout/fragment_intervals_quiz.xml" value="0.24003623188405798" />
+        <entry key="app/src/main/res/layout/fragment_second.xml" value="0.24003623188405798" />
+        <entry key="app/src/main/res/layout/item_answer.xml" value="0.17274569402228976" />
       </map>
     </option>
   </component>

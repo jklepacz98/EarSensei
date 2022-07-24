@@ -8,6 +8,7 @@
     <color name="onSecondary">#FFFFFFFF</color>
     <color name="white">#FFFFFFFF</color>
     <color name="lightGreyTransparent">#66EEEEEE</color>
+    <color name="ligthGrey">#FFDDDDDD</color>
     <color name="black">#FF000000</color>
     <color name="gradientStart">#a8edea</color>
     <color name="gradientEnd">#fed6e3</color>

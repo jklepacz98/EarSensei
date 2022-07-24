@@ -27,4 +27,33 @@
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
+    <string name="perfect1st">Pryma</string>
+    <string name="minor2nd">Sekunda mała</string>
+    <string name="major2nd">Sekunda wielka</string>
+    <string name="minor3rd">Tercja mała</string>
+    <string name="major3rd">Tercja wielka</string>
+    <string name="perfect4th">Kwarta</string>
+    <string name="tritone">Tryton</string>
+    <string name="perfect5th">Kwinta</string>
+    <string name="minor6th">Seksta mała</string>
+    <string name="major6th">Seksta wielka</string>
+    <string name="minor7th">Septyma mała</string>
+    <string name="major7th">Septyma wielka</string>
+    <string name="octave">Oktawa</string>
+    <string name="minor9th">Nona mała</string>
+    <string name="major9th">Nona wielka</string>
+
+    <string name="is_null">is null</string>
+
+    <string-array name="quantity_array">
+        <item>All</item>
+        <item>200</item>
+        <item>100</item>
+        <item>50</item>
+        <item>20</item>
+        <item>10</item>
+    </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

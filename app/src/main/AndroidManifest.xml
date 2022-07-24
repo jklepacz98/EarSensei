@@ -9,22 +9,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EarSensei">
         <activity
+            android:name=".intervalsquiz.View.IntervalsQuizActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.StatsMenuActivity"
             android:exported="false" />
         <activity
             android:name=".activities.StatsDetailsActivity"
             android:exported="false" />
-        <activity
-            android:name=".activities.quizactivities.TestQuizActivity"
-            android:label="@string/title_activity_test"
-            android:theme="@style/Theme.EarSensei.NoActionBar" />
         <activity android:name=".activities.IntervalsSettingsActivity" />
         <activity android:name=".activities.StatsGeneralActivity" />
         <activity android:name=".activities.MusicTheoryActivity" />
-        <activity android:name=".activities.quizactivities.ChordsQuizActivity" />
-        <activity android:name=".activities.quizactivities.ScalesQuizActivity" />
-        <activity android:name=".activities.quizactivities.PerfectPitchQuizActivity" />
-        <activity android:name=".activities.quizactivities.IntervalsQuizActivity" />
+        <activity android:name=".activities.quiz.ChordsQuizActivity" />
+        <activity android:name=".activities.quiz.ScalesQuizActivity" />
+        <activity android:name=".activities.quiz.PerfectPitchQuizActivity" />
         <activity
             android:name=".activities.MainActivity"
             android:exported="true">

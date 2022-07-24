@@ -6,20 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context=".activities.quizactivities.ScalesQuizActivity">
+    tools:context=".activities.quiz.ScalesQuizActivity">
 
-    <ImageButton
-        android:layout_margin="16dp"
-        android:id="@+id/button_play"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:background="@drawable/play_round_button"
-        android:src="@drawable/ic_baseline_play_arrow_24" />
-
-    <GridLayout
-        android:id="@+id/buttons_grid"
-        android:columnCount="2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
 
 </LinearLayout>
