@@ -39,6 +39,7 @@ class IntervalsQuizViewModel(application: Application) : AndroidViewModel(applic
     fun generateQuizModel(): QuizModel {
 
         //todo
+        //val interval = MusicTerminology.Intervals.PERFECT_5TH
         val interval = getIntervalProgressFromDB().map { it.question }.random()
         val notes = MusicTerminology.notesWithOctave
         val filteredNotes =
