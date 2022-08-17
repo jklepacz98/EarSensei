@@ -6,10 +6,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.earsensei.R
-import com.example.earsensei.intervalsquiz.Model.AnswerModel
+import com.example.earsensei.database.Answer
 
 class IntervalsQuizAdapter(
-    var answers: List<AnswerModel>,
+    var answers: List<Answer>,
     val recyclerViewClickListener: RecyclerViewClickListener
 ) : RecyclerView.Adapter<IntervalsQuizViewHolder>() {
 
@@ -21,13 +21,13 @@ class IntervalsQuizAdapter(
     }
 
     override fun onBindViewHolder(holder: IntervalsQuizViewHolder, position: Int) {
-        val answerModel: AnswerModel = answers.get(position)
-        holder.button.setText(holder.itemView.resources.getText(answerModel.stringResourceId))
-        val color = getColor(answerModel)
-        when (answerModel.state) {
-            AnswerModel.NOT_CLICKED -> holder.button.setBackgroundColor(Color.WHITE)
-            AnswerModel.CLICKED_CORRECT -> holder.button.setBackgroundColor(Color.GREEN)
-            AnswerModel.CLICKED_WRONG -> holder.button.setBackgroundColor(Color.RED)
+        val answer: Answer = answers.get(position)
+        holder.button.setText(holder.itemView.resources.getText(answer.stringResourceId))
+        val color = getColor(answer)
+        when (answer.state) {
+            Answer.NOT_CLICKED -> holder.button.setBackgroundColor(Color.WHITE)
+            Answer.CLICKED_CORRECT -> holder.button.setBackgroundColor(Color.GREEN)
+            Answer.CLICKED_WRONG -> holder.button.setBackgroundColor(Color.RED)
         }
     }
 
@@ -40,15 +40,15 @@ class IntervalsQuizAdapter(
         notifyDataSetChanged()
     }
 
-    fun changeList(newAnswers: List<AnswerModel>) {
+    fun changeList(newAnswers: List<Answer>) {
         answers = newAnswers
         notifyDataSetChanged()
     }
 
-    fun getColor(answerModel: AnswerModel): Int =
-        when (answerModel.state) {
-            AnswerModel.NOT_CLICKED -> Color.WHITE
-            AnswerModel.CLICKED_CORRECT -> Color.GREEN
+    fun getColor(answer: Answer): Int =
+        when (answer.state) {
+            Answer.NOT_CLICKED -> Color.WHITE
+            Answer.CLICKED_CORRECT -> Color.GREEN
             else -> Color.RED
         }
 

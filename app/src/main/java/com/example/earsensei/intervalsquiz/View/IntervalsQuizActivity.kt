@@ -1,103 +1,97 @@
 package com.example.earsensei.intervalsquiz.View
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.ProgressBar
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.earsensei.NotesPlayer
 import com.example.earsensei.QuizState
-import com.example.earsensei.R
-import com.example.earsensei.intervalsquiz.Model.AnswerModel
+import com.example.earsensei.database.Answer
+import com.example.earsensei.databinding.ActivityIntervalsQuizBinding
 import com.example.earsensei.intervalsquiz.ViewModel.IntervalsQuizViewModel
 
 class IntervalsQuizActivity : AppCompatActivity(), IntervalsQuizAdapter.RecyclerViewClickListener {
 
-    var answers: List<AnswerModel> = listOf()
-
-    val viewModel: IntervalsQuizViewModel by lazy {
-        ViewModelProvider(this).get(IntervalsQuizViewModel::class.java)
+    private var answers: List<Answer> = listOf()
+    private lateinit var binding: ActivityIntervalsQuizBinding
+    private val viewModel: IntervalsQuizViewModel by lazy {
+        val provider = ViewModelProvider.AndroidViewModelFactory.getInstance(application)
+        ViewModelProvider(this, provider).get(IntervalsQuizViewModel::class.java)
     }
-
-    val notesPlayer: NotesPlayer = NotesPlayer(this)
-
+    private val notesPlayer: NotesPlayer = NotesPlayer(this)
 
     override fun onClick(position: Int) {
-        //todo
-        //makeToast(position.toString())
         viewModel.checkAnswer(position)
-    }
-
-    fun makeToast(text: String) {
-        Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
+        viewModel.showToast()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_intervals_quiz)
+        binding = ActivityIntervalsQuizBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setupRecyclerView()
+        setupPlayButton()
+        setupNextButton()
+        setupProgressObserver()
+        setupProgressMaxObserver()
+        setupFirstNotes()
+        setupNotesObserver()
+    }
 
-        val progressBar: ProgressBar = findViewById(R.id.progress_bar)
-        val nextButton: Button = findViewById(R.id.next_button)
-        val playButton: ImageButton = findViewById(R.id.button_play)
-        val answersAdapter: IntervalsQuizAdapter = IntervalsQuizAdapter(answers, this)
-
-        val rvAnswers: RecyclerView = findViewById(R.id.rv_answers)
-        rvAnswers.adapter = answersAdapter
-        rvAnswers.layoutManager = GridLayoutManager(this, 3)
-
-        viewModel.toastMessage.observe(this) {
-            makeToast(it)
-        }
-
+    //todo chyba da się to lepiej podzielić
+    fun setupRecyclerView() {
+        val answersAdapter = IntervalsQuizAdapter(answers, this)
+        binding.rvAnswers.adapter = answersAdapter
+        binding.rvAnswers.layoutManager = GridLayoutManager(this, 3)
         viewModel.answers.observe(this) {
-            Toast.makeText(this, "obserwnąłem zmiany answers", Toast.LENGTH_SHORT).show()
             answers = viewModel.answers.value ?: listOf()
             answersAdapter.changeList(answers)
         }
+    }
 
-        viewModel.progress.observe(this) {
-            progressBar.progress = it
-            //todo
-            if (progressBar.progress >= progressBar.max) {
-                this.finish()
-            }
+    fun setupPlayButton() {
+        binding.buttonPlay.setOnClickListener() {
+            notesPlayer.playMultipleNotes()
         }
+    }
 
-        viewModel.progressMax.observe(this) {
-            progressBar.max = it
-        }
-
-        viewModel.state.observe(this) {
-            if (viewModel.state.value == QuizState.ANSWERED) {
-                nextButton.visibility = View.VISIBLE
-            } else {
-                nextButton.visibility = View.INVISIBLE
-            }
-        }
-
-        viewModel.quizModel.observe(this) {
-            notesPlayer.setNotes(viewModel.getNotes())
-        }
-
-
-        notesPlayer.setNotes(viewModel.getNotes())
-        Log.d("cos1", viewModel.getNotes().toString())
-        notesPlayer.playMultipleNotes()
-
-
-        nextButton.setOnClickListener {
+    fun setupNextButton() {
+        binding.nextButton.setOnClickListener {
             viewModel.nextQuiz()
             notesPlayer.playMultipleNotes()
         }
+        viewModel.state.observe(this) {
+            binding.nextButton.visibility = when (it) {
+                QuizState.ANSWERED -> View.VISIBLE
+                else -> View.INVISIBLE
+            }
+        }
+    }
 
-        playButton.setOnClickListener() {
-            notesPlayer.playMultipleNotes()
+    fun setupProgressObserver() {
+        viewModel.progress.observe(this) {
+            binding.progressBar.progress = it
+            if (binding.progressBar.progress >= binding.progressBar.max) {
+                this.finish()
+            }
+        }
+    }
+
+    fun setupProgressMaxObserver() {
+        viewModel.progressMax.observe(this) {
+            binding.progressBar.max = it
+        }
+    }
+
+    fun setupFirstNotes() {
+        notesPlayer.setNotes(viewModel.getNotes())
+        notesPlayer.playMultipleNotes()
+    }
+
+    fun setupNotesObserver() {
+        viewModel.quizModel.observe(this) {
+            notesPlayer.setNotes(viewModel.getNotes())
         }
     }
 }

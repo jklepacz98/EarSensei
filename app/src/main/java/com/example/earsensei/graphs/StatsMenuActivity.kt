@@ -1,4 +1,4 @@
-package com.example.earsensei.activities
+package com.example.earsensei.graphs
 
 import android.app.Activity
 import android.content.Intent

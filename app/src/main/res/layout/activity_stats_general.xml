@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activities.StatsGeneralActivity">
+    tools:context=".graphs.StatsGeneralActivity">
 
   <com.github.mikephil.charting.charts.HorizontalBarChart
       android:id="@+id/bar_chart"

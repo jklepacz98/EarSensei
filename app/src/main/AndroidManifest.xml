@@ -12,14 +12,12 @@
             android:name=".intervalsquiz.View.IntervalsQuizActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.StatsMenuActivity"
+            android:name=".graphs.StatsMenuActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.StatsDetailsActivity"
+            android:name=".graphs.StatsDetailsActivity"
             android:exported="false" />
-        <activity android:name=".activities.IntervalsSettingsActivity" />
-        <activity android:name=".activities.StatsGeneralActivity" />
-        <activity android:name=".activities.MusicTheoryActivity" />
+        <activity android:name=".graphs.StatsGeneralActivity" />
         <activity android:name=".activities.quiz.ChordsQuizActivity" />
         <activity android:name=".activities.quiz.ScalesQuizActivity" />
         <activity android:name=".activities.quiz.PerfectPitchQuizActivity" />
