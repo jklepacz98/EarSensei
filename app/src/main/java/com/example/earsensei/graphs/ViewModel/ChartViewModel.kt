@@ -5,7 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.earsensei.MusicTerminology
+import com.example.earsensei.INTERVALS
 import com.example.earsensei.database.EarSenseiDatabase
 import com.example.earsensei.database.quizResult.QuizResult
 import kotlinx.coroutines.Dispatchers
@@ -21,10 +21,10 @@ class ChartViewModel(app: Application) : AndroidViewModel(app) {
 
                     val map = linkedMapOf<String, Float>()
                     val allResults = db.resultDao().readAllData2().size
-                    MusicTerminology.intervals.keys.forEach {
-                        val correctResults = db.resultDao().getAllCorrectResults(it)
+                    INTERVALS.values().forEach {
+                        val correctResults = db.resultDao().getAllCorrectResults(it.name)
                         val ratio = correctResults.toFloat() / allResults.toFloat()
-                        map.put(it, ratio)
+                        map.put(it.name, ratio)
                     }
                     postValue(map)
                 }

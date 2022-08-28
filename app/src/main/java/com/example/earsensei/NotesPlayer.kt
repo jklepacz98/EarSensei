@@ -11,7 +11,7 @@ class NotesPlayer(val context: Context) {
 
     var job: Job = Job()
     val mediaPlayers: MutableList<MediaPlayer> = mutableListOf()
-    
+
     suspend fun playSingleNote() {
         mediaPlayers.forEach() {
             if (it.isPlaying) {
@@ -40,6 +40,6 @@ class NotesPlayer(val context: Context) {
     }
 
     companion object {
-        val DELAY = 850L
+        private val DELAY = 850L
     }
 }

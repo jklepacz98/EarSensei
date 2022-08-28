@@ -1,6 +1,5 @@
 package com.example.earsensei.intervalsquiz.View
 
-import android.app.Application
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,17 +10,15 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.earsensei.NotesPlayer
 import com.example.earsensei.database.Answer
-import com.example.earsensei.databinding.ActivityIntervalsQuizBinding
+import com.example.earsensei.databinding.FragmentIntervalsBinding
 import com.example.earsensei.intervalsquiz.ViewModel.IntervalsQuizViewModel
-import com.example.earsensei.utils.QuizState
 
 class IntervalsFragment : Fragment(), IntervalsQuizAdapter.RecyclerViewClickListener {
 
     private var answers: List<Answer> = listOf()
-    private lateinit var binding: ActivityIntervalsQuizBinding
+    private lateinit var binding: FragmentIntervalsBinding
     private val viewModel: IntervalsQuizViewModel by lazy {
-        val provider = ViewModelProvider.AndroidViewModelFactory.getInstance(Application())
-        ViewModelProvider(this, provider).get(IntervalsQuizViewModel::class.java)
+        ViewModelProvider(this@IntervalsFragment).get(IntervalsQuizViewModel::class.java)
     }
     private lateinit var notesPlayer: NotesPlayer
 
@@ -31,8 +28,8 @@ class IntervalsFragment : Fragment(), IntervalsQuizAdapter.RecyclerViewClickList
     }
 
     override fun onClick(position: Int) {
-        viewModel.checkAnswer(position)
-        viewModel.showToast()
+        // TODO:
+        //viewModel.checkAnswer(position)
     }
 
     override fun onCreateView(
@@ -41,13 +38,12 @@ class IntervalsFragment : Fragment(), IntervalsQuizAdapter.RecyclerViewClickList
         savedInstanceState: Bundle?
     ): View? {
         super.onCreate(savedInstanceState)
-        binding = ActivityIntervalsQuizBinding.inflate(inflater, container, false)
+        binding = FragmentIntervalsBinding.inflate(inflater, container, false)
         setupRecyclerView()
         setupPlayButton()
         setupNextButton()
         setupProgressObserver()
         setupProgressMaxObserver()
-        setupFirstNotes()
         setupNotesObserver()
         return binding.root
     }
@@ -71,12 +67,13 @@ class IntervalsFragment : Fragment(), IntervalsQuizAdapter.RecyclerViewClickList
 
     fun setupNextButton() {
         binding.nextButton.setOnClickListener {
-            viewModel.nextQuiz()
+            // TODO:
+            //viewModel.nextQuiz()
             notesPlayer.playMultipleNotes()
         }
-        viewModel.state.observe(viewLifecycleOwner) {
+        viewModel.isAnswered.observe(viewLifecycleOwner) {
             binding.nextButton.visibility = when (it) {
-                QuizState.ANSWERED -> View.VISIBLE
+                true -> View.VISIBLE
                 else -> View.INVISIBLE
             }
         }
@@ -97,14 +94,9 @@ class IntervalsFragment : Fragment(), IntervalsQuizAdapter.RecyclerViewClickList
         }
     }
 
-    fun setupFirstNotes() {
-        notesPlayer.setNotes(viewModel.getNotes())
-        notesPlayer.playMultipleNotes()
-    }
-
     fun setupNotesObserver() {
-        viewModel.quizModel.observe(viewLifecycleOwner) {
-            notesPlayer.setNotes(viewModel.getNotes())
+        viewModel.notes.observe(viewLifecycleOwner) {
+            notesPlayer.setNotes(it)
         }
     }
 }

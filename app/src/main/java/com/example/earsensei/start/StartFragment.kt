@@ -6,11 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
-import com.example.earsensei.R
 import com.example.earsensei.database.EarSenseiDatabase
 import com.example.earsensei.database.quizResult.QuizResultTestDataset
 import com.example.earsensei.databinding.FragmentStartBinding
+import com.example.earsensei.utils.navigate
 import kotlinx.coroutines.runBlocking
 
 class StartFragment : Fragment() {
@@ -28,18 +27,20 @@ class StartFragment : Fragment() {
 
     private fun setupButtons() {
         binding.buttonIntervals.setOnClickListener {
-            findNavController().navigate(R.id.action_startFragment_to_intervalsFragment)
+            this@StartFragment.navigate(StartFragmentDirections.actionStartFragmentToIntervalsFragment())
         }
         binding.buttonStats.setOnClickListener {
-            findNavController().navigate(R.id.action_startFragment_to_statsFragment)
+            this@StartFragment.navigate(StartFragmentDirections.actionStartFragmentToStatsFragment())
         }
         binding.buttonAddDataToDatabase.setOnClickListener {
             val results = QuizResultTestDataset.generateQuizResults()
+            val progressList = QuizResultTestDataset.generateProgress()
             val db = EarSenseiDatabase.getDataBase(requireContext())
             runBlocking {
 
                 db.resultDao().insert(*results.toTypedArray())
                     .also { Log.d("cosek", it.toString()) }
+                db.progressionDao().insert(*progressList.toTypedArray())
             }
         }
     }

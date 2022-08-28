@@ -1,11 +1,11 @@
-package com.example.earsensei.database.progress
+package com.example.earsensei.database.progression
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class Progress(
-    @PrimaryKey
+data class Progression(
+    @PrimaryKey(autoGenerate = true)
     var id: Int = 0,
     val type: String,
     val question: String,

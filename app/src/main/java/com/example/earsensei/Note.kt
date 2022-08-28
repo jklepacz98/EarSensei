@@ -2,7 +2,7 @@ package com.example.earsensei
 
 class Note(val name: String, val number: Int, val audioResource: Int) {
     companion object {
-        val notes = mapOf(
+        val NOTES = mapOf(
             0 to Note("C3", 0, R.raw.c3),
             1 to Note("Cis3", 1, R.raw.cis3),
             2 to Note("D3", 2, R.raw.d3),
