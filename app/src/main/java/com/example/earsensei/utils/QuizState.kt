@@ -1,4 +1,4 @@
-package com.example.earsensei
+package com.example.earsensei.utils
 
 class QuizState {
     companion object {

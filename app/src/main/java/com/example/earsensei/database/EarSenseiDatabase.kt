@@ -4,12 +4,15 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.earsensei.database.result.QuizResultDao
-import com.example.earsensei.database.result.Result
+import com.example.earsensei.database.progress.Progress
+import com.example.earsensei.database.progress.ProgressDao
+import com.example.earsensei.database.quizResult.QuizResult
+import com.example.earsensei.database.quizResult.QuizResultDao
 
-@Database(entities = [Result::class], version = 1)
+@Database(entities = [QuizResult::class, Progress::class], version = 1)
 abstract class EarSenseiDatabase : RoomDatabase() {
-    abstract fun userDao(): QuizResultDao
+    abstract fun resultDao(): QuizResultDao
+    abstract fun progressDao(): ProgressDao
 
     companion object {
         @Volatile
@@ -20,6 +23,7 @@ abstract class EarSenseiDatabase : RoomDatabase() {
             if (tempInstance != null) {
                 return tempInstance
             }
+            //todo what synchronized does?
             synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,

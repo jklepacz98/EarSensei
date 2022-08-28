@@ -1,8 +1,12 @@
 package com.example.earsensei.intervalsquiz.View
 
+import android.app.Application
+import android.content.Context
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.earsensei.NotesPlayer
@@ -11,25 +15,33 @@ import com.example.earsensei.databinding.ActivityIntervalsQuizBinding
 import com.example.earsensei.intervalsquiz.ViewModel.IntervalsQuizViewModel
 import com.example.earsensei.utils.QuizState
 
-class IntervalsQuizActivity : AppCompatActivity(), IntervalsQuizAdapter.RecyclerViewClickListener {
+class IntervalsFragment : Fragment(), IntervalsQuizAdapter.RecyclerViewClickListener {
 
     private var answers: List<Answer> = listOf()
     private lateinit var binding: ActivityIntervalsQuizBinding
     private val viewModel: IntervalsQuizViewModel by lazy {
-        val provider = ViewModelProvider.AndroidViewModelFactory.getInstance(application)
+        val provider = ViewModelProvider.AndroidViewModelFactory.getInstance(Application())
         ViewModelProvider(this, provider).get(IntervalsQuizViewModel::class.java)
     }
-    private val notesPlayer: NotesPlayer = NotesPlayer(this)
+    private lateinit var notesPlayer: NotesPlayer
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        notesPlayer = NotesPlayer(context)
+    }
 
     override fun onClick(position: Int) {
         viewModel.checkAnswer(position)
         viewModel.showToast()
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         super.onCreate(savedInstanceState)
-        binding = ActivityIntervalsQuizBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        binding = ActivityIntervalsQuizBinding.inflate(inflater, container, false)
         setupRecyclerView()
         setupPlayButton()
         setupNextButton()
@@ -37,14 +49,15 @@ class IntervalsQuizActivity : AppCompatActivity(), IntervalsQuizAdapter.Recycler
         setupProgressMaxObserver()
         setupFirstNotes()
         setupNotesObserver()
+        return binding.root
     }
 
     //todo chyba da się to lepiej podzielić
     fun setupRecyclerView() {
         val answersAdapter = IntervalsQuizAdapter(answers, this)
         binding.rvAnswers.adapter = answersAdapter
-        binding.rvAnswers.layoutManager = GridLayoutManager(this, 3)
-        viewModel.answers.observe(this) {
+        binding.rvAnswers.layoutManager = GridLayoutManager(activity, 3)
+        viewModel.answers.observe(viewLifecycleOwner) {
             answers = viewModel.answers.value ?: listOf()
             answersAdapter.changeList(answers)
         }
@@ -61,7 +74,7 @@ class IntervalsQuizActivity : AppCompatActivity(), IntervalsQuizAdapter.Recycler
             viewModel.nextQuiz()
             notesPlayer.playMultipleNotes()
         }
-        viewModel.state.observe(this) {
+        viewModel.state.observe(viewLifecycleOwner) {
             binding.nextButton.visibility = when (it) {
                 QuizState.ANSWERED -> View.VISIBLE
                 else -> View.INVISIBLE
@@ -70,16 +83,16 @@ class IntervalsQuizActivity : AppCompatActivity(), IntervalsQuizAdapter.Recycler
     }
 
     fun setupProgressObserver() {
-        viewModel.progress.observe(this) {
+        viewModel.progress.observe(viewLifecycleOwner) {
             binding.progressBar.progress = it
             if (binding.progressBar.progress >= binding.progressBar.max) {
-                this.finish()
+                // TODO:
             }
         }
     }
 
     fun setupProgressMaxObserver() {
-        viewModel.progressMax.observe(this) {
+        viewModel.progressMax.observe(viewLifecycleOwner) {
             binding.progressBar.max = it
         }
     }
@@ -90,7 +103,7 @@ class IntervalsQuizActivity : AppCompatActivity(), IntervalsQuizAdapter.Recycler
     }
 
     fun setupNotesObserver() {
-        viewModel.quizModel.observe(this) {
+        viewModel.quizModel.observe(viewLifecycleOwner) {
             notesPlayer.setNotes(viewModel.getNotes())
         }
     }

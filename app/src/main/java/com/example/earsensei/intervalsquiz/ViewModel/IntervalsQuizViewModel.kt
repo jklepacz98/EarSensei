@@ -9,7 +9,9 @@ import com.example.earsensei.*
 import com.example.earsensei.database.Answer
 import com.example.earsensei.database.EarSenseiDatabase
 import com.example.earsensei.database.progress.Progress
-import com.example.earsensei.database.result.Result
+import com.example.earsensei.database.quizResult.QuizResult
+import com.example.earsensei.utils.QuizState
+import com.example.earsensei.utils.QuizType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -39,13 +41,13 @@ class IntervalsQuizViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     fun showToast() {
-        val msg = db.userDao().readAllData().value?.map { it.baseNote }.toString()
+        val msg = db.resultDao().readAllData().value?.map { it.baseNote }.toString()
         toastMessage.postValue(msg)
     }
 
-    fun addResult(result: Result) {
+    fun addResult(quizResult: QuizResult) {
         viewModelScope.launch(Dispatchers.IO) {
-            db.userDao().insert(result)
+            db.resultDao().insert(quizResult)
         }
     }
 
@@ -117,10 +119,6 @@ class IntervalsQuizViewModel(app: Application) : AndroidViewModel(app) {
         state.value = QuizState.UNANSWERED
         quizModel.value = generateQuizModel()
         setAnswers(generateAnswers())
-    }
-
-    fun <T> MutableLiveData<T>.notifyObservers() {
-        value = value
     }
 }
 

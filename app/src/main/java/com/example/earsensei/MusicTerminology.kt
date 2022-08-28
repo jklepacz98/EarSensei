@@ -1,10 +1,10 @@
 package com.example.earsensei
 
-class MusicTerminology {
-    object Intervals{
+sealed class MusicTerminology {
+    object Intervals {
         const val PERFECT_1ST = "Perfect 1st"
         const val MINOR_2ND = "Minor 2nd"
-        const val MAJOR_2ND ="Major 2nd"
+        const val MAJOR_2ND = "Major 2nd"
         const val MINOR_3RD = "Minor 3rd"
         const val MAJOR_3RD = "Major 3rd"
         const val PERFECT_4TH = "Perfect 4th"
@@ -15,12 +15,12 @@ class MusicTerminology {
         const val MINOR_7TH = "Minor 7th"
         const val MAJOR_7TH = "Major 7th"
         const val OCATVE = "Octave"
-        const val MINOR_9TH ="Minor 9th"
-        const val MAJOR_9TH ="Major 9th"
+        const val MINOR_9TH = "Minor 9th"
+        const val MAJOR_9TH = "Major 9th"
     }
 
-    object Translations{
-        val intervals : Map<String, Int> = mapOf(
+    object Translations {
+        val intervals: Map<String, Int> = mapOf(
             Intervals.PERFECT_1ST to R.string.perfect1st,
             Intervals.MINOR_2ND to R.string.minor2nd,
             Intervals.MAJOR_3RD to R.string.major2nd,
@@ -62,7 +62,7 @@ class MusicTerminology {
             "Minor 7th" to arrayOf(0, 3, 7, 10),
         )
 
-        val intervals : LinkedHashMap<String, Int> = linkedMapOf<String, Int>(
+        val intervals: LinkedHashMap<String, Int> = linkedMapOf<String, Int>(
             Intervals.PERFECT_1ST to 0,
             Intervals.MINOR_2ND to 1,
             Intervals.MAJOR_3RD to 2,
@@ -113,48 +113,48 @@ class MusicTerminology {
             "B" to 11,
         )
 
-         val notesWithOctave = mapOf<String, Int>(
-             "C3" to 0,
-             "Cis3" to 1,
-             "D3" to 2,
-             "Dis3" to 3,
-             "E3" to 4,
-             "F3" to 5,
-             "Fis3" to 6,
-             "G3" to 7,
-             "Gis3" to 8,
-             "A3" to 9,
-             "Ais3" to 10,
-             "B3" to 11,
+        val notesWithOctave = mapOf<String, Int>(
+            "C3" to 0,
+            "Cis3" to 1,
+            "D3" to 2,
+            "Dis3" to 3,
+            "E3" to 4,
+            "F3" to 5,
+            "Fis3" to 6,
+            "G3" to 7,
+            "Gis3" to 8,
+            "A3" to 9,
+            "Ais3" to 10,
+            "B3" to 11,
 
-             "C4" to 12,
-             "Cis4" to 13,
-             "D4" to 14,
-             "Dis4" to 15,
-             "E4" to 16,
-             "F4" to 17,
-             "Fis4" to 18,
-             "G4" to 19,
-             "Gis4" to 20,
-             "A4" to 21,
-             "Ais4" to 22,
-             "B4" to 23,
+            "C4" to 12,
+            "Cis4" to 13,
+            "D4" to 14,
+            "Dis4" to 15,
+            "E4" to 16,
+            "F4" to 17,
+            "Fis4" to 18,
+            "G4" to 19,
+            "Gis4" to 20,
+            "A4" to 21,
+            "Ais4" to 22,
+            "B4" to 23,
 
-             "C5" to 24,
-             "Cis5" to 25,
-             "D5" to 26,
-             "Dis5" to 27,
-             "E5" to 28,
-             "F5" to 29,
-             "Fis5" to 30,
-             "G5" to 31,
-             "Gis5" to 32,
-             "A5" to 33,
-             "Ais5" to 34,
-             "B5" to 35,
+            "C5" to 24,
+            "Cis5" to 25,
+            "D5" to 26,
+            "Dis5" to 27,
+            "E5" to 28,
+            "F5" to 29,
+            "Fis5" to 30,
+            "G5" to 31,
+            "Gis5" to 32,
+            "A5" to 33,
+            "Ais5" to 34,
+            "B5" to 35,
 
-             "C6" to 36
-         )
+            "C6" to 36
+        )
     }
 
 }

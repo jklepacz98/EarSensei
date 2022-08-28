@@ -1,23 +1,23 @@
 package com.example.earsensei
 
-import com.example.earsensei.database.result.Result
+import com.example.earsensei.database.quizResult.QuizResult
 
 class QuizRatioCalculator {
     companion object {
         fun calculateSpecificAnswerRatio(
-            results: ArrayList<Result>,
+            quizResults: List<QuizResult>,
             answer: String
         ): Float {
-            val allAnswers: Float = results.size.toFloat()
+            val allQuizResults: Float = quizResults.size.toFloat()
             val matchingAnswersRatio: Float =
-                results.filter { answer == it.userAnswer }.size.toFloat()
-            return matchingAnswersRatio / allAnswers
+                quizResults.filter { answer == it.userAnswer }.size.toFloat()
+            return matchingAnswersRatio / allQuizResults
         }
 
-        fun calculateCorrectAnswerRatio(results: ArrayList<Result>): Float {
-            var allAnswers: Float = results.size.toFloat()
+        fun calculateCorrectAnswerRatio(quizResults: List<QuizResult>): Float {
+            var allAnswers: Float = quizResults.size.toFloat()
             var correctAnswers: Float =
-                results.filter { it.userAnswer == it.correctAnswer }.size.toFloat()
+                quizResults.filter { it.userAnswer == it.correctAnswer }.size.toFloat()
             return correctAnswers / allAnswers
         }
 

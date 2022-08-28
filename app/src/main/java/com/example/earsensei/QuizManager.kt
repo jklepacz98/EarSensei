@@ -1,38 +1,22 @@
 package com.example.earsensei
 
-import com.example.earsensei.database.result.Result
+import com.example.earsensei.database.quizResult.QuizResult
 import java.util.*
 
 class QuizManager(
-    val results: ArrayList<Result>,
+    val quizResults: ArrayList<QuizResult>,
     val quizType: String,
     val takeLast: Int
 ) {
 
     val quizList: Stack<QuizModel> = Stack()
-
     var currentQuiz: QuizModel? = null
-
     val questionPool: MutableList<String> = MusicTerminology.intervals.keys.toMutableList()
 
     fun generateQuizList() {
 
     }
 
-    //todo
-//    fun checkAnswer(userAnswer : String){
-//        val date: Long = Date().time
-//        val contentValues: ContentValues = earSenseiDBHelper.createIntervalsContentValues(
-//            currentQuiz.baseNote,
-//            quizType,
-//            currentQuiz.correctAnswer,
-//            userAnswer,
-//            date
-//        )
-//        if(userAnswer == currentQuiz.correctAnswer) {
-//
-//        }
-//    }
 
     fun takeWorstRecordsRatios(numberOfRatios: Int): List<Pair<String, Float>> {
         val ratios =
@@ -41,16 +25,16 @@ class QuizManager(
     }
 
     fun createCorrectAnswerMap(): MutableMap<String, Float> {
-        val filteredResults =
-            ArrayList<Result>(
-                results
+        val filteredQuizResults =
+            ArrayList<QuizResult>(
+                quizResults
                     .filter { it.quizType == quizType }
                     .takeLast(takeLast))
-        val correctAnswers = filteredResults.map { it.correctAnswer }.toSet()
+        val correctAnswers = filteredQuizResults.map { it.correctAnswer }.toSet()
         val correctAnswerMap = mutableMapOf<String, Float>()
         correctAnswers.forEach { correctAnswer ->
             val quizRecordsFilteredOnceAgain =
-                ArrayList<Result>(filteredResults.filter { it.correctAnswer == correctAnswer })
+                ArrayList<QuizResult>(filteredQuizResults.filter { it.correctAnswer == correctAnswer })
             val ratio =
                 QuizRatioCalculator.calculateCorrectAnswerRatio(quizRecordsFilteredOnceAgain)
             correctAnswerMap.put(correctAnswer, ratio)

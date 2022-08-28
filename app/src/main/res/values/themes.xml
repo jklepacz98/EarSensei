@@ -26,8 +26,8 @@
     <style name="Theme.EarSensei.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="Theme.EarSensei.ButtonOverlay" parent="Widget.AppCompat.Button">
-<!--        <item name="android:background">#FF99AA99</item>-->
-<!--        <dimen name="android:layout_margin">20dp</dimen>-->
+        <!--        <item name="android:background">#FF99AA99</item>-->
+        <!--        <dimen name="android:layout_margin">20dp</dimen>-->
         <item name="android:background">@drawable/default_round_button</item>
     </style>
 </resources>

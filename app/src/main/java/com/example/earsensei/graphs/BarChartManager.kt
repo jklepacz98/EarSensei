@@ -14,25 +14,50 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 
 class BarChartManager(val barChart: BarChart) {
 
-    companion object {
-        val barDistance: Float = 1F
-        val barWidth: Float = 0.9F
-        val maxVisibleXAxisLabels: Int = 20
-        val animationLengthInMs: Int = 750
-        val yAxisMinimum: Float = 0F
-        val yAxisMaximum: Float = 1F + 0.001F //0.001F addition is to show last grid line
-        val rightOffset: Float = 32F
-        val xAxisLabelTextSize: Float = 16F
-        val barTextSize: Float = 12F
-    }
+    val barDistance: Float = 1F
+    val barWidth: Float = 0.9F
+    val maxVisibleXAxisLabels: Int = 20
+    val animationLengthInMs: Int = 750
+    val yAxisMinimum: Float = 0F
+    val yAxisMaximum: Float = 1F + 0.001F //0.001F addition is to show last grid line
+    val rightOffset: Float = 32F
+    val xAxisLabelTextSize: Float = 16F
+    val barTextSize: Float = 12F
+
+//    var barDistance: Float = barChartModel.barDistance
+//    var barWidth: Float = barChartModel.barWidth
+//    var maxVisibleXAxisLabels: Int = barChartModel.maxVisibleXAxisLabels
+//    var animationLengthInMs: Int = barChartModel.animationLengthInMs
+//    var yAxisMinimum: Float = barChartModel.yAxisMinimum
+//    var yAxisMaximum: Float = barChartModel.yAxisMaximum
+//    var rightOffset: Float = barChartModel.rightOffset
+//    var xAxisLabelTextSize: Float = barChartModel.xAxisLabelTextSize
+//    var barTextSize: Float = barChartModel.barTextSize
 
     fun setupBarChart() {
+        setupDescription()
+        setupLegend()
+        setupXTopAxis()
+        setupYTopAxis()
+        setupYBottomAxis()
+        barChart.setFitBars(true)
+        barChart.isScaleXEnabled = false
+        barChart.setExtraOffsets(0F, 0F, rightOffset, 0F)
+        barChart.animateY(animationLengthInMs, Easing.EaseInOutQuad)
+        barChart.invalidate()
+    }
+
+    fun setupDescription() {
         val description: Description = barChart.description
         description.isEnabled = false
+    }
 
+    fun setupLegend() {
         val legend: Legend = barChart.legend
         legend.isEnabled = false
+    }
 
+    fun setupXTopAxis() {
         val xAxis: XAxis = barChart.xAxis
         xAxis.labelCount = maxVisibleXAxisLabels
         xAxis.granularity = barDistance
@@ -40,44 +65,39 @@ class BarChartManager(val barChart: BarChart) {
         xAxis.setDrawGridLines(false)
         xAxis.position = XAxis.XAxisPosition.BOTTOM
         xAxis.textSize = xAxisLabelTextSize
+    }
 
+    fun setupYTopAxis() {
         val yTopAxis: YAxis = barChart.axisLeft
         yTopAxis.axisMinimum = yAxisMinimum
         yTopAxis.axisMaximum = yAxisMaximum
         //yTopAxis.setDrawLabels(false)
+    }
 
+    fun setupYBottomAxis() {
         val yBottomAxis: YAxis = barChart.axisRight
         yBottomAxis.axisMinimum = yAxisMinimum
         yBottomAxis.axisMaximum = yAxisMaximum
         yBottomAxis.setDrawGridLines(false)
         yBottomAxis.setDrawLabels(false)
-
-
-
-        barChart.setFitBars(true)
-        barChart.isScaleXEnabled = false
-        barChart.setExtraOffsets(0F, 0F, rightOffset, 0F)
-        barChart.animateY(animationLengthInMs, Easing.EaseInOutQuad)
-
-        barChart.invalidate()
     }
 
-    fun setXAxisLabels(xAxisLabels: ArrayList<String>) {
+    fun setXAxisLabels(xAxisLabels: List<String>) {
         barChart.xAxis.valueFormatter = IndexAxisValueFormatter(xAxisLabels)
         barChart.invalidate()
     }
 
-    fun setDataValues(xValues: ArrayList<Float>) {
-        val dataValues: ArrayList<BarEntry> = createDataValues(xValues)
-        val barDataSet1: BarDataSet = BarDataSet(dataValues, "DataSet 1")
+    fun setDataValues(xValues: List<Float>) {
+        val dataValues: List<BarEntry> = createBarEntries(xValues)
+        val barDataSet1 = BarDataSet(dataValues, "DataSet 1")
         barDataSet1.setColor(Color.GREEN)
-        val barData: BarData = BarData(barDataSet1)
+        val barData = BarData(barDataSet1)
         barData.barWidth = barWidth
         barData.setValueTextSize(barTextSize)
         barChart.data = barData
     }
 
-    fun createDataValues(xValues: ArrayList<Float>): ArrayList<BarEntry> {
+    fun createBarEntries(xValues: List<Float>): List<BarEntry> {
         var iterator = 0F
         val dataValues: ArrayList<BarEntry> = arrayListOf()
         xValues.forEach() {
@@ -88,7 +108,7 @@ class BarChartManager(val barChart: BarChart) {
         return dataValues
     }
 
-    fun setOrderdHashMap(xLabels: ArrayList<String>): LinkedHashMap<Float, String> {
+    fun setOrderdHashMap(xLabels: List<String>): LinkedHashMap<Float, String> {
         val orderHashMap: LinkedHashMap<Float, String> = linkedMapOf()
         var iterator = 0F
         xLabels.forEach() {
