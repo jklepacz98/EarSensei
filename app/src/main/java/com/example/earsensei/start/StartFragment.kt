@@ -1,7 +1,6 @@
 package com.example.earsensei.start
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,9 +36,7 @@ class StartFragment : Fragment() {
             val progressList = QuizResultTestDataset.generateProgress()
             val db = EarSenseiDatabase.getDataBase(requireContext())
             runBlocking {
-
                 db.resultDao().insert(*results.toTypedArray())
-                    .also { Log.d("cosek", it.toString()) }
                 db.progressionDao().insert(*progressList.toTypedArray())
             }
         }

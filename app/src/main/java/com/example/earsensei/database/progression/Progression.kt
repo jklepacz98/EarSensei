@@ -1,9 +1,10 @@
 package com.example.earsensei.database.progression
 
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 
-@Entity
+@Entity(indices = [Index(value = ["question"], unique = true)])
 data class Progression(
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0,

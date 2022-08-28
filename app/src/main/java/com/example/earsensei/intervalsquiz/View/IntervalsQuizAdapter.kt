@@ -1,17 +1,19 @@
 package com.example.earsensei.intervalsquiz.View
 
 import android.content.Context
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.recyclerview.widget.RecyclerView
 import com.example.earsensei.R
-import com.example.earsensei.database.Answer
+import com.example.earsensei.database.AnswerButtonModel
 
 class IntervalsQuizAdapter(
-    var answers: List<Answer>,
+    var answers: List<AnswerButtonModel>,
     val recyclerViewClickListener: RecyclerViewClickListener
 ) : RecyclerView.Adapter<IntervalsQuizViewHolder>() {
+
+    var areAnswersHighlighted = false
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IntervalsQuizViewHolder {
         val context: Context = parent.context
@@ -21,14 +23,23 @@ class IntervalsQuizAdapter(
     }
 
     override fun onBindViewHolder(holder: IntervalsQuizViewHolder, position: Int) {
-        val answer: Answer = answers.get(position)
+        val answer: AnswerButtonModel = answers.get(position)
         holder.button.setText(holder.itemView.resources.getText(answer.stringResourceId))
-        val color = getColor(answer)
-        when (answer.state) {
-            Answer.NOT_CLICKED -> holder.button.setBackgroundColor(Color.WHITE)
-            Answer.CLICKED_CORRECT -> holder.button.setBackgroundColor(Color.GREEN)
-            Answer.CLICKED_WRONG -> holder.button.setBackgroundColor(Color.RED)
+        //todo
+        holder.button.setColor(answer)
+        when (areAnswersHighlighted) {
+            true -> holder.button.setColor(answer)
         }
+    }
+
+    private fun Button.setColor(answer: AnswerButtonModel) {
+        answers.forEach {
+            when (it.isCorrect) {
+                true -> setBackgroundResource(R.drawable.default_round_button_right)
+                else -> setBackgroundResource(R.drawable.default_round_button_wrong)
+            }
+        }
+
     }
 
     override fun getItemCount(): Int {
@@ -40,17 +51,10 @@ class IntervalsQuizAdapter(
         notifyDataSetChanged()
     }
 
-    fun changeList(newAnswers: List<Answer>) {
+    fun changeList(newAnswers: List<AnswerButtonModel>) {
         answers = newAnswers
         notifyDataSetChanged()
     }
-
-    fun getColor(answer: Answer): Int =
-        when (answer.state) {
-            Answer.NOT_CLICKED -> Color.WHITE
-            Answer.CLICKED_CORRECT -> Color.GREEN
-            else -> Color.RED
-        }
 
 
     interface RecyclerViewClickListener {

@@ -12,5 +12,9 @@
     <color name="black">#FF000000</color>
     <color name="gradientStart">#a8edea</color>
     <color name="gradientEnd">#fed6e3</color>
-<!--    <color name="white">#FFFFFFFF</color>-->
+    <color name="rightHighlight">#79db44</color>
+    <color name="rightHighlightPressed">#3f7522</color>
+    <color name="wrongHighlight">#942525</color>
+    <color name="wrongHighlightPressed">#942525</color>
+    <!--    <color name="white">#FFFFFFFF</color>-->
 </resources>

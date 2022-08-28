@@ -2,6 +2,7 @@ package com.example.earsensei.intervalsquiz.View
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,13 +10,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.earsensei.NotesPlayer
-import com.example.earsensei.database.Answer
+import com.example.earsensei.database.AnswerButtonModel
 import com.example.earsensei.databinding.FragmentIntervalsBinding
 import com.example.earsensei.intervalsquiz.ViewModel.IntervalsQuizViewModel
 
 class IntervalsFragment : Fragment(), IntervalsQuizAdapter.RecyclerViewClickListener {
 
-    private var answers: List<Answer> = listOf()
+    private var answers: List<AnswerButtonModel> = listOf()
     private lateinit var binding: FragmentIntervalsBinding
     private val viewModel: IntervalsQuizViewModel by lazy {
         ViewModelProvider(this@IntervalsFragment).get(IntervalsQuizViewModel::class.java)
@@ -29,7 +30,7 @@ class IntervalsFragment : Fragment(), IntervalsQuizAdapter.RecyclerViewClickList
 
     override fun onClick(position: Int) {
         // TODO:
-        //viewModel.checkAnswer(position)
+        viewModel.checkAnswer(position)
     }
 
     override fun onCreateView(
@@ -42,6 +43,7 @@ class IntervalsFragment : Fragment(), IntervalsQuizAdapter.RecyclerViewClickList
         setupRecyclerView()
         setupPlayButton()
         setupNextButton()
+        setupIsAnsweredObserver()
         setupProgressObserver()
         setupProgressMaxObserver()
         setupNotesObserver()
@@ -54,8 +56,15 @@ class IntervalsFragment : Fragment(), IntervalsQuizAdapter.RecyclerViewClickList
         binding.rvAnswers.adapter = answersAdapter
         binding.rvAnswers.layoutManager = GridLayoutManager(activity, 3)
         viewModel.answers.observe(viewLifecycleOwner) {
-            answers = viewModel.answers.value ?: listOf()
-            answersAdapter.changeList(answers)
+            Log.d("cos2", "hjkgfdsahgjklsfd")
+            answersAdapter.changeList(it)
+            Log.d("cos3", answersAdapter.answers.toString())
+        }
+    }
+
+    fun setupAreAnswersHighlightedObserver() {
+        viewModel.areAnswersHighlighted.observe(viewLifecycleOwner) {
+
         }
     }
 
@@ -67,24 +76,23 @@ class IntervalsFragment : Fragment(), IntervalsQuizAdapter.RecyclerViewClickList
 
     fun setupNextButton() {
         binding.nextButton.setOnClickListener {
-            // TODO:
-            //viewModel.nextQuiz()
-            notesPlayer.playMultipleNotes()
+            viewModel.nextQuiz()
         }
+    }
+
+    fun setupIsAnsweredObserver() {
         viewModel.isAnswered.observe(viewLifecycleOwner) {
             binding.nextButton.visibility = when (it) {
                 true -> View.VISIBLE
                 else -> View.INVISIBLE
             }
+            binding.rvAnswers
         }
     }
 
     fun setupProgressObserver() {
         viewModel.progress.observe(viewLifecycleOwner) {
             binding.progressBar.progress = it
-            if (binding.progressBar.progress >= binding.progressBar.max) {
-                // TODO:
-            }
         }
     }
 

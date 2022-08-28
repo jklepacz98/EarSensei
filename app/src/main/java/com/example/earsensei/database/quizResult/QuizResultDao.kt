@@ -8,10 +8,10 @@ import androidx.room.Query
 @Dao
 interface QuizResultDao {
     @Query("SELECT * FROM quizResult")
-    fun readAllData(): LiveData<List<QuizResult>>
+    fun getAllData(): LiveData<List<QuizResult>>
 
     @Query("SELECT * FROM quizResult")
-    fun readAllData2(): List<QuizResult>
+    fun getAllData2(): List<QuizResult>
 
     //todo zmienić nazwę argumentu
     @Query("SELECT COUNT(*) FROM quizresult WHERE :answer = correctAnswer AND isCorrect = 1")
