@@ -2,6 +2,7 @@ package com.example.earsensei.database.quizResult
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.util.*
 
 @Entity
 data class QuizResult(
@@ -11,6 +12,6 @@ data class QuizResult(
     val baseNote: String,
     val correctAnswer: String,
     val userAnswer: String,
-    val date: Int,
+    val date: Long = Date().time,
     var isCorrect: Boolean = correctAnswer == userAnswer
 )

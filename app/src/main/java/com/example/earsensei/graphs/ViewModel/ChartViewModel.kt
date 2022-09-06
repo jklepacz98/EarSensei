@@ -20,9 +20,10 @@ class ChartViewModel(app: Application) : AndroidViewModel(app) {
                 viewModelScope.launch(Dispatchers.IO) {
 
                     val map = linkedMapOf<String, Float>()
-                    val allResults = db.resultDao().getAllData2().size
                     INTERVALS.values().forEach {
-                        val correctResults = db.resultDao().getAllCorrectResults(it.name)
+                        val correctResults =
+                            db.resultDao().getCountAllCorrectResults(it.getType(), it.name)
+                        val allResults = db.resultDao().getCountAllByAnswer(it.getType(), it.name)
                         val ratio = correctResults.toFloat() / allResults.toFloat()
                         map.put(it.name, ratio)
                     }

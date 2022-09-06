@@ -6,14 +6,12 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.recyclerview.widget.RecyclerView
 import com.example.earsensei.R
-import com.example.earsensei.database.AnswerButtonModel
+import com.example.earsensei.database.Answer
 
 class IntervalsQuizAdapter(
-    var answers: List<AnswerButtonModel>,
+    var answers: List<Answer>,
     val recyclerViewClickListener: RecyclerViewClickListener
 ) : RecyclerView.Adapter<IntervalsQuizViewHolder>() {
-
-    var areAnswersHighlighted = false
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IntervalsQuizViewHolder {
         val context: Context = parent.context
@@ -23,39 +21,25 @@ class IntervalsQuizAdapter(
     }
 
     override fun onBindViewHolder(holder: IntervalsQuizViewHolder, position: Int) {
-        val answer: AnswerButtonModel = answers.get(position)
+        val answer: Answer = answers.get(position)
         holder.button.setText(holder.itemView.resources.getText(answer.stringResourceId))
-        //todo
-        holder.button.setColor(answer)
-        when (areAnswersHighlighted) {
-            true -> holder.button.setColor(answer)
-        }
+        if (answer.isHighlighted) holder.button.setColor(answer)
+        else holder.button.setBackgroundResource(R.drawable.default_round_button)
     }
 
-    private fun Button.setColor(answer: AnswerButtonModel) {
-        answers.forEach {
-            when (it.isCorrect) {
-                true -> setBackgroundResource(R.drawable.default_round_button_right)
-                else -> setBackgroundResource(R.drawable.default_round_button_wrong)
-            }
-        }
-
+    private fun Button.setColor(answer: Answer) {
+        if (answer.isCorrect) setBackgroundResource(R.drawable.default_round_button_right)
+        else setBackgroundResource(R.drawable.default_round_button_wrong)
     }
 
     override fun getItemCount(): Int {
         return answers.size
     }
 
-    fun deleteItem(position: Int) {
-        answers.drop(position)
-        notifyDataSetChanged()
-    }
-
-    fun changeList(newAnswers: List<AnswerButtonModel>) {
+    fun changeList(newAnswers: List<Answer>) {
         answers = newAnswers
         notifyDataSetChanged()
     }
-
 
     interface RecyclerViewClickListener {
         fun onClick(position: Int)

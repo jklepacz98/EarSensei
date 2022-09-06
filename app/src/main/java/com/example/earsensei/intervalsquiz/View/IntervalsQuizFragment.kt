@@ -1,82 +1,77 @@
 package com.example.earsensei.intervalsquiz.View
 
-import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.earsensei.NotesPlayer
-import com.example.earsensei.database.AnswerButtonModel
 import com.example.earsensei.databinding.FragmentIntervalsBinding
 import com.example.earsensei.intervalsquiz.ViewModel.IntervalsQuizViewModel
 
 class IntervalsFragment : Fragment(), IntervalsQuizAdapter.RecyclerViewClickListener {
 
-    private var answers: List<AnswerButtonModel> = listOf()
     private lateinit var binding: FragmentIntervalsBinding
     private val viewModel: IntervalsQuizViewModel by lazy {
         ViewModelProvider(this@IntervalsFragment).get(IntervalsQuizViewModel::class.java)
     }
-    private lateinit var notesPlayer: NotesPlayer
+    private val answersAdapter = IntervalsQuizAdapter(listOf(), this)
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        notesPlayer = NotesPlayer(context)
-    }
 
     override fun onClick(position: Int) {
-        // TODO:
-        viewModel.checkAnswer(position)
+        viewModel.onAnswerClick(position)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         super.onCreate(savedInstanceState)
         binding = FragmentIntervalsBinding.inflate(inflater, container, false)
         setupRecyclerView()
+        setupAnswersObserver()
         setupPlayButton()
         setupNextButton()
+        setupIsNextButtonVisibleObserver()
         setupIsAnsweredObserver()
         setupProgressObserver()
         setupProgressMaxObserver()
-        setupNotesObserver()
+        setupGoBackObserver()
         return binding.root
     }
 
-    //todo chyba da się to lepiej podzielić
     fun setupRecyclerView() {
-        val answersAdapter = IntervalsQuizAdapter(answers, this)
         binding.rvAnswers.adapter = answersAdapter
         binding.rvAnswers.layoutManager = GridLayoutManager(activity, 3)
-        viewModel.answers.observe(viewLifecycleOwner) {
-            Log.d("cos2", "hjkgfdsahgjklsfd")
-            answersAdapter.changeList(it)
-            Log.d("cos3", answersAdapter.answers.toString())
-        }
+
     }
 
-    fun setupAreAnswersHighlightedObserver() {
-        viewModel.areAnswersHighlighted.observe(viewLifecycleOwner) {
-
+    fun setupAnswersObserver() {
+        viewModel.answers.observe(viewLifecycleOwner) {
+            answersAdapter.changeList(it)
         }
     }
 
     fun setupPlayButton() {
         binding.buttonPlay.setOnClickListener() {
-            notesPlayer.playMultipleNotes()
+            viewModel.playNotes()
         }
     }
 
     fun setupNextButton() {
         binding.nextButton.setOnClickListener {
             viewModel.nextQuiz()
+        }
+    }
+
+    fun setupIsNextButtonVisibleObserver() {
+        val nextButton = binding.nextButton
+        viewModel.isNextButtonVisible.observe(viewLifecycleOwner) {
+            if (it) nextButton.visibility = View.VISIBLE
+            else nextButton.visibility = View.INVISIBLE
         }
     }
 
@@ -102,9 +97,10 @@ class IntervalsFragment : Fragment(), IntervalsQuizAdapter.RecyclerViewClickList
         }
     }
 
-    fun setupNotesObserver() {
-        viewModel.notes.observe(viewLifecycleOwner) {
-            notesPlayer.setNotes(it)
+    fun setupGoBackObserver() {
+        viewModel.goBack.observe(viewLifecycleOwner) {
+            if (it) findNavController().popBackStack()
         }
     }
+
 }

@@ -1,9 +1,8 @@
 package com.example.earsensei.database.quizResult
 
 import com.example.earsensei.INTERVALS
+import com.example.earsensei.NOTES_WITH_OCTAVE
 import com.example.earsensei.database.progression.Progression
-import com.example.earsensei.notesWithOctave
-import com.example.earsensei.utils.QuizType
 import com.example.earsensei.utils.randomEnum
 
 class QuizResultTestDataset {
@@ -13,11 +12,11 @@ class QuizResultTestDataset {
             for (i in 0..10000) {
                 quizResults.add(
                     QuizResult(
-                        quizType = QuizType.INTERVALS,
-                        baseNote = notesWithOctave.keys.random(),
+                        quizType = INTERVALS.getType(),
+                        baseNote = NOTES_WITH_OCTAVE.keys.random(),
                         correctAnswer = randomEnum<INTERVALS>().name,
                         userAnswer = randomEnum<INTERVALS>().name,
-                        date = i
+                        date = i.toLong()
                     )
                 )
             }
@@ -28,21 +27,21 @@ class QuizResultTestDataset {
             val progressionList = arrayListOf<Progression>()
             progressionList.add(
                 Progression(
-                    type = QuizType.INTERVALS,
+                    type = INTERVALS.getType(),
                     question = INTERVALS.MAJOR_3RD.name,
                     date = 0
                 )
             )
             progressionList.add(
                 Progression(
-                    type = QuizType.INTERVALS,
+                    type = INTERVALS.getType(),
                     question = INTERVALS.PERFECT_5TH.name,
                     date = 0
                 )
             )
             progressionList.add(
                 Progression(
-                    type = QuizType.INTERVALS,
+                    type = INTERVALS.getType(),
                     question = INTERVALS.OCATVE.name,
                     date = 0
                 )

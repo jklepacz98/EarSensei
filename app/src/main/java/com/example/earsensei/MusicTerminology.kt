@@ -8,7 +8,11 @@ class MusicTerminology() {
     }
 }
 
-enum class INTERVALS(val halfSteps: Int, val translation: Int) {
+interface Musicable {
+    fun getType(): String
+}
+
+enum class INTERVALS(val halfSteps: Int, val translation: Int) : Musicable {
     PERFECT_1ST(0, R.string.interval_perfect1st),
     MINOR_2ND(1, R.string.interval_minor2nd),
     MAJOR_2RD(2, R.string.interval_major2nd),
@@ -23,27 +27,61 @@ enum class INTERVALS(val halfSteps: Int, val translation: Int) {
     MAJOR_7TH(11, R.string.interval_major7th),
     OCATVE(12, R.string.interval_octave),
     MINOR_9TH(13, R.string.interval_minor9th),
-    MAJOR_9TH(14, R.string.interval_major9th)
+    MAJOR_9TH(14, R.string.interval_major9th);
+
+    override fun getType(): String {
+        return INTERVALS.getType()
+    }
+
+    companion object : Musicable {
+        const private val type: String = "Intervals"
+        override fun getType(): String {
+            return type
+        }
+    }
+
 }
 
-enum class SCALES(val halfSteps: List<Int>, val translation: Int) {
+enum class SCALES(val halfSteps: List<Int>, val translation: Int) : Musicable {
     MAJOR(listOf(0, 2, 4, 5, 7, 9, 11, 12), R.string.scale_major),
     NATURAL_MINOR(listOf(0, 2, 3, 5, 7, 8, 10, 12), R.string.scale_natural_minor),
-    HARMONIC_MINOR(listOf(0, 2, 3, 5, 7, 8, 11, 12), R.string.scale_harmonic_minor)
+    HARMONIC_MINOR(listOf(0, 2, 3, 5, 7, 8, 11, 12), R.string.scale_harmonic_minor);
+
+    override fun getType(): String {
+        return SCALES.getType()
+    }
+
+    companion object : Musicable {
+        const private val type: String = "Scales"
+        override fun getType(): String {
+            return type
+        }
+    }
 }
 
 
-enum class CHORDS(val halfSteps: List<Int>, val translation: Int) {
+enum class CHORDS(val halfSteps: List<Int>, val translation: Int) : Musicable {
     MAJOR(listOf(0, 4, 7), R.string.chord_major),
     MINOR(listOf(0, 3, 7), R.string.chord_minor),
     DIMINISHED(listOf(0, 3, 6), R.string.chord_diminished),
     AUGMENTED(listOf(0, 4, 8), R.string.chord_augmented),
     MAJOR_7TH(listOf(0, 4, 7, 11), R.string.chord_major7th),
     DOMINANT_7TH(listOf(0, 4, 7, 10), R.string.chord_dominant7th),
-    MINOR_7TH(listOf(0, 3, 7, 10), R.string.chord_minor7th)
+    MINOR_7TH(listOf(0, 3, 7, 10), R.string.chord_minor7th);
+
+    override fun getType(): String {
+        return CHORDS.getType()
+    }
+
+    companion object : Musicable {
+        const private val type: String = "Chords"
+        override fun getType(): String {
+            return type
+        }
+    }
 }
 
-val notes = mapOf<String, Int>(
+val NOTES = mapOf<String, Int>(
     "C" to 0,
     "Cis" to 1,
     "D" to 2,
@@ -58,7 +96,7 @@ val notes = mapOf<String, Int>(
     "B" to 11,
 )
 
-val notesWithOctave = mapOf<String, Int>(
+val NOTES_WITH_OCTAVE = mapOf<String, Int>(
     "C3" to 0,
     "Cis3" to 1,
     "D3" to 2,
