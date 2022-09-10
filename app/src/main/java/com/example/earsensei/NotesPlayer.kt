@@ -32,6 +32,9 @@ class NotesPlayer(val context: Context) {
 
     fun setNotes(notes: List<Note>) {
         job.cancel()
+        mediaPlayers.forEach {
+            it.release()
+        }
         mediaPlayers.clear()
         notes.forEach() {
             val mediaPlayer: MediaPlayer = MediaPlayer.create(context, it.audioResource)
