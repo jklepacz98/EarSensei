@@ -11,7 +11,8 @@ class QuizGenerator(val db: EarSenseiDatabase) {
 
     fun generateQuizes(type: String): List<Quiz> {
         val quizes = mutableListOf<Quiz>()
-        val unlockedQuestions = db.unlockedquestionDao().getAllData()
+        val unlockedQuestions =
+            db.unlockedquestionDao().getAllData().sortedBy { INTERVALS.valueOf(it.question).order }
         val worst = progressManager.getWorstRecord(type)
         val mistake = progressManager.getMostCommonMistake(type, worst.key)
         for (i in 0..(numberOfNormal - 1)) {
