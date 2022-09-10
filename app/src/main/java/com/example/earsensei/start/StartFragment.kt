@@ -1,14 +1,11 @@
 package com.example.earsensei.start
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import com.example.earsensei.INTERVALS
-import com.example.earsensei.ProgressManager
 import com.example.earsensei.database.EarSenseiDatabase
 import com.example.earsensei.database.quizResult.QuizResultTestDataset
 import com.example.earsensei.databinding.FragmentStartBinding
@@ -34,6 +31,9 @@ class StartFragment : Fragment() {
         binding.buttonIntervals.setOnClickListener {
             this@StartFragment.navigate(StartFragmentDirections.actionStartFragmentToIntervalsFragment())
         }
+        binding.buttonChords.setOnClickListener {
+            this@StartFragment.navigate(StartFragmentDirections.actionStartFragmentToChordsQuizFragment())
+        }
         binding.buttonStats.setOnClickListener {
             this@StartFragment.navigate(StartFragmentDirections.actionStartFragmentToStatsFragment())
         }
@@ -51,14 +51,6 @@ class StartFragment : Fragment() {
                 val db = EarSenseiDatabase.getDataBase(requireContext())
                 db.resultDao().deleteAll()
                 db.unlockedquestionDao().deleteAll()
-            }
-        }
-        binding.getWorst.setOnClickListener {
-            lifecycleScope.launch(Dispatchers.IO) {
-                val db = EarSenseiDatabase.getDataBase(requireContext())
-                val progressManager = ProgressManager(db)
-                val worst = progressManager.getWorstRecord(INTERVALS.getType())
-                Log.d("cos1", worst.toString())
             }
         }
     }

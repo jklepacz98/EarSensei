@@ -20,17 +20,19 @@ class IntervalsQuizViewModel(app: Application) : AndroidViewModel(app) {
     private val notesPlayer: NotesPlayer by lazy { NotesPlayer(app) }
     private val quizGenerator: QuizGenerator by lazy { QuizGenerator(db) }
 
+    private val musicTerminology: MusicTerminology = Intervals
+
     private lateinit var unlockedQuestions: List<UnlockedQuestion>
-    private val quizes: List<Quiz> by lazy { quizGenerator.generateQuizes(INTERVALS.getType()) }
+    private val quizes: List<Quiz> by lazy { quizGenerator.generateQuizes(musicTerminology) }
     private val quizIterator: Iterator<Quiz> by lazy { quizes.iterator() }
     private lateinit var curentQuiz: Quiz
-    val progress = MutableLiveData<Int>(0)
+    val progress = MutableLiveData<Int>(-1)
     val progressMax = MutableLiveData<Int>(20)
     val answers = MutableLiveData<List<Answer>>()
     val isAnswered = MutableLiveData(false)
     val isNextButtonVisible = MutableLiveData(false)
     val goBack = MutableLiveData(false)
-    val lastUnlockQuestionDate by lazy { db.unlockedquestionDao().getLatest(INTERVALS.getType()) }
+    val lastUnlockQuestionDate by lazy { db.unlockedquestionDao().getLatest(musicTerminology.type) }
     lateinit var lastRecords: MutableList<QuizResult>
 
     val makeToast: MutableLiveData<String> = MutableLiveData()
@@ -53,11 +55,10 @@ class IntervalsQuizViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     fun setNotes() {
-        val baseNote = Note.NOTES[NOTES_WITH_OCTAVE[curentQuiz.baseNote]]
-        val sum =
-            NOTES_WITH_OCTAVE[curentQuiz.baseNote]!! + (INTERVALS.valueOf(curentQuiz.correctAnswer.name)).halfSteps
-        val secondNote = Note.NOTES[sum]
-        notesPlayer.setNotes(listOf(baseNote!!, secondNote!!))
+        val baseNote = NOTES_WITH_OCTAVE[curentQuiz.baseNote]!!
+        val interval = musicTerminology.mapson.get(curentQuiz.correctAnswer.name)
+        val noteIndices = interval!!.toNoteIndices(baseNote)
+        notesPlayer.setNotes(noteIndices)
     }
 
 
@@ -65,7 +66,7 @@ class IntervalsQuizViewModel(app: Application) : AndroidViewModel(app) {
         viewModelScope.launch(Dispatchers.IO) {
             unlockedQuestions = db.unlockedquestionDao().getAllData()
             iterateQuiz()
-            lastRecords = db.resultDao().get(INTERVALS.getType(), lastUnlockQuestionDate, LIMIT)
+            lastRecords = db.resultDao().get(musicTerminology.type, lastUnlockQuestionDate, LIMIT)
                 .toMutableList()
             progressMax.postValue(quizes.size)
         }
@@ -77,7 +78,7 @@ class IntervalsQuizViewModel(app: Application) : AndroidViewModel(app) {
 
     private fun List<UnlockedQuestion>.toAnswers(): List<Answer> =
         map {
-            val interval = INTERVALS.valueOf(it.question)
+            val interval = musicTerminology.mapson.get(it.question)!!
             Answer(interval.name, interval.translation, false)
         }.also { it.random().isCorrect = true }
 
@@ -89,9 +90,8 @@ class IntervalsQuizViewModel(app: Application) : AndroidViewModel(app) {
             viewModelScope.launch(Dispatchers.IO) {
                 if (canUnlockNewQuestion(lastRecords)) {
                     lastRecords.clear()
-                    //unlockedQuestions = db.unlockedquestionDao().getByType(INTERVALS.getType()).sortedBy { INTERVALS.valueOf(it.question).halfSteps }
-                    val lockedQuestions = INTERVALS.values()
-                        .toList()
+                    //unlockedQuestions = db.unlockedquestionDao().getByType(Intervals.getType()).sortedBy { Intervals.valueOf(it.question).halfSteps }
+                    val lockedQuestions = Intervals.list
                         .map { it.name }
                         //todo list of
                         .minus(unlockedQuestions.map { it.question })
@@ -100,7 +100,7 @@ class IntervalsQuizViewModel(app: Application) : AndroidViewModel(app) {
                     db.unlockedquestionDao().insert(
                         UnlockedQuestion(
                             question = randomQuestion,
-                            type = INTERVALS.getType()
+                            type = musicTerminology.type
                         )
                     )
                 }
@@ -119,7 +119,7 @@ class IntervalsQuizViewModel(app: Application) : AndroidViewModel(app) {
 
     fun addResult(answer: Answer) {
         val quizResult = QuizResult(
-            quizType = INTERVALS.getType(),
+            quizType = musicTerminology.type,
             baseNote = curentQuiz.baseNote,
             correctAnswer = curentQuiz.correctAnswer.name,
             userAnswer = answer.name

@@ -16,10 +16,13 @@
         <action
             android:id="@+id/action_startFragment_to_statsFragment"
             app:destination="@id/statsFragment" />
+        <action
+            android:id="@+id/action_startFragment_to_chordsQuizFragment"
+            app:destination="@id/chordsQuizFragment" />
     </fragment>
     <fragment
         android:id="@+id/intervalsFragment"
-        android:name="com.example.earsensei.intervalsquiz.View.IntervalsFragment"
+        android:name="com.example.earsensei.intervalsquiz.View.IntervalsQuizFragment"
         android:label="fragment_intervals"
         tools:layout="@layout/fragment_intervals" />
     <fragment
@@ -40,4 +43,8 @@
             android:id="@+id/action_chartFragment_self"
             app:destination="@id/chartFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/chordsQuizFragment"
+        android:name="com.example.earsensei.intervalsquiz.View.ChordsQuizFragment"
+        android:label="ChordsQuizFragment" />
 </navigation>

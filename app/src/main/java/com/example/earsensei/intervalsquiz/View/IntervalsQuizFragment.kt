@@ -12,13 +12,13 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.earsensei.databinding.FragmentIntervalsBinding
 import com.example.earsensei.intervalsquiz.ViewModel.IntervalsQuizViewModel
 
-class IntervalsFragment : Fragment(), IntervalsQuizAdapter.RecyclerViewClickListener {
+class IntervalsQuizFragment : Fragment(), QuizAdapter.RecyclerViewClickListener {
 
     private lateinit var binding: FragmentIntervalsBinding
     private val viewModel: IntervalsQuizViewModel by lazy {
-        ViewModelProvider(this@IntervalsFragment).get(IntervalsQuizViewModel::class.java)
+        ViewModelProvider(this@IntervalsQuizFragment).get(IntervalsQuizViewModel::class.java)
     }
-    private val answersAdapter = IntervalsQuizAdapter(listOf(), this)
+    private val answersAdapter = QuizAdapter(listOf(), this)
 
 
     override fun onClick(position: Int) {

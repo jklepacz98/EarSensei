@@ -1,9 +1,8 @@
 package com.example.earsensei.database.quizResult
 
-import com.example.earsensei.INTERVALS
+import com.example.earsensei.Intervals
 import com.example.earsensei.NOTES_WITH_OCTAVE
 import com.example.earsensei.database.unlockedQuestion.UnlockedQuestion
-import com.example.earsensei.utils.randomEnum
 
 class QuizResultTestDataset {
     companion object {
@@ -12,10 +11,10 @@ class QuizResultTestDataset {
             for (i in 0..10000) {
                 quizResults.add(
                     QuizResult(
-                        quizType = INTERVALS.getType(),
+                        quizType = Intervals.type,
                         baseNote = NOTES_WITH_OCTAVE.keys.random(),
-                        correctAnswer = randomEnum<INTERVALS>().name,
-                        userAnswer = randomEnum<INTERVALS>().name,
+                        correctAnswer = Intervals.list.random().name,
+                        userAnswer = Intervals.list.random().name,
                         date = i.toLong()
                     )
                 )
@@ -27,20 +26,20 @@ class QuizResultTestDataset {
             val progressionList = arrayListOf<UnlockedQuestion>()
             progressionList.add(
                 UnlockedQuestion(
-                    type = INTERVALS.getType(),
-                    question = INTERVALS.MAJOR_3RD.name
+                    type = Intervals.type,
+                    question = Intervals.list.get(0).name
                 )
             )
             progressionList.add(
                 UnlockedQuestion(
-                    type = INTERVALS.getType(),
-                    question = INTERVALS.MINOR_9TH.name
+                    type = Intervals.type,
+                    question = Intervals.list.get(1).name
                 )
             )
             progressionList.add(
                 UnlockedQuestion(
-                    type = INTERVALS.getType(),
-                    question = INTERVALS.OCATVE.name
+                    type = Intervals.type,
+                    question = Intervals.list.get(2).name
                 )
             )
             return progressionList

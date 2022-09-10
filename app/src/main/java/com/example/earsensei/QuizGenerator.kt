@@ -7,39 +7,59 @@ import com.example.earsensei.database.Quiz
 class QuizGenerator(val db: EarSenseiDatabase) {
     var numberOfNormal: Int = 4
     var numberOfAdjusted: Int = 4
-    val progressManager = ProgressManager(db)
+    val hardestQuestionsFinder = HardestQuestionsFinder(db)
 
-    fun generateQuizes(type: String): List<Quiz> {
+    fun generateQuizes(musicTerminology: MusicTerminology): List<Quiz> {
+        val type = musicTerminology.type
         val quizes = mutableListOf<Quiz>()
         val unlockedQuestions =
-            db.unlockedquestionDao().getAllData().sortedBy { INTERVALS.valueOf(it.question).order }
-        val worst = progressManager.getWorstRecord(type)
-        val mistake = progressManager.getMostCommonMistake(type, worst.key)
-        for (i in 0..(numberOfNormal - 1)) {
-            val quiz = generateQuiz(unlockedQuestions.map { it.question })
-            quizes.add(quiz)
+            db.unlockedquestionDao().getByType(type)
+                .sortedBy { musicTerminology.mapson.get(it.question)!!.order }
+        val worst = hardestQuestionsFinder.getWorstRecord(type)
+        if (worst != null) {
+            val mistake = hardestQuestionsFinder.getMostCommonMistake(type, worst.key)
+            if (mistake != null) {
+                for (i in 0..(numberOfNormal - 1)) {
+                    val quiz = generateQuiz(unlockedQuestions.map { it.question }, musicTerminology)
+                    quizes.add(quiz)
+                }
+                for (i in 0..(numberOfAdjusted - 1)) {
+                    val quiz = generateQuiz(listOf(worst.key, mistake.key), musicTerminology)
+                    quizes.add(quiz)
+                }
+            } else {
+                for (i in 0..(numberOfNormal + numberOfAdjusted - 1)) {
+                    val quiz = generateQuiz(unlockedQuestions.map { it.question }, musicTerminology)
+                    quizes.add(quiz)
+                }
+            }
+        } else {
+            for (i in 0..(numberOfNormal + numberOfAdjusted - 1)) {
+                val quiz = generateQuiz(unlockedQuestions.map { it.question }, musicTerminology)
+                quizes.add(quiz)
+            }
         }
-        for (i in 0..(numberOfAdjusted - 1)) {
-            val quiz = generateQuiz(listOf(worst.key, mistake.key))
-            quizes.add(quiz)
-        }
+
+
         return quizes
     }
 
 
-    private fun generateQuiz(answers: List<String>): Quiz {
-        val answers = generateAnswers(answers)
+    private fun generateQuiz(answers: List<String>, musicTerminology: MusicTerminology): Quiz {
+        val answers = generateAnswers(answers, musicTerminology)
         val correctAnswer = answers.filter { it.isCorrect == true }.first()
-        //todo zmienić nazwę
-        val range = INTERVALS.valueOf(correctAnswer.name).getRange()
+        val range = musicTerminology.mapson.get(correctAnswer.name)!!.getRange()
         val baseNote = range.keys.random()
         return Quiz(baseNote, correctAnswer, answers)
     }
 
-    private fun generateAnswers(answerPool: List<String>): List<Answer> {
+    private fun generateAnswers(
+        answerPool: List<String>,
+        musicTerminology: MusicTerminology
+    ): List<Answer> {
         val answers = mutableListOf<Answer>()
         answerPool.forEach {
-            val interval = INTERVALS.valueOf(it)
+            val interval = musicTerminology.mapson.get(it)!!
             val answer = Answer(
                 interval.name,
                 interval.translation,

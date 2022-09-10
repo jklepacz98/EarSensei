@@ -30,14 +30,14 @@ class NotesPlayer(val context: Context) {
         }
     }
 
-    fun setNotes(notes: List<Note>) {
-        job.cancel()
+    fun setNotes(noteIndices: List<Int>) {
+        val notes = noteIndices.map { Note.NOTES.get(it) }
         mediaPlayers.forEach {
             it.release()
         }
         mediaPlayers.clear()
         notes.forEach() {
-            val mediaPlayer: MediaPlayer = MediaPlayer.create(context, it.audioResource)
+            val mediaPlayer: MediaPlayer = MediaPlayer.create(context, it!!.audioResource)
             mediaPlayers.add(mediaPlayer)
         }
     }
