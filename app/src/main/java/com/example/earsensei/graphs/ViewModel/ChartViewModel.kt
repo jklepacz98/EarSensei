@@ -18,20 +18,22 @@ class ChartViewModel(app: Application) : AndroidViewModel(app) {
         MediatorLiveData<LinkedHashMap<String, Float>>().apply {
             addSource(quizResults) {
                 viewModelScope.launch(Dispatchers.IO) {
-
                     val map = linkedMapOf<String, Float>()
                     INTERVALS.values().forEach {
-                        val correctResults =
-                            db.resultDao().getCountAllCorrectResults(it.getType(), it.name)
-                        val allResults = db.resultDao().getCountAllByAnswer(it.getType(), it.name)
-                        val ratio = correctResults.toFloat() / allResults.toFloat()
+                        val ratio = calculateRatio(it.type, it.name)
                         map.put(it.name, ratio)
                     }
                     postValue(map)
                 }
             }
-            // TODO:  
+            // TODO:
             quizResults.postValue(listOf())
         }
 
+    //todo
+    suspend fun calculateRatio(type: String, name: String): Float {
+        val correctResults = db.resultDao().getCountAllCorrectResults(type, name)
+        val allResults = db.resultDao().getCountAllByAnswer(type, name)
+        return correctResults.toFloat() / allResults.toFloat()
+    }
 }

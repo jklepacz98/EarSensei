@@ -43,14 +43,14 @@ class StartFragment : Fragment() {
                 val progressList = QuizResultTestDataset.generateProgress()
                 val db = EarSenseiDatabase.getDataBase(requireContext())
                 db.resultDao().insert(*results.toTypedArray())
-                db.progressionDao().insert(*progressList.toTypedArray())
+                db.unlockedquestionDao().insert(*progressList.toTypedArray())
             }
         }
         binding.buttonDeleteDataFromDatabase.setOnClickListener {
             lifecycleScope.launch(Dispatchers.IO) {
                 val db = EarSenseiDatabase.getDataBase(requireContext())
                 db.resultDao().deleteAll()
-                db.progressionDao().deleteAll()
+                db.unlockedquestionDao().deleteAll()
             }
         }
         binding.getWorst.setOnClickListener {

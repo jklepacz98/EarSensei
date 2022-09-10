@@ -1,87 +1,83 @@
 package com.example.earsensei
 
-class MusicTerminology() {
+
+interface MusicTerminology {
+    val order: Int
+    val translation: Int
+    fun getRange(): Map<String, Int>
+    val type: String
+}
+
+enum class INTERVALS(override val order: Int, val halfSteps: Int, override val translation: Int) :
+    MusicTerminology {
+    //PERFECT_1ST(0,0, R.string.interval_perfect1st),
+    MINOR_2ND(1, 1, R.string.interval_minor2nd),
+    MAJOR_2RD(2, 2, R.string.interval_major2nd),
+    MINOR_3RD(3, 3, R.string.interval_minor3rd),
+    MAJOR_3RD(4, 4, R.string.interval_major3rd),
+    PERFECT_4TH(5, 5, R.string.interval_perfect4th),
+    TRITONE(6, 6, R.string.interval_tritone),
+    PERFECT_5TH(7, 7, R.string.interval_perfect5th),
+    MINOR_6TH(8, 8, R.string.interval_minor6th),
+    MAJOR_6TH(9, 9, R.string.interval_major6th),
+    MINOR_7TH(10, 10, R.string.interval_minor7th),
+    MAJOR_7TH(11, 11, R.string.interval_major7th),
+    OCATVE(12, 12, R.string.interval_octave),
+    MINOR_9TH(13, 13, R.string.interval_minor9th),
+    MAJOR_9TH(14, 14, R.string.interval_major9th);
+
+    override val type: String = "Intervals"
+
+    override fun getRange() =
+        NOTES_WITH_OCTAVE.filter { it.value < NOTES_WITH_OCTAVE.size - this.halfSteps }
+
     companion object {
-        const val MAJOR = "Major"
-        const val MINOR = "Minor"
-        const val OCTAVE_SIZE = 12
-    }
-}
-
-interface Musicable {
-    fun getType(): String
-}
-
-enum class INTERVALS(val halfSteps: Int, val translation: Int) : Musicable {
-    PERFECT_1ST(0, R.string.interval_perfect1st),
-    MINOR_2ND(1, R.string.interval_minor2nd),
-    MAJOR_2RD(2, R.string.interval_major2nd),
-    MINOR_3RD(3, R.string.interval_minor3rd),
-    MAJOR_3RD(4, R.string.interval_major3rd),
-    PERFECT_4TH(5, R.string.interval_perfect4th),
-    TRITONE(6, R.string.interval_tritone),
-    PERFECT_5TH(7, R.string.interval_perfect5th),
-    MINOR_6TH(8, R.string.interval_minor6th),
-    MAJOR_6TH(9, R.string.interval_major6th),
-    MINOR_7TH(10, R.string.interval_minor7th),
-    MAJOR_7TH(11, R.string.interval_major7th),
-    OCATVE(12, R.string.interval_octave),
-    MINOR_9TH(13, R.string.interval_minor9th),
-    MAJOR_9TH(14, R.string.interval_major9th);
-
-    override fun getType(): String {
-        return INTERVALS.getType()
-    }
-
-    companion object : Musicable {
-        const private val type: String = "Intervals"
-        override fun getType(): String {
-            return type
-        }
-    }
-
-}
-
-enum class SCALES(val halfSteps: List<Int>, val translation: Int) : Musicable {
-    MAJOR(listOf(0, 2, 4, 5, 7, 9, 11, 12), R.string.scale_major),
-    NATURAL_MINOR(listOf(0, 2, 3, 5, 7, 8, 10, 12), R.string.scale_natural_minor),
-    HARMONIC_MINOR(listOf(0, 2, 3, 5, 7, 8, 11, 12), R.string.scale_harmonic_minor);
-
-    override fun getType(): String {
-        return SCALES.getType()
-    }
-
-    companion object : Musicable {
-        const private val type: String = "Scales"
-        override fun getType(): String {
-            return type
+        const val TYPE = "Intervals"
+        fun getType(): String {
+            return TYPE
         }
     }
 }
+//
+//enum class SCALES(val halfSteps: List<Int>, override val translation: Int) : MusicTerminology {
+//    MAJOR(listOf(0, 2, 4, 5, 7, 9, 11, 12), R.string.scale_major),
+//    NATURAL_MINOR(listOf(0, 2, 3, 5, 7, 8, 10, 12), R.string.scale_natural_minor),
+//    HARMONIC_MINOR(listOf(0, 2, 3, 5, 7, 8, 11, 12), R.string.scale_harmonic_minor);
+//
+//    override fun getType(): String {
+//        return SCALES.getType()
+//    }
+//
+//    companion object {
+//        private const val type: String = "Scales"
+//        fun getType(): String {
+//            return type
+//        }
+//    }
+//}
 
+//enum class CHORDS(val halfSteps: List<Int>, override val translation: Int) : MusicTerminology {
+//    MAJOR(listOf(0, 4, 7), R.string.chord_major),
+//    MINOR(listOf(0, 3, 7), R.string.chord_minor),
+//    DIMINISHED(listOf(0, 3, 6), R.string.chord_diminished),
+//    AUGMENTED(listOf(0, 4, 8), R.string.chord_augmented),
+//    MAJOR_7TH(listOf(0, 4, 7, 11), R.string.chord_major7th),
+//    DOMINANT_7TH(listOf(0, 4, 7, 10), R.string.chord_dominant7th),
+//    MINOR_7TH(listOf(0, 3, 7, 10), R.string.chord_minor7th);
+//
+//    override fun getType(): String {
+//        return CHORDS.getType()
+//    }
+//
+//    companion object : MusicTerminology {
+//        private const val type: String = "Chords"
+//        override fun getType(): String {
+//            return type
+//        }
+//    }
+//}
 
-enum class CHORDS(val halfSteps: List<Int>, val translation: Int) : Musicable {
-    MAJOR(listOf(0, 4, 7), R.string.chord_major),
-    MINOR(listOf(0, 3, 7), R.string.chord_minor),
-    DIMINISHED(listOf(0, 3, 6), R.string.chord_diminished),
-    AUGMENTED(listOf(0, 4, 8), R.string.chord_augmented),
-    MAJOR_7TH(listOf(0, 4, 7, 11), R.string.chord_major7th),
-    DOMINANT_7TH(listOf(0, 4, 7, 10), R.string.chord_dominant7th),
-    MINOR_7TH(listOf(0, 3, 7, 10), R.string.chord_minor7th);
-
-    override fun getType(): String {
-        return CHORDS.getType()
-    }
-
-    companion object : Musicable {
-        const private val type: String = "Chords"
-        override fun getType(): String {
-            return type
-        }
-    }
-}
-
-val NOTES = mapOf<String, Int>(
+val NOTES = mapOf(
     "C" to 0,
     "Cis" to 1,
     "D" to 2,
@@ -96,7 +92,7 @@ val NOTES = mapOf<String, Int>(
     "B" to 11,
 )
 
-val NOTES_WITH_OCTAVE = mapOf<String, Int>(
+val NOTES_WITH_OCTAVE = mapOf(
     "C3" to 0,
     "Cis3" to 1,
     "D3" to 2,

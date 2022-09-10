@@ -2,7 +2,7 @@ package com.example.earsensei.database.quizResult
 
 import com.example.earsensei.INTERVALS
 import com.example.earsensei.NOTES_WITH_OCTAVE
-import com.example.earsensei.database.progression.Progression
+import com.example.earsensei.database.unlockedQuestion.UnlockedQuestion
 import com.example.earsensei.utils.randomEnum
 
 class QuizResultTestDataset {
@@ -23,27 +23,24 @@ class QuizResultTestDataset {
             return quizResults.toList()
         }
 
-        fun generateProgress(): List<Progression> {
-            val progressionList = arrayListOf<Progression>()
+        fun generateProgress(): List<UnlockedQuestion> {
+            val progressionList = arrayListOf<UnlockedQuestion>()
             progressionList.add(
-                Progression(
+                UnlockedQuestion(
                     type = INTERVALS.getType(),
-                    question = INTERVALS.MAJOR_3RD.name,
-                    date = 0
+                    question = INTERVALS.MAJOR_3RD.name
                 )
             )
             progressionList.add(
-                Progression(
+                UnlockedQuestion(
                     type = INTERVALS.getType(),
-                    question = INTERVALS.PERFECT_5TH.name,
-                    date = 0
+                    question = INTERVALS.MINOR_9TH.name
                 )
             )
             progressionList.add(
-                Progression(
+                UnlockedQuestion(
                     type = INTERVALS.getType(),
-                    question = INTERVALS.OCATVE.name,
-                    date = 0
+                    question = INTERVALS.OCATVE.name
                 )
             )
             return progressionList

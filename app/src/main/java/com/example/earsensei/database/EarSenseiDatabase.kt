@@ -4,15 +4,15 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.earsensei.database.progression.Progression
-import com.example.earsensei.database.progression.ProgressionDao
 import com.example.earsensei.database.quizResult.QuizResult
 import com.example.earsensei.database.quizResult.QuizResultDao
+import com.example.earsensei.database.unlockedQuestion.UnlockedQuestion
+import com.example.earsensei.database.unlockedQuestion.UnlockedQuestionDao
 
-@Database(entities = [QuizResult::class, Progression::class], version = 1)
+@Database(entities = [QuizResult::class, UnlockedQuestion::class], version = 1)
 abstract class EarSenseiDatabase : RoomDatabase() {
     abstract fun resultDao(): QuizResultDao
-    abstract fun progressionDao(): ProgressionDao
+    abstract fun unlockedquestionDao(): UnlockedQuestionDao
 
     companion object {
         @Volatile

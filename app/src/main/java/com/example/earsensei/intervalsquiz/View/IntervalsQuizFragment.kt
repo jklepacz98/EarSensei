@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -40,6 +41,8 @@ class IntervalsFragment : Fragment(), IntervalsQuizAdapter.RecyclerViewClickList
         setupProgressObserver()
         setupProgressMaxObserver()
         setupGoBackObserver()
+        //todo
+        setupMakeToastObserver()
         return binding.root
     }
 
@@ -100,6 +103,12 @@ class IntervalsFragment : Fragment(), IntervalsQuizAdapter.RecyclerViewClickList
     fun setupGoBackObserver() {
         viewModel.goBack.observe(viewLifecycleOwner) {
             if (it) findNavController().popBackStack()
+        }
+    }
+
+    fun setupMakeToastObserver() {
+        viewModel.makeToast.observe(viewLifecycleOwner) {
+            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
         }
     }
 

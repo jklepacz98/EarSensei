@@ -13,8 +13,8 @@ interface QuizResultDao {
     @Query("SELECT * FROM quizResult")
     fun get(): List<QuizResult>
 
-    @Query("SELECT * FROM quizresult WHERE :type = quizType AND :after > date")
-    fun get(type: String, after: Long): List<QuizResult>
+    @Query("SELECT * FROM quizresult WHERE :type = quizType AND :after < date ORDER BY date LIMIT :limit")
+    fun get(type: String, after: Long, limit: Int): List<QuizResult>
 
     @Query("SELECT COUNT(*) FROM quizresult WHERE isCorrect = 1")
     fun getCountAllCorrectResults(): Long
