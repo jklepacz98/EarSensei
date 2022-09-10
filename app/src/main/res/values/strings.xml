@@ -58,6 +58,21 @@
     <string name="chord_dominant7th">Dominanta septymowa</string>
     <string name="chord_minor7th">Molowy z septymą małą</string>
 
+    <!--perfect pitch-->>
+    <string name="C">C</string>
+    <string name="Cis">Cis</string>
+    <string name="D">D</string>
+    <string name="Dis">Dis</string>
+    <string name="E">E</string>
+    <string name="F">F</string>
+    <string name="Fis">F</string>
+    <string name="G">G</string>
+    <string name="Gis">Gis</string>
+    <string name="A">A</string>
+    <string name="Ais">Ais</string>
+    <string name="B">B</string>
+
+
     <string name="is_null">is null</string>
 
     <string-array name="quantity_array">

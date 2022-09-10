@@ -14,14 +14,14 @@ import kotlinx.coroutines.launch
 class ChartViewModel(app: Application) : AndroidViewModel(app) {
     val db: EarSenseiDatabase by lazy { EarSenseiDatabase.getDataBase(app) }
     var quizResults: MutableLiveData<List<QuizResult>> = MutableLiveData()
-    val chartData: MediatorLiveData<LinkedHashMap<String, Float>> =
-        MediatorLiveData<LinkedHashMap<String, Float>>().apply {
+    val chartData: MediatorLiveData<LinkedHashMap<Int, Float>> =
+        MediatorLiveData<LinkedHashMap<Int, Float>>().apply {
             addSource(quizResults) {
                 viewModelScope.launch(Dispatchers.IO) {
-                    val map = linkedMapOf<String, Float>()
+                    val map = linkedMapOf<Int, Float>()
                     INTERVALS.values().forEach {
                         val ratio = calculateRatio(it.type, it.name)
-                        map.put(it.name, ratio)
+                        map.put(it.translation, ratio)
                     }
                     postValue(map)
                 }

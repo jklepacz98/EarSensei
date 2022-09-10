@@ -26,22 +26,16 @@ class ChartFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentChartBinding.inflate(layoutInflater)
-
         barChartManager = BarChartManager(binding.barChart)
-
         setupChartDataObserver()
-
-
         barChartManager.setupBarChart()
-
-
         return binding.root
     }
 
     private fun setupChartDataObserver() {
         viewModel.chartData.observe(viewLifecycleOwner) {
-            // TODO:
-            barChartManager.setXAxisLabels(it.keys.toList())
+            val translations = it.keys.map { resources.getText(it).toString() }
+            barChartManager.setXAxisLabels(translations)
             barChartManager.setDataValues(it.values.toList())
         }
     }

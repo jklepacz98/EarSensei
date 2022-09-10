@@ -26,10 +26,10 @@ enum class INTERVALS(override val order: Int, val halfSteps: Int, override val t
     MINOR_9TH(13, 13, R.string.interval_minor9th),
     MAJOR_9TH(14, 14, R.string.interval_major9th);
 
-    override val type: String = "Intervals"
+    override val type: String = INTERVALS.TYPE
 
     override fun getRange() =
-        NOTES_WITH_OCTAVE.filter { it.value < NOTES_WITH_OCTAVE.size - this.halfSteps }
+        NOTES_WITH_OCTAVE.filter { it.value < NOTES_WITH_OCTAVE.size - halfSteps }
 
     companion object {
         const val TYPE = "Intervals"
@@ -38,44 +38,83 @@ enum class INTERVALS(override val order: Int, val halfSteps: Int, override val t
         }
     }
 }
-//
-//enum class SCALES(val halfSteps: List<Int>, override val translation: Int) : MusicTerminology {
-//    MAJOR(listOf(0, 2, 4, 5, 7, 9, 11, 12), R.string.scale_major),
-//    NATURAL_MINOR(listOf(0, 2, 3, 5, 7, 8, 10, 12), R.string.scale_natural_minor),
-//    HARMONIC_MINOR(listOf(0, 2, 3, 5, 7, 8, 11, 12), R.string.scale_harmonic_minor);
-//
-//    override fun getType(): String {
-//        return SCALES.getType()
-//    }
-//
-//    companion object {
-//        private const val type: String = "Scales"
-//        fun getType(): String {
-//            return type
-//        }
-//    }
-//}
 
-//enum class CHORDS(val halfSteps: List<Int>, override val translation: Int) : MusicTerminology {
-//    MAJOR(listOf(0, 4, 7), R.string.chord_major),
-//    MINOR(listOf(0, 3, 7), R.string.chord_minor),
-//    DIMINISHED(listOf(0, 3, 6), R.string.chord_diminished),
-//    AUGMENTED(listOf(0, 4, 8), R.string.chord_augmented),
-//    MAJOR_7TH(listOf(0, 4, 7, 11), R.string.chord_major7th),
-//    DOMINANT_7TH(listOf(0, 4, 7, 10), R.string.chord_dominant7th),
-//    MINOR_7TH(listOf(0, 3, 7, 10), R.string.chord_minor7th);
-//
-//    override fun getType(): String {
-//        return CHORDS.getType()
-//    }
-//
-//    companion object : MusicTerminology {
-//        private const val type: String = "Chords"
-//        override fun getType(): String {
-//            return type
-//        }
-//    }
-//}
+enum class SCALES(
+    override val order: Int,
+    val halfSteps: List<Int>,
+    override val translation: Int
+) : MusicTerminology {
+    MAJOR(1, listOf(0, 2, 4, 5, 7, 9, 11, 12), R.string.scale_major),
+    NATURAL_MINOR(2, listOf(0, 2, 3, 5, 7, 8, 10, 12), R.string.scale_natural_minor),
+    HARMONIC_MINOR(3, listOf(0, 2, 3, 5, 7, 8, 11, 12), R.string.scale_harmonic_minor);
+
+    override fun getRange(): Map<String, Int> =
+        NOTES_WITH_OCTAVE.filter { it.value < NOTES_WITH_OCTAVE.size - (halfSteps.last() - halfSteps.first()) }
+
+    override val type: String = SCALES.TYPE
+
+
+    companion object {
+        const val TYPE = "Scales"
+        fun getType(): String {
+            return TYPE
+        }
+    }
+}
+
+enum class CHORDS(
+    override val order: Int,
+    val halfSteps: List<Int>,
+    override val translation: Int
+) : MusicTerminology {
+    MAJOR(1, listOf(0, 4, 7), R.string.chord_major),
+    MINOR(2, listOf(0, 3, 7), R.string.chord_minor),
+    DIMINISHED(3, listOf(0, 3, 6), R.string.chord_diminished),
+    AUGMENTED(4, listOf(0, 4, 8), R.string.chord_augmented),
+    MAJOR_7TH(5, listOf(0, 4, 7, 11), R.string.chord_major7th),
+    DOMINANT_7TH(6, listOf(0, 4, 7, 10), R.string.chord_dominant7th),
+    MINOR_7TH(7, listOf(0, 3, 7, 10), R.string.chord_minor7th);
+
+    override val type: String = CHORDS.TYPE
+
+    override fun getRange(): Map<String, Int> =
+        NOTES_WITH_OCTAVE.filter { it.value < NOTES_WITH_OCTAVE.size - (halfSteps.last() - halfSteps.first()) }
+
+
+    companion object {
+        private const val TYPE: String = "Chords"
+        fun getType(): String {
+            return TYPE
+        }
+    }
+}
+
+enum class PERFECT_PITCH(override val order: Int, override val translation: Int) :
+    MusicTerminology {
+    C(1, R.string.C),
+    CIS(2, R.string.Cis),
+    D(3, R.string.D),
+    DIS(4, R.string.Dis),
+    E(5, R.string.E),
+    F(6, R.string.F),
+    FIS(7, R.string.Fis),
+    G(8, R.string.G),
+    GIS(9, R.string.Gis),
+    A(10, R.string.A),
+    AIS(11, R.string.Ais),
+    B(12, R.string.B);
+
+    override val type: String = PERFECT_PITCH.TYPE
+
+    override fun getRange(): Map<String, Int> = NOTES_WITH_OCTAVE
+
+    companion object {
+        private const val TYPE: String = "PerfectPitch"
+        fun getType(): String {
+            return TYPE
+        }
+    }
+}
 
 val NOTES = mapOf(
     "C" to 0,
