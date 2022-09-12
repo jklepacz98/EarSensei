@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".intervalsquiz.View.IntervalsQuizFragment">
+    tools:context=".intervalsquiz.View.QuizFragment">
 
     <ProgressBar
         android:id="@+id/progress_bar"

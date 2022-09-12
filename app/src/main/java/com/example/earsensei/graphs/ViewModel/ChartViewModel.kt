@@ -21,7 +21,7 @@ class ChartViewModel(app: Application) : AndroidViewModel(app) {
             addSource(quizResults) {
                 viewModelScope.launch(Dispatchers.IO) {
                     val map = linkedMapOf<Int, Float>()
-                    musicTerminology.mapson.values.forEach {
+                    musicTerminology.musicMap.values.forEach {
                         val ratio = calculateRatio(musicTerminology.type, it.name)
                         map.put(it.translation, ratio)
                     }

@@ -22,7 +22,7 @@
     </fragment>
     <fragment
         android:id="@+id/intervalsFragment"
-        android:name="com.example.earsensei.intervalsquiz.View.IntervalsQuizFragment"
+        android:name="com.example.earsensei.intervalsquiz.View.QuizFragment"
         android:label="fragment_intervals"
         tools:layout="@layout/fragment_intervals" />
     <fragment

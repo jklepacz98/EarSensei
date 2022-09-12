@@ -10,13 +10,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.earsensei.databinding.FragmentIntervalsBinding
-import com.example.earsensei.intervalsquiz.ViewModel.IntervalsQuizViewModel
+import com.example.earsensei.intervalsquiz.ViewModel.QuizViewModel
 
-class IntervalsQuizFragment : Fragment(), QuizAdapter.RecyclerViewClickListener {
+class QuizFragment : Fragment(), QuizAdapter.RecyclerViewClickListener {
 
     private lateinit var binding: FragmentIntervalsBinding
-    private val viewModel: IntervalsQuizViewModel by lazy {
-        ViewModelProvider(this@IntervalsQuizFragment).get(IntervalsQuizViewModel::class.java)
+    private val viewModel: QuizViewModel by lazy {
+        ViewModelProvider(this@QuizFragment).get(QuizViewModel::class.java)
     }
     private val answersAdapter = QuizAdapter(listOf(), this)
 

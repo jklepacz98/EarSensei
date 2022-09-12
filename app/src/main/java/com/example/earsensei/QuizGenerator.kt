@@ -14,7 +14,7 @@ class QuizGenerator(val db: EarSenseiDatabase) {
         val quizes = mutableListOf<Quiz>()
         val unlockedQuestions =
             db.unlockedquestionDao().getByType(type)
-                .sortedBy { musicTerminology.mapson.get(it.question)!!.order }
+                .sortedBy { musicTerminology.musicMap.get(it.question)!!.order }
         val worst = hardestQuestionsFinder.getWorstRecord(type)
         if (worst != null) {
             val mistake = hardestQuestionsFinder.getMostCommonMistake(type, worst.key)
@@ -48,7 +48,7 @@ class QuizGenerator(val db: EarSenseiDatabase) {
     private fun generateQuiz(answers: List<String>, musicTerminology: MusicTerminology): Quiz {
         val answers = generateAnswers(answers, musicTerminology)
         val correctAnswer = answers.filter { it.isCorrect == true }.first()
-        val range = musicTerminology.mapson.get(correctAnswer.name)!!.getRange()
+        val range = musicTerminology.musicMap.get(correctAnswer.name)!!.getRange()
         val baseNote = range.keys.random()
         return Quiz(baseNote, correctAnswer, answers)
     }
@@ -59,7 +59,7 @@ class QuizGenerator(val db: EarSenseiDatabase) {
     ): List<Answer> {
         val answers = mutableListOf<Answer>()
         answerPool.forEach {
-            val interval = musicTerminology.mapson.get(it)!!
+            val interval = musicTerminology.musicMap.get(it)!!
             val answer = Answer(
                 interval.name,
                 interval.translation,

@@ -14,7 +14,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
-class IntervalsQuizViewModel(app: Application) : AndroidViewModel(app) {
+class QuizViewModel(app: Application) : AndroidViewModel(app) {
 
     private val db: EarSenseiDatabase by lazy { EarSenseiDatabase.getDataBase(app) }
     private val notesPlayer: NotesPlayer by lazy { NotesPlayer(app) }
@@ -56,7 +56,7 @@ class IntervalsQuizViewModel(app: Application) : AndroidViewModel(app) {
 
     fun setNotes() {
         val baseNote = NOTES_WITH_OCTAVE[curentQuiz.baseNote]!!
-        val interval = musicTerminology.mapson.get(curentQuiz.correctAnswer.name)
+        val interval = musicTerminology.musicMap.get(curentQuiz.correctAnswer.name)
         val noteIndices = interval!!.toNoteIndices(baseNote)
         notesPlayer.setNotes(noteIndices)
     }
@@ -78,7 +78,7 @@ class IntervalsQuizViewModel(app: Application) : AndroidViewModel(app) {
 
     private fun List<UnlockedQuestion>.toAnswers(): List<Answer> =
         map {
-            val interval = musicTerminology.mapson.get(it.question)!!
+            val interval = musicTerminology.musicMap.get(it.question)!!
             Answer(interval.name, interval.translation, false)
         }.also { it.random().isCorrect = true }
 

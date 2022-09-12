@@ -3,7 +3,7 @@ package com.example.earsensei
 
 interface MusicTerminology {
     val type: String
-    val mapson: Map<String, MusicSomething>
+    val musicMap: Map<String, MusicSomething>
 }
 
 interface MusicSomething {
@@ -37,27 +37,7 @@ data class Interval(
 
 object Intervals : MusicTerminology {
 
-//    MINOR_2ND(1, 1, R.string.interval_minor2nd),
-//    MAJOR_2RD(2, 2, R.string.interval_major2nd),
-//    MINOR_3RD(3, 3, R.string.interval_minor3rd),
-//    MAJOR_3RD(4, 4, R.string.interval_major3rd),
-//    PERFECT_4TH(5, 5, R.string.interval_perfect4th),
-//    TRITONE(6, 6, R.string.interval_tritone),
-//    PERFECT_5TH(7, 7, R.string.interval_perfect5th),
-//    MINOR_6TH(8, 8, R.string.interval_minor6th),
-//    MAJOR_6TH(9, 9, R.string.interval_major6th),
-//    MINOR_7TH(10, 10, R.string.interval_minor7th),
-//    MAJOR_7TH(11, 11, R.string.interval_major7th),
-//    OCATVE(12, 12, R.string.interval_octave),
-//    MINOR_9TH(13, 13, R.string.interval_minor9th),
-//    MAJOR_9TH(14, 14, R.string.interval_major9th);
-
     override val type: String = Interval.TYPE
-
-    fun somethingsdfa() {
-        val inter = Interval("MINOR_2ND", 1, 1, R.string.interval_minor2nd)
-        inter.type
-    }
 
     val list = listOf(
         Interval("MINOR_2ND", 1, 1, R.string.interval_minor2nd),
@@ -76,31 +56,45 @@ object Intervals : MusicTerminology {
         Interval("MAJOR_9TH", 14, 14, R.string.interval_major9th)
     )
 
-    override val mapson: Map<String, MusicSomething> = list.map { it.name to it }.toMap()
+    override val musicMap: Map<String, MusicSomething> = list.associateBy { it.name }
 }
 
-//enum class SCALES(
-//    override val order: Int,
-//    val halfSteps: List<Int>,
-//    override val translation: Int
-//) : MusicTerminology {
-//    MAJOR(1, listOf(0, 2, 4, 5, 7, 9, 11, 12), R.string.scale_major),
-//    NATURAL_MINOR(2, listOf(0, 2, 3, 5, 7, 8, 10, 12), R.string.scale_natural_minor),
-//    HARMONIC_MINOR(3, listOf(0, 2, 3, 5, 7, 8, 11, 12), R.string.scale_harmonic_minor);
-//
-//    override fun getRange(): Map<String, Int> =
-//        NOTES_WITH_OCTAVE.filter { it.value < NOTES_WITH_OCTAVE.size - (halfSteps.last() - halfSteps.first()) }
-//
-//    override val type: String = SCALES.TYPE
-//
-//
-//    companion object {
-//        const val TYPE = "Scales"
-//        fun getType(): String {
-//            return TYPE
-//        }
-//    }
-//}
+data class Scale(
+    override val name: String,
+    override val order: Int,
+    val halfSteps: List<Int>,
+    override val translation: Int
+) : MusicSomething {
+    override fun getRange(): Map<String, Int> {
+        //todo change name of range
+        val range = NOTES_WITH_OCTAVE.size - (halfSteps.maxOrNull() ?: 0)
+        return NOTES_WITH_OCTAVE.filter { it.value < range }
+    }
+
+    val type = TYPE
+
+    companion object {
+        val TYPE = "Scales"
+    }
+
+    override fun toNoteIndices(baseNote: Int): List<Int> {
+        return halfSteps.map { baseNote + it }
+    }
+}
+
+object Scales : MusicTerminology {
+
+    override val type: String = Scale.TYPE
+
+    val list = listOf(
+        Scale("MAJOR", 1, listOf(0, 2, 4, 5, 7, 9, 11, 12), R.string.scale_major),
+        Scale("NATURAL_MINOR", 2, listOf(0, 2, 3, 5, 7, 8, 10, 12), R.string.scale_natural_minor),
+        Scale("HARMONIC_MINOR", 3, listOf(0, 2, 3, 5, 7, 8, 11, 12), R.string.scale_harmonic_minor),
+    )
+
+    override val musicMap: Map<String, MusicSomething> = list.associateBy { it.name }
+}
+
 //
 //enum class CHORDS(
 //    override val order: Int,
@@ -214,10 +208,21 @@ val NOTES_WITH_OCTAVE = mapOf(
     "C6" to 36
 )
 
+//    MINOR_2ND(1, 1, R.string.interval_minor2nd),
+//    MAJOR_2RD(2, 2, R.string.interval_major2nd),
+//    MINOR_3RD(3, 3, R.string.interval_minor3rd),
+//    MAJOR_3RD(4, 4, R.string.interval_major3rd),
+//    PERFECT_4TH(5, 5, R.string.interval_perfect4th),
+//    TRITONE(6, 6, R.string.interval_tritone),
+//    PERFECT_5TH(7, 7, R.string.interval_perfect5th),
+//    MINOR_6TH(8, 8, R.string.interval_minor6th),
+//    MAJOR_6TH(9, 9, R.string.interval_major6th),
+//    MINOR_7TH(10, 10, R.string.interval_minor7th),
+//    MAJOR_7TH(11, 11, R.string.interval_major7th),
+//    OCATVE(12, 12, R.string.interval_octave),
+//    MINOR_9TH(13, 13, R.string.interval_minor9th),
+//    MAJOR_9TH(14, 14, R.string.interval_major9th);
 
-
-
-
-
-
-
+//MAJOR(1, listOf(0, 2, 4, 5, 7, 9, 11, 12), R.string.scale_major),
+//NATURAL_MINOR(2, listOf(0, 2, 3, 5, 7, 8, 10, 12), R.string.scale_natural_minor),
+//HARMONIC_MINOR(3, listOf(0, 2, 3, 5, 7, 8, 11, 12), R.string.scale_harmonic_minor);
