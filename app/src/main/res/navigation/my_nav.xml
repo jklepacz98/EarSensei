@@ -11,20 +11,21 @@
         android:label="fragment_start"
         tools:layout="@layout/fragment_start">
         <action
-            android:id="@+id/action_startFragment_to_intervalsFragment"
-            app:destination="@id/intervalsFragment" />
+            android:id="@+id/action_startFragment_to_quizFragment"
+            app:destination="@id/quizFragment" />
         <action
             android:id="@+id/action_startFragment_to_statsFragment"
             app:destination="@id/statsFragment" />
-        <action
-            android:id="@+id/action_startFragment_to_chordsQuizFragment"
-            app:destination="@id/chordsQuizFragment" />
     </fragment>
     <fragment
-        android:id="@+id/intervalsFragment"
+        android:id="@+id/quizFragment"
         android:name="com.example.earsensei.intervalsquiz.View.QuizFragment"
         android:label="fragment_intervals"
-        tools:layout="@layout/fragment_intervals" />
+        tools:layout="@layout/fragment_intervals">
+        <argument
+            android:name="type"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/statsFragment"
         android:name="com.example.earsensei.stats.StatsFragment"
@@ -36,12 +37,15 @@
     </fragment>
     <fragment
         android:id="@+id/chartFragment"
-        android:name="com.example.earsensei.graphs.View.ChartFragment"
+        android:name="com.example.earsensei.graphs.View.GraphFragment"
         android:label="fragment_chart"
         tools:layout="@layout/fragment_chart">
         <action
             android:id="@+id/action_chartFragment_self"
             app:destination="@id/chartFragment" />
+        <argument
+            android:name="type"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/chordsQuizFragment"

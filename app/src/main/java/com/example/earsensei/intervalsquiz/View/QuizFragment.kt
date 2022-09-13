@@ -6,17 +6,22 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.earsensei.databinding.FragmentIntervalsBinding
 import com.example.earsensei.intervalsquiz.ViewModel.QuizViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 class QuizFragment : Fragment(), QuizAdapter.RecyclerViewClickListener {
 
+    private val args: QuizFragmentArgs by navArgs()
+
     private lateinit var binding: FragmentIntervalsBinding
-    private val viewModel: QuizViewModel by lazy {
-        ViewModelProvider(this@QuizFragment).get(QuizViewModel::class.java)
+    private val viewModel by viewModel<QuizViewModel> {
+        val type = args.type
+        parametersOf(type)
     }
     private val answersAdapter = QuizAdapter(listOf(), this)
 

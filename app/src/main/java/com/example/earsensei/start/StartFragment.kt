@@ -6,6 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import com.example.earsensei.Chords
+import com.example.earsensei.Intervals
+import com.example.earsensei.PerfectPitches
+import com.example.earsensei.Scales
 import com.example.earsensei.database.EarSenseiDatabase
 import com.example.earsensei.database.quizResult.QuizResultTestDataset
 import com.example.earsensei.databinding.FragmentStartBinding
@@ -29,10 +33,26 @@ class StartFragment : Fragment() {
 
     private fun setupButtons() {
         binding.buttonIntervals.setOnClickListener {
-            this@StartFragment.navigate(StartFragmentDirections.actionStartFragmentToIntervalsFragment())
+            this@StartFragment.navigate(
+                StartFragmentDirections.actionStartFragmentToQuizFragment(Intervals.type)
+            )
         }
         binding.buttonChords.setOnClickListener {
-            this@StartFragment.navigate(StartFragmentDirections.actionStartFragmentToChordsQuizFragment())
+            this@StartFragment.navigate(
+                StartFragmentDirections.actionStartFragmentToQuizFragment(
+                    Chords.type
+                )
+            )
+        }
+        binding.buttonScales.setOnClickListener {
+            this@StartFragment.navigate(
+                StartFragmentDirections.actionStartFragmentToQuizFragment(Scales.type)
+            )
+        }
+        binding.buttonPerfectPitch.setOnClickListener {
+            this@StartFragment.navigate(
+                StartFragmentDirections.actionStartFragmentToQuizFragment(PerfectPitches.type)
+            )
         }
         binding.buttonStats.setOnClickListener {
             this@StartFragment.navigate(StartFragmentDirections.actionStartFragmentToStatsFragment())

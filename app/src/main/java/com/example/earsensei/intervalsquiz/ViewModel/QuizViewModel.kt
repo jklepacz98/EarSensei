@@ -14,13 +14,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
-class QuizViewModel(app: Application) : AndroidViewModel(app) {
+class QuizViewModel(val app: Application, val type: String) : AndroidViewModel(app) {
 
     private val db: EarSenseiDatabase by lazy { EarSenseiDatabase.getDataBase(app) }
     private val notesPlayer: NotesPlayer by lazy { NotesPlayer(app) }
     private val quizGenerator: QuizGenerator by lazy { QuizGenerator(db) }
 
-    private val musicTerminology: MusicTerminology = Intervals
+    private val musicTerminology: MusicTerminology = MusicTerminologyFactory.get(type)
 
     private lateinit var unlockedQuestions: List<UnlockedQuestion>
     private val quizes: List<Quiz> by lazy { quizGenerator.generateQuizes(musicTerminology) }
@@ -91,18 +91,20 @@ class QuizViewModel(app: Application) : AndroidViewModel(app) {
                 if (canUnlockNewQuestion(lastRecords)) {
                     lastRecords.clear()
                     //unlockedQuestions = db.unlockedquestionDao().getByType(Intervals.getType()).sortedBy { Intervals.valueOf(it.question).halfSteps }
-                    val lockedQuestions = Intervals.list
+                    val lockedQuestions = musicTerminology.list
                         .map { it.name }
                         //todo list of
                         .minus(unlockedQuestions.map { it.question })
-                    val randomQuestion = lockedQuestions.random()
-                    makeToast.postValue(randomQuestion + " unlocked")
-                    db.unlockedquestionDao().insert(
-                        UnlockedQuestion(
-                            question = randomQuestion,
-                            type = musicTerminology.type
+                    if (lockedQuestions.isNotEmpty()) {
+                        val randomQuestion = lockedQuestions.random()
+                        makeToast.postValue(randomQuestion + " unlocked")
+                        db.unlockedquestionDao().insert(
+                            UnlockedQuestion(
+                                question = randomQuestion,
+                                type = musicTerminology.type
+                            )
                         )
-                    )
+                    }
                 }
             }
         }

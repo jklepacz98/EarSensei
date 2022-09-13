@@ -5,20 +5,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import com.example.earsensei.database.quizResult.QuizResultTestDataset
+import androidx.navigation.fragment.navArgs
 import com.example.earsensei.databinding.FragmentChartBinding
 import com.example.earsensei.graphs.BarChartManager
-import com.example.earsensei.graphs.ViewModel.ChartViewModel
+import com.example.earsensei.graphs.ViewModel.GraphViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
-class ChartFragment : Fragment() {
+class GraphFragment : Fragment() {
     private lateinit var binding: FragmentChartBinding
 
-    private val quizResults = QuizResultTestDataset.generateQuizResults()
     private lateinit var barChartManager: BarChartManager
 
-    val viewModel: ChartViewModel by lazy {
-        ViewModelProvider(this@ChartFragment).get(ChartViewModel::class.java)
+    private val args: GraphFragmentArgs by navArgs()
+
+    val viewModel by viewModel<GraphViewModel> {
+        val type = args.type
+        parametersOf(type)
     }
 
     override fun onCreateView(

@@ -5,17 +5,18 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.earsensei.Intervals
 import com.example.earsensei.MusicTerminology
+import com.example.earsensei.MusicTerminologyFactory
 import com.example.earsensei.database.EarSenseiDatabase
 import com.example.earsensei.database.quizResult.QuizResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class ChartViewModel(app: Application) : AndroidViewModel(app) {
+class GraphViewModel(val app: Application, val type: String) : AndroidViewModel(app) {
     val db: EarSenseiDatabase by lazy { EarSenseiDatabase.getDataBase(app) }
     var quizResults: MutableLiveData<List<QuizResult>> = MutableLiveData()
-    val musicTerminology: MusicTerminology = Intervals
+
+    val musicTerminology: MusicTerminology = MusicTerminologyFactory.get(type)
     val chartData: MediatorLiveData<LinkedHashMap<Int, Float>> =
         MediatorLiveData<LinkedHashMap<Int, Float>>().apply {
             addSource(quizResults) {

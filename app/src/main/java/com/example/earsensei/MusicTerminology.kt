@@ -1,9 +1,20 @@
 package com.example.earsensei
 
 
+object MusicTerminologyFactory {
+    fun get(type: String): MusicTerminology = when (type) {
+        Intervals.type -> Intervals
+        Chords.type -> Chords
+        Scales.type -> Scales
+        PerfectPitches.type -> PerfectPitches
+        else -> Intervals
+    }
+}
+
 interface MusicTerminology {
     val type: String
     val musicMap: Map<String, MusicSomething>
+    val list: List<MusicSomething>
 }
 
 interface MusicSomething {
@@ -13,6 +24,7 @@ interface MusicSomething {
     fun getRange(): Map<String, Int>
     fun toNoteIndices(baseNote: Int): List<Int>
 }
+
 
 data class Interval(
     override val name: String,
@@ -39,7 +51,7 @@ object Intervals : MusicTerminology {
 
     override val type: String = Interval.TYPE
 
-    val list = listOf(
+    override val list = listOf(
         Interval("MINOR_2ND", 1, 1, R.string.interval_minor2nd),
         Interval("MAJOR_2RD", 2, 2, R.string.interval_major2nd),
         Interval("MINOR_3RD", 3, 3, R.string.interval_minor3rd),
@@ -86,7 +98,7 @@ object Scales : MusicTerminology {
 
     override val type: String = Scale.TYPE
 
-    val list = listOf(
+    override val list = listOf(
         Scale("MAJOR", 1, listOf(0, 2, 4, 5, 7, 9, 11, 12), R.string.scale_major),
         Scale("NATURAL_MINOR", 2, listOf(0, 2, 3, 5, 7, 8, 10, 12), R.string.scale_natural_minor),
         Scale("HARMONIC_MINOR", 3, listOf(0, 2, 3, 5, 7, 8, 11, 12), R.string.scale_harmonic_minor),
@@ -95,60 +107,87 @@ object Scales : MusicTerminology {
     override val musicMap: Map<String, MusicSomething> = list.associateBy { it.name }
 }
 
-//
-//enum class CHORDS(
-//    override val order: Int,
-//    val halfSteps: List<Int>,
-//    override val translation: Int
-//) : MusicTerminology {
-//    MAJOR(1, listOf(0, 4, 7), R.string.chord_major),
-//    MINOR(2, listOf(0, 3, 7), R.string.chord_minor),
-//    DIMINISHED(3, listOf(0, 3, 6), R.string.chord_diminished),
-//    AUGMENTED(4, listOf(0, 4, 8), R.string.chord_augmented),
-//    MAJOR_7TH(5, listOf(0, 4, 7, 11), R.string.chord_major7th),
-//    DOMINANT_7TH(6, listOf(0, 4, 7, 10), R.string.chord_dominant7th),
-//    MINOR_7TH(7, listOf(0, 3, 7, 10), R.string.chord_minor7th);
-//
-//    override val type: String = CHORDS.TYPE
-//
-//    override fun getRange(): Map<String, Int> =
-//        NOTES_WITH_OCTAVE.filter { it.value < NOTES_WITH_OCTAVE.size - (halfSteps.last() - halfSteps.first()) }
-//
-//
-//    companion object {
-//        private const val TYPE: String = "Chords"
-//        fun getType(): String {
-//            return TYPE
-//        }
-//    }
-//}
-//
-//enum class PERFECT_PITCH(override val order: Int, override val translation: Int) :
-//    MusicTerminology {
-//    C(1, R.string.C),
-//    CIS(2, R.string.Cis),
-//    D(3, R.string.D),
-//    DIS(4, R.string.Dis),
-//    E(5, R.string.E),
-//    F(6, R.string.F),
-//    FIS(7, R.string.Fis),
-//    G(8, R.string.G),
-//    GIS(9, R.string.Gis),
-//    A(10, R.string.A),
-//    AIS(11, R.string.Ais),
-//    B(12, R.string.B);
-//
-//    override val type: String = PERFECT_PITCH.TYPE
-//
-//    override fun getRange(): Map<String, Int> = NOTES_WITH_OCTAVE
-//
-//    companion object {
-//        private const val TYPE: String = "PerfectPitch"
-//        fun getType(): String {
-//            return TYPE
-//        }
-//    }
-//}
+
+data class Chord(
+    override val name: String,
+    override val order: Int,
+    val halfSteps: List<Int>,
+    override val translation: Int
+) : MusicSomething {
+    override fun getRange(): Map<String, Int> {
+        val range = NOTES_WITH_OCTAVE.size - (halfSteps.maxOrNull() ?: 0)
+        return NOTES_WITH_OCTAVE.filter { it.value < range }
+    }
+
+    val type = TYPE
+
+    companion object {
+        val TYPE = "Chord"
+    }
+
+    override fun toNoteIndices(baseNote: Int): List<Int> {
+        return halfSteps.map { baseNote + it }
+    }
+}
+
+object Chords : MusicTerminology {
+
+    override val type: String = Chord.TYPE
+    override val list = listOf(
+        Chord("MAJOR", 1, listOf(0, 4, 7), R.string.chord_major),
+        Chord("MINOR", 2, listOf(0, 3, 7), R.string.chord_minor),
+        Chord("DIMINISHED", 3, listOf(0, 3, 6), R.string.chord_diminished),
+        Chord("AUGMENTED", 4, listOf(0, 4, 8), R.string.chord_augmented),
+        Chord("MAJOR_7TH", 5, listOf(0, 4, 7, 11), R.string.chord_major7th),
+        Chord("DOMINANT_7TH", 6, listOf(0, 4, 7, 10), R.string.chord_dominant7th),
+        Chord("MINOR_7TH", 7, listOf(0, 3, 7, 10), R.string.chord_minor7th)
+    )
+
+    override val musicMap: Map<String, MusicSomething> = list.associateBy { it.name }
+}
+
+data class PerfectPitch(
+    override val name: String,
+    override val order: Int,
+    val halfSteps: Int,
+    override val translation: Int
+) : MusicSomething {
+    override fun getRange(): Map<String, Int> {
+        return NOTES_WITH_OCTAVE
+    }
+
+    val type = TYPE
+
+    companion object {
+        val TYPE = "PerfectPitch"
+    }
+
+    override fun toNoteIndices(baseNote: Int): List<Int> {
+        return listOf(halfSteps)
+    }
+}
+
+//todo change name
+object PerfectPitches : MusicTerminology {
+
+    override val type: String = PerfectPitch.TYPE
+    override val list: List<MusicSomething> = listOf(
+        PerfectPitch("C", 1, 1, R.string.C),
+        PerfectPitch("CIS", 2, 2, R.string.Cis),
+        PerfectPitch("D", 3, 3, R.string.D),
+        PerfectPitch("DIS", 4, 4, R.string.Dis),
+        PerfectPitch("E", 5, 5, R.string.E),
+        PerfectPitch("F", 6, 6, R.string.F),
+        PerfectPitch("FIS", 7, 7, R.string.Fis),
+        PerfectPitch("G", 8, 8, R.string.G),
+        PerfectPitch("GIS", 9, 9, R.string.Gis),
+        PerfectPitch("A", 10, 10, R.string.A),
+        PerfectPitch("AIS", 11, 11, R.string.Ais),
+        PerfectPitch("B", 12, 12, R.string.B)
+    )
+
+    override val musicMap: Map<String, MusicSomething> = list.associateBy { it.name }
+}
 
 val NOTES = mapOf(
     "C" to 0,
