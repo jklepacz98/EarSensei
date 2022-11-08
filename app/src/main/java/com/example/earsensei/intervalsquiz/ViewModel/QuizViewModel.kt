@@ -1,10 +1,12 @@
 package com.example.earsensei.intervalsquiz.ViewModel
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.earsensei.*
+import com.example.earsensei.MusicTerminology
+import com.example.earsensei.NOTES_WITH_OCTAVE
+import com.example.earsensei.NotesPlayer
+import com.example.earsensei.QuizGenerator
 import com.example.earsensei.database.Answer
 import com.example.earsensei.database.EarSenseiDatabase
 import com.example.earsensei.database.Quiz
@@ -14,13 +16,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
-class QuizViewModel(val app: Application, val type: String) : AndroidViewModel(app) {
+class QuizViewModel(
+    val db: EarSenseiDatabase,
+    val notesPlayer: NotesPlayer,
+    private val musicTerminology: MusicTerminology
+) : ViewModel() {
 
-    private val db: EarSenseiDatabase by lazy { EarSenseiDatabase.getDataBase(app) }
-    private val notesPlayer: NotesPlayer by lazy { NotesPlayer(app) }
     private val quizGenerator: QuizGenerator by lazy { QuizGenerator(db) }
-
-    private val musicTerminology: MusicTerminology = MusicTerminologyFactory.get(type)
 
     private lateinit var unlockedQuestions: List<UnlockedQuestion>
     private val quizes: List<Quiz> by lazy { quizGenerator.generateQuizes(musicTerminology) }
@@ -32,7 +34,7 @@ class QuizViewModel(val app: Application, val type: String) : AndroidViewModel(a
     val isAnswered = MutableLiveData(false)
     val isNextButtonVisible = MutableLiveData(false)
     val goBack = MutableLiveData(false)
-    val lastUnlockQuestionDate by lazy { db.unlockedquestionDao().getLatest(musicTerminology.type) }
+    val lastUnlockQuestionDate by lazy { db.unlockedQuestionDao().getLatest(musicTerminology.type) }
     lateinit var lastRecords: MutableList<QuizResult>
 
     val makeToast: MutableLiveData<String> = MutableLiveData()
@@ -64,7 +66,7 @@ class QuizViewModel(val app: Application, val type: String) : AndroidViewModel(a
 
     private fun setQuestionPool() {
         viewModelScope.launch(Dispatchers.IO) {
-            unlockedQuestions = db.unlockedquestionDao().getAllData()
+            unlockedQuestions = db.unlockedQuestionDao().getAllData()
             iterateQuiz()
             lastRecords = db.resultDao().get(musicTerminology.type, lastUnlockQuestionDate, LIMIT)
                 .toMutableList()
@@ -98,7 +100,7 @@ class QuizViewModel(val app: Application, val type: String) : AndroidViewModel(a
                     if (lockedQuestions.isNotEmpty()) {
                         val randomQuestion = lockedQuestions.random()
                         makeToast.postValue(randomQuestion + " unlocked")
-                        db.unlockedquestionDao().insert(
+                        db.unlockedQuestionDao().insert(
                             UnlockedQuestion(
                                 question = randomQuestion,
                                 type = musicTerminology.type

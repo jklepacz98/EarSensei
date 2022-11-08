@@ -1,31 +1,19 @@
 <resources>
+
     <string name="app_name">EarSensei</string>
+
+    <!-- Start -->
     <string name="intervals">Interwały</string>
     <string name="perfect_pitch">Słuch absolutny</string>
     <string name="scales">Skale</string>
     <string name="chords">Akordy</string>
     <string name="music_theory">Teoria muzyki</string>
     <string name="profile">Profil</string>
-    <string-array name="scales_array">
-        <item>Durowa</item>
-        <item>Naturalna Molowa</item>
-        <item>Harmoniczna Molowa</item>
-    </string-array>
-    <string-array name="chords_array">
-        <item>Dur</item>
-        <item>Mol</item>
-        <item>Zmniejszony</item>
-        <item>Zwiększony</item>
-    </string-array>
-    <string name="title_activity_test">TestActivity</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
+    <string name="settings">Ustawienia</string>
+
+    <!-- Navigation buttons -->
     <string name="next">Dalej</string>
     <string name="previous">Cofnij</string>
-
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
     <!--intervals-->
     <string name="interval_perfect1st">Pryma</string>
@@ -83,7 +71,5 @@
         <item>20</item>
         <item>10</item>
     </string-array>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

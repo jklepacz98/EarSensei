@@ -13,7 +13,7 @@ class QuizGenerator(val db: EarSenseiDatabase) {
         val type = musicTerminology.type
         val quizes = mutableListOf<Quiz>()
         val unlockedQuestions =
-            db.unlockedquestionDao().getByType(type)
+            db.unlockedQuestionDao().getByType(type)
                 .sortedBy { musicTerminology.musicMap.get(it.question)!!.order }
         val worst = hardestQuestionsFinder.getWorstRecord(type)
         if (worst != null) {

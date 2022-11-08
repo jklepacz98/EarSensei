@@ -1,22 +1,21 @@
 package com.example.earsensei.graphs.ViewModel
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.earsensei.MusicTerminology
-import com.example.earsensei.MusicTerminologyFactory
 import com.example.earsensei.database.EarSenseiDatabase
 import com.example.earsensei.database.quizResult.QuizResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class GraphViewModel(val app: Application, val type: String) : AndroidViewModel(app) {
-    val db: EarSenseiDatabase by lazy { EarSenseiDatabase.getDataBase(app) }
-    var quizResults: MutableLiveData<List<QuizResult>> = MutableLiveData()
+class GraphViewModel(
+    private val db: EarSenseiDatabase,
+    private val musicTerminology: MusicTerminology
+) : ViewModel() {
+    private var quizResults: MutableLiveData<List<QuizResult>> = MutableLiveData()
 
-    val musicTerminology: MusicTerminology = MusicTerminologyFactory.get(type)
     val chartData: MediatorLiveData<LinkedHashMap<Int, Float>> =
         MediatorLiveData<LinkedHashMap<Int, Float>>().apply {
             addSource(quizResults) {
@@ -34,7 +33,7 @@ class GraphViewModel(val app: Application, val type: String) : AndroidViewModel(
         }
 
     //todo
-    suspend fun calculateRatio(type: String, name: String): Float {
+    fun calculateRatio(type: String, name: String): Float {
         val correctResults = db.resultDao().getCountAllCorrectResults(type, name)
         val allResults = db.resultDao().getCountAllByAnswer(type, name)
         return correctResults.toFloat() / allResults.toFloat()
