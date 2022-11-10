@@ -5,13 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.earsensei.MusicTerminology
-import com.example.earsensei.database.EarSenseiDatabase
 import com.example.earsensei.database.quizResult.QuizResult
+import com.example.earsensei.database.quizResult.QuizResultDao
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class GraphViewModel(
-    private val db: EarSenseiDatabase,
+    private val resultDao: QuizResultDao,
     private val musicTerminology: MusicTerminology
 ) : ViewModel() {
     private var quizResults: MutableLiveData<List<QuizResult>> = MutableLiveData()
@@ -34,8 +34,8 @@ class GraphViewModel(
 
     //todo
     fun calculateRatio(type: String, name: String): Float {
-        val correctResults = db.resultDao().getCountAllCorrectResults(type, name)
-        val allResults = db.resultDao().getCountAllByAnswer(type, name)
+        val correctResults = resultDao.getCountCorrect(type, name)
+        val allResults = resultDao.getCount(type, name)
         return correctResults.toFloat() / allResults.toFloat()
     }
 }

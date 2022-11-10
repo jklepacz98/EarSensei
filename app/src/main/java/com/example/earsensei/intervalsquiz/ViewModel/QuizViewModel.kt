@@ -51,7 +51,7 @@ class QuizViewModel(
             setNotes()
             playNotes()
         } else {
-            //todo Do something more. Maybe some congratulations?
+            //todo Do something more. Maybe some gratulations?
             goBack.postValue(true)
         }
     }
@@ -68,8 +68,9 @@ class QuizViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             unlockedQuestions = db.unlockedQuestionDao().getAllData()
             iterateQuiz()
-            lastRecords = db.resultDao().get(musicTerminology.type, lastUnlockQuestionDate, LIMIT)
-                .toMutableList()
+            lastRecords =
+                db.resultDao().getQuizResult(musicTerminology.type, lastUnlockQuestionDate, LIMIT)
+                    .toMutableList()
             progressMax.postValue(quizes.size)
         }
     }

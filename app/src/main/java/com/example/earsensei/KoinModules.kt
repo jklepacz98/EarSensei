@@ -10,17 +10,27 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.parameter.parametersOf
 import org.koin.dsl.module
 
-val appModule = module {
-    viewModel { parameters -> QuizViewModel(get(), get(), get { parametersOf(parameters.get()) }) }
-    viewModel { parameters -> GraphViewModel(get(), get { parametersOf(parameters.get()) }) }
+val viewModelModule = module {
+    viewModel { (type: String) -> QuizViewModel(get(), get(), get { parametersOf(type) }) }
+    viewModel { (type: String) -> GraphViewModel(get(), get { parametersOf(type) }) }
     viewModel { SettingsViewModel() }
-
+}
+val databaseModule = module {
     single {
         Room.databaseBuilder(
             androidApplication(), EarSenseiDatabase::class.java, EarSenseiDatabase.DATABASE_NAME
         ).build()
     }
+    single {
+        val database = get<EarSenseiDatabase>()
+        database.resultDao()
+    }
+    single {
+        val database = get<EarSenseiDatabase>()
+        database.unlockedQuestionDao()
+    }
+}
+val notesPlayerModule = module {
     single { NotesPlayer(androidApplication()) }
-
     factory { parameters -> MusicTerminologyFactory.get(parameters.get()) }
 }
