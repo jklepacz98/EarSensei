@@ -10,9 +10,9 @@ import kotlinx.coroutines.launch
 class NotesPlayer(val context: Context) {
 
     var job: Job = Job()
-    val mediaPlayers: MutableList<MediaPlayer> = mutableListOf()
+    private val mediaPlayers: MutableList<MediaPlayer> = mutableListOf()
 
-    suspend fun playSingleNote() {
+    private suspend fun playSingleNote() {
         mediaPlayers.forEach() {
             if (it.isPlaying) {
                 it.stop()
@@ -31,7 +31,7 @@ class NotesPlayer(val context: Context) {
     }
 
     fun setNotes(noteIndices: List<Int>) {
-        val notes = noteIndices.map { Note.NOTES.get(it) }
+        val notes = noteIndices.map { Note.NOTES[it] }
         mediaPlayers.forEach {
             it.release()
         }
@@ -42,7 +42,7 @@ class NotesPlayer(val context: Context) {
         }
     }
 
-    companion object {
-        private val DELAY = 850L
+    private companion object {
+        const val DELAY = 850L
     }
 }

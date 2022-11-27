@@ -19,12 +19,12 @@
     </fragment>
     <fragment
         android:id="@+id/quizFragment"
-        android:name="com.example.earsensei.intervalsquiz.View.QuizFragment"
+        android:name="com.example.earsensei.quiz.View.QuizFragment"
         android:label="fragment_intervals"
         tools:layout="@layout/fragment_intervals">
         <argument
             android:name="type"
-            app:argType="string" />
+            app:argType="com.example.earsensei.QuizType" />
     </fragment>
     <fragment
         android:id="@+id/statsFragment"
@@ -44,11 +44,11 @@
             android:id="@+id/action_chartFragment_self"
             app:destination="@id/chartFragment" />
         <argument
-            android:name="type"
-            app:argType="string" />
+            android:name="quizType"
+            app:argType="com.example.earsensei.QuizType" />
     </fragment>
     <fragment
         android:id="@+id/chordsQuizFragment"
-        android:name="com.example.earsensei.intervalsquiz.View.ChordsQuizFragment"
+        android:name="com.example.earsensei.quiz.View.ChordsQuizFragment"
         android:label="ChordsQuizFragment" />
 </navigation>

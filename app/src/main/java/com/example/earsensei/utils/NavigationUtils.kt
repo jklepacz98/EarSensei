@@ -6,12 +6,10 @@ import androidx.navigation.fragment.DialogFragmentNavigator
 import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.findNavController
 
-fun Fragment.navigate(directions: NavDirections) {
+fun Fragment.safeNavigate(directions: NavDirections) {
     val controller = findNavController()
     val currentDestination =
         (controller.currentDestination as? FragmentNavigator.Destination)?.className
             ?: (controller.currentDestination as? DialogFragmentNavigator.Destination)?.className
-    if (currentDestination == this.javaClass.name) {
-        controller.navigate(directions)
-    }
+    if (currentDestination == this.javaClass.name) controller.navigate(directions)
 }

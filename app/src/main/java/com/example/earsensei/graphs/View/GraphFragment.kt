@@ -19,8 +19,8 @@ class GraphFragment : Fragment() {
 
     private val args: GraphFragmentArgs by navArgs()
 
-    val viewModel by viewModel<GraphViewModel> {
-        val type = args.type
+    private val viewModel by viewModel<GraphViewModel> {
+        val type = args.quizType
         parametersOf(type)
     }
 

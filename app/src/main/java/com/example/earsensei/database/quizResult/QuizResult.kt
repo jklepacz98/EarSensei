@@ -8,7 +8,7 @@ import java.util.*
 data class QuizResult(
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0,
-    val quizType: String,
+    val type: String,
     val baseNote: String,
     val correctAnswer: String,
     val userAnswer: String,

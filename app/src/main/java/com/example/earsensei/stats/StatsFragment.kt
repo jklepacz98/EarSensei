@@ -7,10 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.earsensei.Chords
 import com.example.earsensei.Intervals
-import com.example.earsensei.PerfectPitches
 import com.example.earsensei.Scales
 import com.example.earsensei.databinding.FragmentStatsBinding
-import com.example.earsensei.utils.navigate
+import com.example.earsensei.utils.safeNavigate
 
 class StatsFragment : Fragment() {
     private lateinit var binding: FragmentStatsBinding
@@ -25,33 +24,16 @@ class StatsFragment : Fragment() {
     }
 
     private fun setupButtons() {
-        binding.buttonIntervals.setOnClickListener {
-            this@StatsFragment.navigate(
-                StatsFragmentDirections.actionStatsFragmentToChartFragment(
-                    Intervals.type
-                )
-            )
-        }
-        binding.buttonChords.setOnClickListener {
-            this@StatsFragment.navigate(
-                StatsFragmentDirections.actionStatsFragmentToChartFragment(
-                    Chords.type
-                )
-            )
-        }
-        binding.buttonScales.setOnClickListener {
-            this@StatsFragment.navigate(
-                StatsFragmentDirections.actionStatsFragmentToChartFragment(
-                    Scales.type
-                )
-            )
-        }
-        binding.buttonPerfectPitch.setOnClickListener {
-            this@StatsFragment.navigate(
-                StatsFragmentDirections.actionStatsFragmentToChartFragment(
-                    PerfectPitches.type
-                )
-            )
+        binding.run {
+            buttonIntervals.setOnClickListener {
+                safeNavigate(StatsFragmentDirections.actionStatsFragmentToChartFragment(Intervals.quizType))
+            }
+            buttonChords.setOnClickListener {
+                safeNavigate(StatsFragmentDirections.actionStatsFragmentToChartFragment(Chords.quizType))
+            }
+            buttonScales.setOnClickListener {
+                safeNavigate(StatsFragmentDirections.actionStatsFragmentToChartFragment(Scales.quizType))
+            }
         }
     }
 }

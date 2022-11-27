@@ -1,193 +1,189 @@
 package com.example.earsensei
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
-object MusicTerminologyFactory {
-    fun get(type: String): MusicTerminology = when (type) {
-        Intervals.type -> Intervals
-        Chords.type -> Chords
-        Scales.type -> Scales
-        PerfectPitches.type -> PerfectPitches
-        else -> Intervals
+@Parcelize
+sealed class QuizType(val name: String) : Parcelable {
+    @Parcelize
+    object Intervals : QuizType(INTERVALS)
+    object Chords : QuizType(CHORDS)
+    object Scales : QuizType(SCALES)
+
+    private companion object {
+        const val INTERVALS = "Intervals"
+        const val CHORDS = "Chords"
+        const val SCALES = "Scales"
     }
 }
 
-interface MusicTerminology {
-    val type: String
-    val musicMap: Map<String, MusicSomething>
-    val list: List<MusicSomething>
+object MusicTerminologyFactory {
+    fun get(quizType: QuizType): MusicTerminology = when (quizType) {
+        is QuizType.Intervals -> Intervals
+        is QuizType.Chords -> Chords
+        is QuizType.Scales -> Scales
+    }
+}
+
+abstract class MusicTerminology {
+    abstract val quizType: QuizType
+    abstract val musicList: List<MusicSomething>
 }
 
 interface MusicSomething {
     val name: String
     val order: Int
     val translation: Int
+    val quizType: QuizType
     fun getRange(): Map<String, Int>
-    fun toNoteIndices(baseNote: Int): List<Int>
+    fun toNoteIds(baseNote: Int): List<Int>
 }
 
 
 data class Interval(
     override val name: String,
     override val order: Int,
+    override val translation: Int,
     val halfSteps: Int,
-    override val translation: Int
 ) : MusicSomething {
     override fun getRange() =
         NOTES_WITH_OCTAVE.filter { it.value < NOTES_WITH_OCTAVE.size - halfSteps }
 
-    val type = TYPE
+    override val quizType = QuizType.Intervals
 
-    companion object {
-        val TYPE = "Intervals"
-    }
-
-    override fun toNoteIndices(baseNote: Int): List<Int> {
+    override fun toNoteIds(baseNote: Int): List<Int> {
         val secondNote = baseNote + halfSteps
         return listOf(baseNote, secondNote)
     }
 }
 
-object Intervals : MusicTerminology {
+object Intervals : MusicTerminology() {
 
-    override val type: String = Interval.TYPE
+    override val quizType = QuizType.Intervals
 
-    override val list = listOf(
-        Interval("MINOR_2ND", 1, 1, R.string.interval_minor2nd),
-        Interval("MAJOR_2RD", 2, 2, R.string.interval_major2nd),
-        Interval("MINOR_3RD", 3, 3, R.string.interval_minor3rd),
-        Interval("MAJOR_3RD", 4, 4, R.string.interval_major3rd),
-        Interval("PERFECT_4TH", 5, 5, R.string.interval_perfect4th),
-        Interval("TRITONE", 6, 6, R.string.interval_tritone),
-        Interval("PERFECT_5TH", 7, 7, R.string.interval_perfect5th),
-        Interval("MINOR_6TH", 8, 8, R.string.interval_minor6th),
-        Interval("MAJOR_6TH", 9, 9, R.string.interval_major6th),
-        Interval("CHORDS.MINOR_7TH", 10, 10, R.string.interval_minor7th),
-        Interval("CHORDS.MAJOR_7TH", 11, 11, R.string.interval_major7th),
-        Interval("OCATVE", 12, 12, R.string.interval_octave),
-        Interval("MINOR_9TH", 13, 13, R.string.interval_minor9th),
-        Interval("MAJOR_9TH", 14, 14, R.string.interval_major9th)
+    override val musicList = listOf(
+        Interval("MINOR_2ND", 1, R.string.interval_minor2nd, 1),
+        Interval("MAJOR_2RD", 2, R.string.interval_major2nd, 2),
+        Interval("MINOR_3RD", 3, R.string.interval_minor3rd, 3),
+        Interval("MAJOR_3RD", 4, R.string.interval_major3rd, 4),
+        Interval("PERFECT_4TH", 5, R.string.interval_perfect4th, 5),
+        Interval("TRITONE", 6, R.string.interval_tritone, 6),
+        Interval("PERFECT_5TH", 7, R.string.interval_perfect5th, 7),
+        Interval("MINOR_6TH", 8, R.string.interval_minor6th, 8),
+        Interval("MAJOR_6TH", 9, R.string.interval_major6th, 9),
+        Interval("CHORDS.MINOR_7TH", 10, R.string.interval_minor7th, 10),
+        Interval("CHORDS.MAJOR_7TH", 11, R.string.interval_major7th, 11),
+        Interval("OCATVE", 12, R.string.interval_octave, 12),
+        Interval("MINOR_9TH", 13, R.string.interval_minor9th, 13),
+        Interval("MAJOR_9TH", 14, R.string.interval_major9th, 14),
     )
-
-    override val musicMap: Map<String, MusicSomething> = list.associateBy { it.name }
 }
 
 data class Scale(
     override val name: String,
     override val order: Int,
+    override val translation: Int,
     val halfSteps: List<Int>,
-    override val translation: Int
 ) : MusicSomething {
+
+    override val quizType = QuizType.Scales
+
     override fun getRange(): Map<String, Int> {
-        //todo change name of range
         val range = NOTES_WITH_OCTAVE.size - (halfSteps.maxOrNull() ?: 0)
         return NOTES_WITH_OCTAVE.filter { it.value < range }
     }
 
-    val type = TYPE
-
-    companion object {
-        val TYPE = "Scales"
-    }
-
-    override fun toNoteIndices(baseNote: Int): List<Int> {
+    override fun toNoteIds(baseNote: Int): List<Int> {
         return halfSteps.map { baseNote + it }
     }
 }
 
-object Scales : MusicTerminology {
+object Scales : MusicTerminology() {
 
-    override val type: String = Scale.TYPE
+    override val quizType = QuizType.Scales
 
-    override val list = listOf(
-        Scale("MAJOR", 1, listOf(0, 2, 4, 5, 7, 9, 11, 12), R.string.scale_major),
-        Scale("NATURAL_MINOR", 2, listOf(0, 2, 3, 5, 7, 8, 10, 12), R.string.scale_natural_minor),
-        Scale("HARMONIC_MINOR", 3, listOf(0, 2, 3, 5, 7, 8, 11, 12), R.string.scale_harmonic_minor),
+    override val musicList = listOf(
+        Scale("MAJOR", 1, R.string.scale_major, listOf(0, 2, 4, 5, 7, 9, 11, 12)),
+        Scale("NATURAL_MINOR", 2, R.string.scale_natural_minor, listOf(0, 2, 3, 5, 7, 8, 10, 12)),
+        Scale("HARMONIC_MINOR", 3, R.string.scale_harmonic_minor, listOf(0, 2, 3, 5, 7, 8, 11, 12)),
     )
-
-    override val musicMap: Map<String, MusicSomething> = list.associateBy { it.name }
 }
 
 
 data class Chord(
     override val name: String,
     override val order: Int,
+    override val translation: Int,
     val halfSteps: List<Int>,
-    override val translation: Int
 ) : MusicSomething {
     override fun getRange(): Map<String, Int> {
         val range = NOTES_WITH_OCTAVE.size - (halfSteps.maxOrNull() ?: 0)
         return NOTES_WITH_OCTAVE.filter { it.value < range }
     }
 
-    val type = TYPE
+    override val quizType = QuizType.Chords
 
-    companion object {
-        val TYPE = "Chord"
-    }
-
-    override fun toNoteIndices(baseNote: Int): List<Int> {
+    override fun toNoteIds(baseNote: Int): List<Int> {
         return halfSteps.map { baseNote + it }
     }
 }
 
-object Chords : MusicTerminology {
+object Chords : MusicTerminology() {
 
-    override val type: String = Chord.TYPE
-    override val list = listOf(
-        Chord("MAJOR", 1, listOf(0, 4, 7), R.string.chord_major),
-        Chord("MINOR", 2, listOf(0, 3, 7), R.string.chord_minor),
-        Chord("DIMINISHED", 3, listOf(0, 3, 6), R.string.chord_diminished),
-        Chord("AUGMENTED", 4, listOf(0, 4, 8), R.string.chord_augmented),
-        Chord("MAJOR_7TH", 5, listOf(0, 4, 7, 11), R.string.chord_major7th),
-        Chord("DOMINANT_7TH", 6, listOf(0, 4, 7, 10), R.string.chord_dominant7th),
-        Chord("MINOR_7TH", 7, listOf(0, 3, 7, 10), R.string.chord_minor7th)
+    override val quizType = QuizType.Chords
+    override val musicList = listOf(
+        Chord("MAJOR", 1, R.string.chord_major, listOf(0, 4, 7)),
+        Chord("MINOR", 2, R.string.chord_minor, listOf(0, 3, 7)),
+        Chord("DIMINISHED", 3, R.string.chord_diminished, listOf(0, 3, 6)),
+        Chord("AUGMENTED", 4, R.string.chord_augmented, listOf(0, 4, 8)),
+        Chord("MAJOR_7TH", 5, R.string.chord_major7th, listOf(0, 4, 7, 11)),
+        Chord("DOMINANT_7TH", 6, R.string.chord_dominant7th, listOf(0, 4, 7, 10)),
+        Chord("MINOR_7TH", 7, R.string.chord_minor7th, listOf(0, 3, 7, 10))
     )
-
-    override val musicMap: Map<String, MusicSomething> = list.associateBy { it.name }
 }
 
-data class PerfectPitch(
-    override val name: String,
-    override val order: Int,
-    val halfSteps: Int,
-    override val translation: Int
-) : MusicSomething {
-    override fun getRange(): Map<String, Int> {
-        return NOTES_WITH_OCTAVE
-    }
-
-    val type = TYPE
-
-    companion object {
-        val TYPE = "PerfectPitch"
-    }
-
-    override fun toNoteIndices(baseNote: Int): List<Int> {
-        return listOf(halfSteps)
-    }
-}
-
-//todo change name
-object PerfectPitches : MusicTerminology {
-
-    override val type: String = PerfectPitch.TYPE
-    override val list: List<MusicSomething> = listOf(
-        PerfectPitch("C", 1, 1, R.string.C),
-        PerfectPitch("CIS", 2, 2, R.string.Cis),
-        PerfectPitch("D", 3, 3, R.string.D),
-        PerfectPitch("DIS", 4, 4, R.string.Dis),
-        PerfectPitch("E", 5, 5, R.string.E),
-        PerfectPitch("F", 6, 6, R.string.F),
-        PerfectPitch("FIS", 7, 7, R.string.Fis),
-        PerfectPitch("G", 8, 8, R.string.G),
-        PerfectPitch("GIS", 9, 9, R.string.Gis),
-        PerfectPitch("A", 10, 10, R.string.A),
-        PerfectPitch("AIS", 11, 11, R.string.Ais),
-        PerfectPitch("B", 12, 12, R.string.B)
-    )
-
-    override val musicMap: Map<String, MusicSomething> = list.associateBy { it.name }
-}
+//todo maybe later
+//data class PerfectPitch(
+//    override val name: String,
+//    override val order: Int,
+//    val halfSteps: Int,
+//    override val translation: Int
+//) : MusicSomething {
+//    override fun getRange(): Map<String, Int> {
+//        return NOTES_WITH_OCTAVE
+//    }
+//
+//    val type = TYPE
+//
+//    companion object {
+//        val TYPE = "PerfectPitch"
+//    }
+//
+//    override fun toNoteIds(baseNote: Int): List<Int> {
+//        return listOf(halfSteps)
+//    }
+//}
+//
+//object PerfectPitches : MusicTerminology {
+//
+//    override val quizType: String = PerfectPitch.TYPE
+//    override val musicList: List<MusicSomething> = listOf(
+//        PerfectPitch("C", 1, 1, R.string.C),
+//        PerfectPitch("CIS", 2, 2, R.string.Cis),
+//        PerfectPitch("D", 3, 3, R.string.D),
+//        PerfectPitch("DIS", 4, 4, R.string.Dis),
+//        PerfectPitch("E", 5, 5, R.string.E),
+//        PerfectPitch("F", 6, 6, R.string.F),
+//        PerfectPitch("FIS", 7, 7, R.string.Fis),
+//        PerfectPitch("G", 8, 8, R.string.G),
+//        PerfectPitch("GIS", 9, 9, R.string.Gis),
+//        PerfectPitch("A", 10, 10, R.string.A),
+//        PerfectPitch("AIS", 11, 11, R.string.Ais),
+//        PerfectPitch("B", 12, 12, R.string.B)
+//    )
+//
+//    override val musicMap: Map<String, MusicSomething> = musicList.associateBy { it.name }
+//}
 
 val NOTES = mapOf(
     "C" to 0,

@@ -1,6 +1,6 @@
 package com.example.earsensei
 
-class Note(val name: String, val number: Int, val audioResource: Int) {
+data class Note(val name: String, val number: Int, val audioResource: Int) {
     companion object {
         val NOTES = mapOf(
             0 to Note("C3", 0, R.raw.c3),
