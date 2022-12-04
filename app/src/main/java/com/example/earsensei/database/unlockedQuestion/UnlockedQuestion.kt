@@ -9,6 +9,6 @@ data class UnlockedQuestion(
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0,
     val type: String,
-    val question: String,
+    val name: String,
     val date: Long? = Date().time,
 )

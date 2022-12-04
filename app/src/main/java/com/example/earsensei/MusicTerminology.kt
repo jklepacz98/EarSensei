@@ -30,6 +30,7 @@ abstract class MusicTerminology {
     abstract val musicList: List<MusicSomething>
 }
 
+//todo change name
 interface MusicSomething {
     val name: String
     val order: Int

@@ -36,7 +36,7 @@ class QuizViewModel(
         setQuestionPool()
         viewModelScope.launch {
             val unlockedQuestions = unlockedQuestionDao.getByType(quizType.name)
-            val unlockedQuestionNames = unlockedQuestions.map { it.question }
+            val unlockedQuestionNames = unlockedQuestions.map { it.name }
             val terminology = musicTerminology.musicList.filter { it.name in unlockedQuestionNames }
             val newAnswers = terminology.map {
                 //todo
@@ -73,7 +73,7 @@ class QuizViewModel(
 
     private fun List<UnlockedQuestion>.toAnswers(): List<Answer> =
         map { unlockedQuestion ->
-            val interval = musicTerminology.musicList.first { it.name == unlockedQuestion.question }
+            val interval = musicTerminology.musicList.first { it.name == unlockedQuestion.name }
             Answer(interval.name, interval.translation, false)
         }.also { it.random().isCorrect = true }
 
@@ -97,9 +97,8 @@ class QuizViewModel(
         iterateQuiz()
     }
 
-    private fun canUnlockNewQuestion(results: List<QuizResult>): Boolean {
-        return results.all { it.isCorrect } && results.size == LIMIT
-    }
+    private fun canUnlockNewQuestion(results: List<QuizResult>): Boolean =
+        results.all { it.isCorrect } && results.size == LIMIT
 
     companion object {
         const val LIMIT = 2
