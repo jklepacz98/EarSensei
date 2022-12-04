@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.earsensei.MusicTerminology
 import com.example.earsensei.NotesPlayer
+import com.example.earsensei.QuizType
 import com.example.earsensei.database.Answer
 import com.example.earsensei.database.quizResult.QuizResult
 import com.example.earsensei.database.quizResult.QuizResultDao
@@ -19,7 +20,8 @@ class QuizViewModel(
     private val quizResultDao: QuizResultDao,
     private val unlockedQuestionDao: UnlockedQuestionDao,
     private val notesPlayer: NotesPlayer,
-    private val musicTerminology: MusicTerminology
+    private val musicTerminology: MusicTerminology,
+    private val quizType: QuizType,
 ) : ViewModel() {
 
     val currentProgress = MutableLiveData(-1)
@@ -32,11 +34,21 @@ class QuizViewModel(
 
     init {
         setQuestionPool()
+        viewModelScope.launch {
+            val unlockedQuestions = unlockedQuestionDao.getByType(quizType.name)
+            val unlockedQuestionNames = unlockedQuestions.map { it.question }
+            val terminology = musicTerminology.musicList.filter { it.name in unlockedQuestionNames }
+            val newAnswers = terminology.map {
+                //todo
+                Answer(it.name, it.translation, false)
+            }
+            answers.postValue(newAnswers)
+        }
     }
+
 
     private fun iterateQuiz() {
         currentProgress.postValue(currentProgress.value?.inc())
-
 
         setNotes()
         playNotes()
@@ -91,6 +103,7 @@ class QuizViewModel(
 
     companion object {
         const val LIMIT = 2
+        const val MIN_UNLOCKED_QUESTIONS = 2
     }
 }
 

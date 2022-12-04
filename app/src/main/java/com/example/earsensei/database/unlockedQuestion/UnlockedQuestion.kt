@@ -10,5 +10,5 @@ data class UnlockedQuestion(
     var id: Int = 0,
     val type: String,
     val question: String,
-    val date: Long = Date().time
+    val date: Long? = Date().time,
 )

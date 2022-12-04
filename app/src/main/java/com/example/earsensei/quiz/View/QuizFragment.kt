@@ -28,7 +28,7 @@ class QuizFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         super.onCreate(savedInstanceState)
         binding = FragmentIntervalsBinding.inflate(inflater, container, false)

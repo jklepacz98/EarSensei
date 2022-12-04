@@ -11,7 +11,9 @@ import org.koin.core.parameter.parametersOf
 import org.koin.dsl.module
 
 val viewModelModule = module {
-    viewModel { (type: QuizType) -> QuizViewModel(get(), get(), get(), get { parametersOf(type) }) }
+    viewModel { (type: QuizType) ->
+        QuizViewModel(get(), get(), get(), get { parametersOf(type) }, type)
+    }
     viewModel { (type: QuizType) -> GraphViewModel(get(), get { parametersOf(type) }) }
     viewModel { SettingsViewModel() }
 }
@@ -21,8 +23,7 @@ val databaseModule = module {
             androidApplication(),
             EarSenseiDatabase::class.java,
             EarSenseiDatabase.DATABASE_NAME,
-        ).createFromAsset("database/PrepopulateEarSensei.db")
-            .build()
+        ).createFromAsset("database/PrepopulateEarSensei.db").build()
     }
     single {
         val database = get<EarSenseiDatabase>()

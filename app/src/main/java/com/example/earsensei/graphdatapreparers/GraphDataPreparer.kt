@@ -7,13 +7,13 @@ class GraphDataPreparer() {
     companion object {
         fun prepareIntervalsMap(
             quizResults: List<QuizResult>,
-            xLabels: List<String>
+            xLabels: List<String>,
         ): LinkedHashMap<String, Float> {
             val ratioHashMap: LinkedHashMap<String, Float> = linkedMapOf()
             xLabels.forEach { xLabel ->
                 val xValue: Float = QuizRatioCalculator.calculateCorrectAnswerRatio(
                     quizResults.filter { it.correctAnswer == xLabel })
-                ratioHashMap.put(xLabel, xValue)
+                ratioHashMap[xLabel] = xValue
             }
             return ratioHashMap
         }

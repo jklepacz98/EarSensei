@@ -10,7 +10,7 @@ interface UnlockedQuestionDao {
     fun getAllData(): List<UnlockedQuestion>
 
     @Query("SELECT * FROM unlockedQuestion WHERE :type = type")
-    fun getByType(type: String): List<UnlockedQuestion>
+    suspend fun getByType(type: String): List<UnlockedQuestion>
 
     @Query("SELECT * FROM unlockedQuestion WHERE :type = type AND :after > date")
     fun getByTypeAfterDate(type: String, after: Long): List<UnlockedQuestion>
