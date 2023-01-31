@@ -47,17 +47,17 @@ class BarChartManager(private val barChart: BarChart) {
         barChart.invalidate()
     }
 
-    fun setupDescription() {
+    private fun setupDescription() {
         val description: Description = barChart.description
         description.isEnabled = false
     }
 
-    fun setupLegend() {
+    private fun setupLegend() {
         val legend: Legend = barChart.legend
         legend.isEnabled = false
     }
 
-    fun setupXTopAxis() {
+    private fun setupXTopAxis() {
         val xAxis: XAxis = barChart.xAxis
         xAxis.labelCount = maxVisibleXAxisLabels
         xAxis.granularity = barDistance
@@ -67,14 +67,14 @@ class BarChartManager(private val barChart: BarChart) {
         xAxis.textSize = xAxisLabelTextSize
     }
 
-    fun setupYTopAxis() {
+    private fun setupYTopAxis() {
         val yTopAxis: YAxis = barChart.axisLeft
         yTopAxis.axisMinimum = yAxisMinimum
         yTopAxis.axisMaximum = yAxisMaximum
         //yTopAxis.setDrawLabels(false)
     }
 
-    fun setupYBottomAxis() {
+    private fun setupYBottomAxis() {
         val yBottomAxis: YAxis = barChart.axisRight
         yBottomAxis.axisMinimum = yAxisMinimum
         yBottomAxis.axisMaximum = yAxisMaximum
@@ -100,16 +100,12 @@ class BarChartManager(private val barChart: BarChart) {
     private fun createBarEntries(xValues: List<Float>): List<BarEntry> {
         var iterator = 0F
         val dataValues: ArrayList<BarEntry> = arrayListOf()
-        xValues.forEach() {
+        xValues.forEach {
             if (!it.isNaN()) {
                 dataValues.add(BarEntry(iterator, it))
                 iterator += barDistance
             }
         }
         return dataValues
-    }
-
-    private companion object {
-        const val ZERO = 0F
     }
 }
