@@ -12,17 +12,17 @@ import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 
-class BarChartManager(val barChart: BarChart) {
+class BarChartManager(private val barChart: BarChart) {
 
-    val barDistance: Float = 1F
-    val barWidth: Float = 0.9F
-    val maxVisibleXAxisLabels: Int = 20
-    val animationLengthInMs: Int = 750
-    val yAxisMinimum: Float = 0F
-    val yAxisMaximum: Float = 1F + 0.001F //0.001F addition is to show last grid line
-    val rightOffset: Float = 32F
-    val xAxisLabelTextSize: Float = 16F
-    val barTextSize: Float = 12F
+    private val barDistance: Float = 1F
+    private val barWidth: Float = 0.9F
+    private val maxVisibleXAxisLabels: Int = 20
+    private val animationLengthInMs: Int = 750
+    private val yAxisMinimum: Float = 0F
+    private val yAxisMaximum: Float = 1F + 0.001F //0.001F addition is to show last grid line
+    private val rightOffset: Float = 32F
+    private val xAxisLabelTextSize: Float = 16F
+    private val barTextSize: Float = 12F
 
 //    var barDistance: Float = barChartModel.barDistance
 //    var barWidth: Float = barChartModel.barWidth
@@ -90,31 +90,26 @@ class BarChartManager(val barChart: BarChart) {
     fun setDataValues(xValues: List<Float>) {
         val dataValues: List<BarEntry> = createBarEntries(xValues)
         val barDataSet1 = BarDataSet(dataValues, "DataSet 1")
-        barDataSet1.setColor(Color.GREEN)
+        barDataSet1.color = Color.GREEN
         val barData = BarData(barDataSet1)
         barData.barWidth = barWidth
         barData.setValueTextSize(barTextSize)
         barChart.data = barData
     }
 
-    fun createBarEntries(xValues: List<Float>): List<BarEntry> {
+    private fun createBarEntries(xValues: List<Float>): List<BarEntry> {
         var iterator = 0F
         val dataValues: ArrayList<BarEntry> = arrayListOf()
         xValues.forEach() {
-            dataValues.add(BarEntry(iterator, it))
-            //orderHashMap.put(iterator, it.key)
-            iterator += barDistance
+            if (!it.isNaN()) {
+                dataValues.add(BarEntry(iterator, it))
+                iterator += barDistance
+            }
         }
         return dataValues
     }
 
-    fun setOrderdHashMap(xLabels: List<String>): LinkedHashMap<Float, String> {
-        val orderHashMap: LinkedHashMap<Float, String> = linkedMapOf()
-        var iterator = 0F
-        xLabels.forEach() {
-            orderHashMap.put(iterator, it)
-            iterator += barDistance
-        }
-        return orderHashMap
+    private companion object {
+        const val ZERO = 0F
     }
 }
