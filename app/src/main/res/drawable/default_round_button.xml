@@ -10,9 +10,9 @@
     </item>
     <item android:state_pressed="true">
         <shape android:shape="rectangle">
-            <stroke android:color="@color/secondary"
+            <stroke android:color="@color/secondaryVariant"
                 android:width="2dp"/>
-            <solid android:color="@color/primary"/>
+            <solid android:color="@color/primaryVariant"/>
             <corners android:radius="5dp"/>
         </shape>
     </item>
