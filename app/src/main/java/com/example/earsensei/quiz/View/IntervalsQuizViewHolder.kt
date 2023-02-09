@@ -8,7 +8,7 @@ import com.example.earsensei.databinding.ItemAnswerBinding
 
 class IntervalsQuizViewHolder(
     private val view: View,
-    private val clickListener: (Answer) -> Unit
+    private val clickListener: (Answer) -> Unit,
 ) : RecyclerView.ViewHolder(view) {
     private val binding = ItemAnswerBinding.bind(view)
 
@@ -25,7 +25,8 @@ class IntervalsQuizViewHolder(
     }
 
     private fun setBtnAnswerText(answer: Answer) {
-        binding.button.text = answer.name
+        val stringResource = view.resources.getText(answer.stringResourceId)
+        binding.button.text = stringResource
     }
 
     private fun setBtnAnswerColor(answer: Answer) {

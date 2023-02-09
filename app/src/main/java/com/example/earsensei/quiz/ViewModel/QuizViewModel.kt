@@ -29,11 +29,12 @@ class QuizViewModel(
     val answers = MutableLiveData<List<Answer>>()
     val isAnswered = MutableLiveData(false)
     val isNextButtonVisible = MutableLiveData(false)
+    val isLoading = MutableLiveData(true)
     val goBack = SingleLiveEvent<Boolean>()
     val toastEvent: SingleLiveEvent<String> = SingleLiveEvent()
 
     init {
-        setQuestionPool()
+        isLoading.postValue(true)
         viewModelScope.launch {
             val unlockedQuestions = unlockedQuestionDao.getByType(quizType.name)
             val unlockedQuestionNames = unlockedQuestions.map { it.name }
@@ -43,16 +44,15 @@ class QuizViewModel(
                 Answer(it.name, it.translation, false)
             }
             answers.postValue(newAnswers)
+            isLoading.postValue(false)
         }
     }
 
 
     private fun iterateQuiz() {
         currentProgress.postValue(currentProgress.value?.inc())
-
         setNotes()
         playNotes()
-
     }
 
     private fun setNotes() {

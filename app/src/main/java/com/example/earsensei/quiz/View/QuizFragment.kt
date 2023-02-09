@@ -42,6 +42,7 @@ class QuizFragment : Fragment() {
         setupProgressMaxObserver()
         setupGoBackObserver()
         setupToastEventObserver()
+        setupIsLoadingObserver()
         return binding.root
     }
 
@@ -84,6 +85,14 @@ class QuizFragment : Fragment() {
                 else -> View.INVISIBLE
             }
             binding.rvAnswers
+        }
+    }
+
+    private fun setupIsLoadingObserver() {
+        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            binding.vsQuizLoading.run {
+                displayedChild = if (isLoading) 0 else 1
+            }
         }
     }
 
