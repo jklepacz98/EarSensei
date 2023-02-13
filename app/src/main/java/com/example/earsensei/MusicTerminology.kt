@@ -27,11 +27,11 @@ object MusicTerminologyFactory {
 
 abstract class MusicTerminology {
     abstract val quizType: QuizType
-    abstract val musicList: List<MusicSomething>
+    abstract val musicList: List<MusicElement>
 }
 
 //todo change name
-interface MusicSomething {
+interface MusicElement {
     val name: String
     val order: Int
     val translation: Int
@@ -46,7 +46,7 @@ data class Interval(
     override val order: Int,
     override val translation: Int,
     val halfSteps: Int,
-) : MusicSomething {
+) : MusicElement {
     override fun getRange() =
         NOTES_WITH_OCTAVE.filter { it.value < NOTES_WITH_OCTAVE.size - halfSteps }
 
@@ -85,7 +85,7 @@ data class Scale(
     override val order: Int,
     override val translation: Int,
     val halfSteps: List<Int>,
-) : MusicSomething {
+) : MusicElement {
 
     override val quizType = QuizType.Scales
 
@@ -116,7 +116,7 @@ data class Chord(
     override val order: Int,
     override val translation: Int,
     val halfSteps: List<Int>,
-) : MusicSomething {
+) : MusicElement {
     override fun getRange(): Map<String, Int> {
         val range = NOTES_WITH_OCTAVE.size - (halfSteps.maxOrNull() ?: 0)
         return NOTES_WITH_OCTAVE.filter { it.value < range }
@@ -149,7 +149,7 @@ object Chords : MusicTerminology() {
 //    override val order: Int,
 //    val halfSteps: Int,
 //    override val translation: Int
-//) : MusicSomething {
+//) : MusicElement {
 //    override fun getRange(): Map<String, Int> {
 //        return NOTES_WITH_OCTAVE
 //    }
@@ -168,7 +168,7 @@ object Chords : MusicTerminology() {
 //object PerfectPitches : MusicTerminology {
 //
 //    override val quizType: String = PerfectPitch.TYPE
-//    override val musicList: List<MusicSomething> = listOf(
+//    override val musicList: List<MusicElement> = listOf(
 //        PerfectPitch("C", 1, 1, R.string.C),
 //        PerfectPitch("CIS", 2, 2, R.string.Cis),
 //        PerfectPitch("D", 3, 3, R.string.D),
@@ -183,7 +183,7 @@ object Chords : MusicTerminology() {
 //        PerfectPitch("B", 12, 12, R.string.B)
 //    )
 //
-//    override val musicMap: Map<String, MusicSomething> = musicList.associateBy { it.name }
+//    override val musicMap: Map<String, MusicElement> = musicList.associateBy { it.name }
 //}
 
 val NOTES = mapOf(

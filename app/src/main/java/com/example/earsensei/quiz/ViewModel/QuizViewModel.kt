@@ -91,13 +91,14 @@ class QuizViewModel(
     }
 
     private fun addResult(answer: Answer) {
-        val quizResult = QuizResult(
-            type = quizType.name,
-            baseNote = ,
-            correctAnswer = answer.name,
-            userAnswer = answer.correctAnswer,
-        )
-        quizResultDao.insert(quizResult)
+        //todo
+//        val quizResult = QuizResult(
+//            type = quizType.name,
+//            baseNote = ,
+//            correctAnswer = answer.name,
+//            userAnswer = answer.correctAnswer,
+//        )
+//        quizResultDao.insert(quizResult)
     }
 
 
