@@ -3,7 +3,7 @@ package com.example.earsensei.quiz.ViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.earsensei.MusicTerminology
+import com.example.earsensei.MusicElements
 import com.example.earsensei.NotesPlayer
 import com.example.earsensei.QuizType
 import com.example.earsensei.database.Answer
@@ -20,7 +20,7 @@ class QuizViewModel(
     private val quizResultDao: QuizResultDao,
     private val unlockedQuestionDao: UnlockedQuestionDao,
     private val notesPlayer: NotesPlayer,
-    private val musicTerminology: MusicTerminology,
+    private val musicElements: MusicElements,
     private val quizType: QuizType,
 ) : ViewModel() {
 
@@ -69,7 +69,7 @@ class QuizViewModel(
     private fun List<UnlockedQuestion>.toAnswers(): List<Answer> {
         val correctAnswer = this.random()
         return map { unlockedQuestion ->
-            val interval = musicTerminology.musicList.first { it.name == unlockedQuestion.name }
+            val interval = musicElements.musicList.first { it.name == unlockedQuestion.name }
             Answer(interval.name,
                 correctAnswer.name,
                 interval.translation,

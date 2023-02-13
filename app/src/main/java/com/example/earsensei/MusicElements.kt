@@ -17,15 +17,15 @@ sealed class QuizType(val name: String) : Parcelable {
     }
 }
 
-object MusicTerminologyFactory {
-    fun get(quizType: QuizType): MusicTerminology = when (quizType) {
+object MusicElementsFactory {
+    fun get(quizType: QuizType): MusicElements = when (quizType) {
         is QuizType.Intervals -> Intervals
         is QuizType.Chords -> Chords
         is QuizType.Scales -> Scales
     }
 }
 
-abstract class MusicTerminology {
+abstract class MusicElements {
     abstract val quizType: QuizType
     abstract val musicList: List<MusicElement>
 }
@@ -58,7 +58,7 @@ data class Interval(
     }
 }
 
-object Intervals : MusicTerminology() {
+object Intervals : MusicElements() {
 
     override val quizType = QuizType.Intervals
 
@@ -99,7 +99,7 @@ data class Scale(
     }
 }
 
-object Scales : MusicTerminology() {
+object Scales : MusicElements() {
 
     override val quizType = QuizType.Scales
 
@@ -129,7 +129,7 @@ data class Chord(
     }
 }
 
-object Chords : MusicTerminology() {
+object Chords : MusicElements() {
 
     override val quizType = QuizType.Chords
     override val musicList = listOf(
@@ -165,7 +165,7 @@ object Chords : MusicTerminology() {
 //    }
 //}
 //
-//object PerfectPitches : MusicTerminology {
+//object PerfectPitches : MusicElements {
 //
 //    override val quizType: String = PerfectPitch.TYPE
 //    override val musicList: List<MusicElement> = listOf(

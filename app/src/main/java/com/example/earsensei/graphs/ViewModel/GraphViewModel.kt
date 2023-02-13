@@ -4,7 +4,7 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.earsensei.MusicTerminology
+import com.example.earsensei.MusicElements
 import com.example.earsensei.QuizType
 import com.example.earsensei.database.quizResult.QuizResult
 import com.example.earsensei.database.quizResult.QuizResultDao
@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 
 class GraphViewModel(
     private val resultDao: QuizResultDao,
-    private val musicTerminology: MusicTerminology
+    private val musicElements: MusicElements,
 ) : ViewModel() {
     private var quizResults: MutableLiveData<List<QuizResult>> = MutableLiveData()
 
@@ -22,8 +22,8 @@ class GraphViewModel(
             addSource(quizResults) {
                 viewModelScope.launch(Dispatchers.IO) {
                     val map = linkedMapOf<Int, Float>()
-                    musicTerminology.musicList.forEach {
-                        val ratio = calculateRatio(musicTerminology.quizType, it.name)
+                    musicElements.musicList.forEach {
+                        val ratio = calculateRatio(musicElements.quizType, it.name)
                         map[it.translation] = ratio
                     }
                     postValue(map)
