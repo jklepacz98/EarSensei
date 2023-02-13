@@ -4,7 +4,8 @@ data class Answer(
     val name: String,
     val correctAnswer: String,
     val stringResourceId: Int,
-    var isCorrect: Boolean = correctAnswer == name,
-    var isHighlighted: Boolean = false,
+    val baseNote: String,
+    val isCorrect: Boolean = correctAnswer == name,
+    val isHighlighted: Boolean,
 )
 

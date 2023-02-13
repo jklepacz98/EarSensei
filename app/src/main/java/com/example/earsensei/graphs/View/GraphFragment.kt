@@ -26,7 +26,7 @@ class GraphFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = FragmentChartBinding.inflate(layoutInflater)
         barChartManager = BarChartManager(binding.barChart)
@@ -36,10 +36,11 @@ class GraphFragment : Fragment() {
     }
 
     private fun setupChartDataObserver() {
-        viewModel.chartData.observe(viewLifecycleOwner) {
-            val translations = it.keys.map { resources.getText(it).toString() }
+        viewModel.chartData.observe(viewLifecycleOwner) { chartData ->
+            val filteredChartData = chartData.filter { !it.value.isNaN() }
+            val translations = filteredChartData.keys.map { resources.getText(it).toString() }
             barChartManager.setXAxisLabels(translations)
-            barChartManager.setDataValues(it.values.toList())
+            barChartManager.setDataValues(filteredChartData.values.toList())
         }
     }
 

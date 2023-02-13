@@ -20,6 +20,7 @@ class IntervalsQuizViewHolder(
 
     private fun setupBtnAnswerClickListener(answer: Answer) {
         binding.button.setOnClickListener {
+
             clickListener.invoke(answer)
         }
     }

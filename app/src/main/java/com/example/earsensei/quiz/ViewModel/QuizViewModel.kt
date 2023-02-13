@@ -3,6 +3,7 @@ package com.example.earsensei.quiz.ViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.earsensei.MusicElement
 import com.example.earsensei.MusicElements
 import com.example.earsensei.NotesPlayer
 import com.example.earsensei.QuizType
@@ -25,7 +26,7 @@ class QuizViewModel(
 ) : ViewModel() {
 
     val currentProgress = MutableLiveData(-1)
-    val maximumProgress = MutableLiveData(20)
+    val maximumProgress = MutableLiveData(0)
     val answers = MutableLiveData<List<Answer>>()
     val isAnswered = MutableLiveData(false)
     val isNextButtonVisible = MutableLiveData(false)
@@ -35,14 +36,31 @@ class QuizViewModel(
 
     init {
         isLoading.postValue(true)
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val unlockedQuestions = unlockedQuestionDao.getByType(quizType.name)
-            val newAnswers = unlockedQuestions.toAnswers()
-            answers.postValue(newAnswers)
+            val musicElementList = unlockedQuestions.toMusicElementList()
+            val musicElementListSorted = musicElementList.sortedBy { it.order }
+            val answerList = generateQuestions(musicElementListSorted)
+            answers.postValue(answerList.first())
             isLoading.postValue(false)
         }
     }
 
+    private fun generateQuestions(musicElementList: List<MusicElement>): List<List<Answer>> {
+        val correctAnswer = musicElementList.random()
+        val baseNote = correctAnswer.getRange().entries.random()
+        val answerList = musicElementList.map { musicElement ->
+            Answer(
+                musicElement.name,
+                correctAnswer.name,
+                musicElement.translation,
+                baseNote.key,
+                musicElement.name == correctAnswer.name,
+                false,
+            )
+        }
+        return listOf(answerList)
+    }
 
     private fun iterateQuiz() {
         currentProgress.postValue(currentProgress.value?.inc())
@@ -58,7 +76,6 @@ class QuizViewModel(
     private fun setQuestionPool() {
         viewModelScope.launch(Dispatchers.IO) {
             iterateQuiz()
-
         }
     }
 
@@ -66,39 +83,36 @@ class QuizViewModel(
         notesPlayer.playMultipleNotes()
     }
 
-    private fun List<UnlockedQuestion>.toAnswers(): List<Answer> {
-        val correctAnswer = this.random()
-        return map { unlockedQuestion ->
-            val interval = musicElements.musicList.first { it.name == unlockedQuestion.name }
-            Answer(interval.name,
-                correctAnswer.name,
-                interval.translation,
-                interval.name == correctAnswer.name,
-                true)
+    private fun List<UnlockedQuestion>.toMusicElementList(): List<MusicElement> {
+        val unlockedMusicElements = mapNotNull { unlockedQuestion ->
+            musicElements.musicList.first { it.name == unlockedQuestion.name }
         }
+        return unlockedMusicElements
     }
 
     fun onAnswerClick(answer: Answer) {
+        isAnswered.postValue(true)
         highlightAnswers()
         addResult(answer)
         iterateQuiz()
     }
 
     private fun highlightAnswers() {
-        val newAnswers = answers.value ?: listOf()
-        newAnswers.forEach { it.isHighlighted = true }
+        val newAnswers = answers.value?.map { it.copy(isHighlighted = true) } ?: listOf()
         answers.postValue(newAnswers)
     }
 
     private fun addResult(answer: Answer) {
-        //todo
-//        val quizResult = QuizResult(
-//            type = quizType.name,
-//            baseNote = ,
-//            correctAnswer = answer.name,
-//            userAnswer = answer.correctAnswer,
-//        )
-//        quizResultDao.insert(quizResult)
+        val quizResult = QuizResult(
+            type = quizType.name,
+            baseNote = answer.baseNote,
+            correctAnswer = answer.correctAnswer,
+            userAnswer = answer.name,
+        )
+        println("cos1 ${quizResult.toString()}")
+        viewModelScope.launch(Dispatchers.IO) {
+            quizResultDao.insert(quizResult)
+        }
     }
 
 
