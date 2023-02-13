@@ -2,9 +2,9 @@ package com.example.earsensei.database
 
 data class Answer(
     val name: String,
+    val correctAnswer: String,
     val stringResourceId: Int,
-    //Todo zmienić var na val
-    var isCorrect: Boolean,
-    var isHighlighted: Boolean = false
+    var isCorrect: Boolean = correctAnswer == name,
+    var isHighlighted: Boolean = false,
 )
 

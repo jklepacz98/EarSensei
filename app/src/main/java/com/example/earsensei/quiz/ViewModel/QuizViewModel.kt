@@ -37,12 +37,7 @@ class QuizViewModel(
         isLoading.postValue(true)
         viewModelScope.launch {
             val unlockedQuestions = unlockedQuestionDao.getByType(quizType.name)
-            val unlockedQuestionNames = unlockedQuestions.map { it.name }
-            val terminology = musicTerminology.musicList.filter { it.name in unlockedQuestionNames }
-            val newAnswers = terminology.map {
-                //todo
-                Answer(it.name, it.translation, false)
-            }
+            val newAnswers = unlockedQuestions.toAnswers()
             answers.postValue(newAnswers)
             isLoading.postValue(false)
         }
@@ -71,24 +66,38 @@ class QuizViewModel(
         notesPlayer.playMultipleNotes()
     }
 
-    private fun List<UnlockedQuestion>.toAnswers(): List<Answer> =
-        map { unlockedQuestion ->
+    private fun List<UnlockedQuestion>.toAnswers(): List<Answer> {
+        val correctAnswer = this.random()
+        return map { unlockedQuestion ->
             val interval = musicTerminology.musicList.first { it.name == unlockedQuestion.name }
-            Answer(interval.name, interval.translation, false)
-        }.also { it.random().isCorrect = true }
+            Answer(interval.name,
+                correctAnswer.name,
+                interval.translation,
+                interval.name == correctAnswer.name,
+                true)
+        }
+    }
 
     fun onAnswerClick(answer: Answer) {
-
+        highlightAnswers()
+        addResult(answer)
+        iterateQuiz()
     }
 
     private fun highlightAnswers() {
-        val newAnswers = answers.value
-        newAnswers?.forEach { it.isHighlighted = true }
-        answers.postValue(newAnswers ?: listOf())
+        val newAnswers = answers.value ?: listOf()
+        newAnswers.forEach { it.isHighlighted = true }
+        answers.postValue(newAnswers)
     }
 
-    private fun addResult(answerName: String) {
-
+    private fun addResult(answer: Answer) {
+        val quizResult = QuizResult(
+            type = quizType.name,
+            baseNote = ,
+            correctAnswer = answer.name,
+            userAnswer = answer.correctAnswer,
+        )
+        quizResultDao.insert(quizResult)
     }
 
 
