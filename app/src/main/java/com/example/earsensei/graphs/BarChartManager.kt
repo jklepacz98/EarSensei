@@ -23,16 +23,7 @@ class BarChartManager(private val barChart: BarChart) {
     private val rightOffset: Float = 32F
     private val xAxisLabelTextSize: Float = 16F
     private val barTextSize: Float = 12F
-
-//    var barDistance: Float = barChartModel.barDistance
-//    var barWidth: Float = barChartModel.barWidth
-//    var maxVisibleXAxisLabels: Int = barChartModel.maxVisibleXAxisLabels
-//    var animationLengthInMs: Int = barChartModel.animationLengthInMs
-//    var yAxisMinimum: Float = barChartModel.yAxisMinimum
-//    var yAxisMaximum: Float = barChartModel.yAxisMaximum
-//    var rightOffset: Float = barChartModel.rightOffset
-//    var xAxisLabelTextSize: Float = barChartModel.xAxisLabelTextSize
-//    var barTextSize: Float = barChartModel.barTextSize
+    private val textColor = Color.WHITE
 
     fun setupBarChart() {
         setupDescription()
@@ -65,12 +56,14 @@ class BarChartManager(private val barChart: BarChart) {
         xAxis.setDrawGridLines(false)
         xAxis.position = XAxis.XAxisPosition.BOTTOM
         xAxis.textSize = xAxisLabelTextSize
+        xAxis.textColor = textColor
     }
 
     private fun setupYTopAxis() {
         val yTopAxis: YAxis = barChart.axisLeft
         yTopAxis.axisMinimum = yAxisMinimum
         yTopAxis.axisMaximum = yAxisMaximum
+        yTopAxis.textColor = textColor
         //yTopAxis.setDrawLabels(false)
     }
 
@@ -94,6 +87,7 @@ class BarChartManager(private val barChart: BarChart) {
         val barData = BarData(barDataSet1)
         barData.barWidth = barWidth
         barData.setValueTextSize(barTextSize)
+        barData.setValueTextColor(textColor)
         barChart.data = barData
     }
 
@@ -101,10 +95,8 @@ class BarChartManager(private val barChart: BarChart) {
         var iterator = 0F
         val dataValues: ArrayList<BarEntry> = arrayListOf()
         xValues.forEach {
-            if (!it.isNaN()) {
-                dataValues.add(BarEntry(iterator, it))
-                iterator += barDistance
-            }
+            dataValues.add(BarEntry(iterator, it))
+            iterator += barDistance
         }
         return dataValues
     }
