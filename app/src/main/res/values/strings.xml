@@ -34,8 +34,13 @@
 
     <!--scales-->
     <string name="scale_major">Durowa</string>
+    <string name="scale_pentatonic_major">Pentatonika Durowa</string>
+    <string name="scale_blues_major">Bluesowa durowa</string>
     <string name="scale_natural_minor">Naturalna Molowa</string>
+    <string name="scale_melodic_minor">Melodyczna Molowa</string>
     <string name="scale_harmonic_minor">Harmoniczna Molowa</string>
+    <string name="scale_pentatonic_minor">Pentatonika Molowa</string>
+    <string name="scale_blues_minor">Bluesowa Molowa</string>
 
     <!--chords-->
     <string name="chord_major">Durowy</string>

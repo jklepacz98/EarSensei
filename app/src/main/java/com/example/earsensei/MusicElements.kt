@@ -80,6 +80,37 @@ object Intervals : MusicElements() {
     )
 }
 
+
+data class Chord(
+    override val name: String,
+    override val order: Int,
+    override val stringResourceId: Int,
+    val halfSteps: List<Int>,
+) : MusicElement {
+    override fun getRange(): Map<String, Int> {
+        val range = NOTES_WITH_OCTAVE.size - (halfSteps.maxOrNull() ?: 0)
+        return NOTES_WITH_OCTAVE.filter { it.value < range }
+    }
+
+    override val quizType = QuizType.Chords
+
+    override fun toNoteIds(baseNote: Int): List<Int> {
+        return halfSteps.map { baseNote + it }
+    }
+}
+
+object Chords : MusicElements() {
+
+    override val quizType = QuizType.Chords
+    override val musicList = listOf(Chord("MAJOR", 1, R.string.chord_major, listOf(0, 4, 7)),
+        Chord("MINOR", 2, R.string.chord_minor, listOf(0, 3, 7)),
+        Chord("DIMINISHED", 3, R.string.chord_diminished, listOf(0, 3, 6)),
+        Chord("AUGMENTED", 4, R.string.chord_augmented, listOf(0, 4, 8)),
+        Chord("MAJOR_7TH", 5, R.string.chord_major7th, listOf(0, 4, 7, 11)),
+        Chord("DOMINANT_7TH", 6, R.string.chord_dominant7th, listOf(0, 4, 7, 10)),
+        Chord("MINOR_7TH", 7, R.string.chord_minor7th, listOf(0, 3, 7, 10)))
+}
+
 data class Scale(
     override val name: String,
     override val order: Int,
@@ -104,42 +135,18 @@ object Scales : MusicElements() {
     override val quizType = QuizType.Scales
 
     override val musicList = listOf(
-        Scale("MAJOR", 1, R.string.scale_major, listOf(0, 2, 4, 5, 7, 9, 11, 12)),
-        Scale("NATURAL_MINOR", 2, R.string.scale_natural_minor, listOf(0, 2, 3, 5, 7, 8, 10, 12)),
-        Scale("HARMONIC_MINOR", 3, R.string.scale_harmonic_minor, listOf(0, 2, 3, 5, 7, 8, 11, 12)),
-    )
-}
-
-
-data class Chord(
-    override val name: String,
-    override val order: Int,
-    override val stringResourceId: Int,
-    val halfSteps: List<Int>,
-) : MusicElement {
-    override fun getRange(): Map<String, Int> {
-        val range = NOTES_WITH_OCTAVE.size - (halfSteps.maxOrNull() ?: 0)
-        return NOTES_WITH_OCTAVE.filter { it.value < range }
-    }
-
-    override val quizType = QuizType.Chords
-
-    override fun toNoteIds(baseNote: Int): List<Int> {
-        return halfSteps.map { baseNote + it }
-    }
-}
-
-object Chords : MusicElements() {
-
-    override val quizType = QuizType.Chords
-    override val musicList = listOf(
-        Chord("MAJOR", 1, R.string.chord_major, listOf(0, 4, 7)),
-        Chord("MINOR", 2, R.string.chord_minor, listOf(0, 3, 7)),
-        Chord("DIMINISHED", 3, R.string.chord_diminished, listOf(0, 3, 6)),
-        Chord("AUGMENTED", 4, R.string.chord_augmented, listOf(0, 4, 8)),
-        Chord("MAJOR_7TH", 5, R.string.chord_major7th, listOf(0, 4, 7, 11)),
-        Chord("DOMINANT_7TH", 6, R.string.chord_dominant7th, listOf(0, 4, 7, 10)),
-        Chord("MINOR_7TH", 7, R.string.chord_minor7th, listOf(0, 3, 7, 10))
+        Scale("MAJOR", 1, R.string.scale_major, listOf(0, 2, 4, 6, 7, 9, 11, 12)),
+        Scale("MAJOR_PENTATONIC", 2, R.string.scale_pentatonic_major, listOf(0, 2, 4, 7, 9, 12)),
+        Scale("BLUES_MAJOR", 3, R.string.scale_blues_major, listOf(0, 3, 5, 6, 7, 9, 12)),
+        Scale("NATURAL_MINOR", 4, R.string.scale_natural_minor, listOf(0, 2, 3, 5, 7, 8, 10, 12)),
+        Scale(
+            "MELODIC_MINOR",
+            5,
+            R.string.scale_melodic_minor,
+            listOf(0, 2, 3, 5, 7, 9, 11, 12, 10, 8, 7, 5, 3, 2, 0),
+        ),
+        Scale("HARMONIC_MINOR", 6, R.string.scale_harmonic_minor, listOf(0, 2, 3, 5, 7, 8, 11, 12)),
+        Scale("BLUES_MINOR", 7, R.string.scale_blues_minor, listOf(0, 3, 5, 6, 7, 10, 12)),
     )
 }
 
@@ -201,8 +208,7 @@ val NOTES = mapOf(
     "B" to 11,
 )
 
-val NOTES_WITH_OCTAVE = mapOf(
-    "C3" to 0,
+val NOTES_WITH_OCTAVE = mapOf("C3" to 0,
     "Cis3" to 1,
     "D3" to 2,
     "Dis3" to 3,
@@ -241,8 +247,7 @@ val NOTES_WITH_OCTAVE = mapOf(
     "Ais5" to 34,
     "B5" to 35,
 
-    "C6" to 36
-)
+    "C6" to 36)
 
 //    MINOR_2ND(1, 1, R.string.interval_minor2nd),
 //    MAJOR_2RD(2, 2, R.string.interval_major2nd),
