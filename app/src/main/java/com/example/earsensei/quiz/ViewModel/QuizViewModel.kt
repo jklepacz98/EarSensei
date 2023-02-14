@@ -43,7 +43,6 @@ class QuizViewModel(
             val unlockedQuestions = unlockedQuestionDao.getByType(quizType.name)
             val musicElementList = unlockedQuestions.toMusicElementList()
             val musicElementListSorted = musicElementList.sortedBy { it.order }
-            //todo
             quizQuestions = generateQuestions(
                 musicElementListSorted,
                 NORMAL_QUESTIONS_NUMBER,
@@ -129,7 +128,8 @@ class QuizViewModel(
                 val type = musicElements.quizType.name
                 val latestUnlockDate = unlockedQuestionDao.getLatestDate(quizType.name)
                 val userAnswers = quizResultDao.getUserAnswer(type).sortedBy { it.date }
-                    .filter { latestUnlockDate < it.date }.takeLast(LIMIT)
+                    .filter { latestUnlockDate < it.date }
+                    .takeLast(CORRECT_QUESTIONS_NEEDED_TO_UNLOCK_NEW_QUESTION)
                 if (canUnlockNewQuestion(userAnswers)) {
                     addUnlockedQuestion()
                 }
@@ -175,7 +175,7 @@ class QuizViewModel(
     }
 
     private fun canUnlockNewQuestion(results: List<QuizResult>): Boolean =
-        results.all { it.isCorrect } && results.size == LIMIT
+        results.all { it.isCorrect } && results.size == CORRECT_QUESTIONS_NEEDED_TO_UNLOCK_NEW_QUESTION
 
     private suspend fun getWorstRecord(type: String): String {
         val unlockedQuestions = unlockedQuestionDao.getByType(type)
@@ -207,7 +207,7 @@ class QuizViewModel(
     }
 
     companion object {
-        const val LIMIT = 8
+        const val CORRECT_QUESTIONS_NEEDED_TO_UNLOCK_NEW_QUESTION = 8
         const val NORMAL_QUESTIONS_NUMBER = 16
         const val ADAPTIVE_QUESTIONS_NUMBER = 16
     }
