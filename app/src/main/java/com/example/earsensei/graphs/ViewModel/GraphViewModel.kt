@@ -36,7 +36,7 @@ class GraphViewModel(
                     musicElements.musicList.forEach {
                         println("cos5")
                         val ratio = calculateRatio(musicElements.quizType, it.name)
-                        map[it.translation] = ratio
+                        map[it.stringResourceId] = ratio
                     }
                     postValue(map)
                 }
@@ -46,7 +46,7 @@ class GraphViewModel(
         }
 
     //todo
-    private fun calculateRatio(quizType: QuizType, name: String): Float {
+    private suspend fun calculateRatio(quizType: QuizType, name: String): Float {
         val correctResults = resultDao.getCountCorrect(quizType.name, name)
         val allResults = resultDao.getCount(quizType.name, name)
         println("cos3 $name $correctResults / $allResults")

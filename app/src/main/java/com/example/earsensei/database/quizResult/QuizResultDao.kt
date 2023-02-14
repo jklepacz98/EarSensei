@@ -7,23 +7,26 @@ import androidx.room.Query
 @Dao
 interface QuizResultDao {
     @Query("SELECT * FROM quizResult")
-    fun getUserAnswer(): List<QuizResult>
+    suspend fun getUserAnswer(): List<QuizResult>
+
+    @Query("SELECT * FROM quizResult WHERE :type = type")
+    suspend fun getUserAnswer(type: String): List<QuizResult>
+
+    @Query("SELECT userAnswer FROM quizResult WHERE :type = type AND :correctAnswer = correctAnswer AND isCorrect = 0")
+    suspend fun getUserAnswer(type: String, correctAnswer: String): List<String>
 
     @Query("SELECT COUNT(*) FROM quizResult WHERE :type = type AND :correctAnswer = correctAnswer")
-    fun getCount(type: String, correctAnswer: String): Long
+    suspend fun getCount(type: String, correctAnswer: String): Long
 
     //todo zmienić nazwę argumentu
     @Query("SELECT COUNT(*) FROM quizResult WHERE :type = type AND :correctAnswer = correctAnswer AND isCorrect = 1")
-    fun getCountCorrect(type: String, correctAnswer: String): Long
+    suspend fun getCountCorrect(type: String, correctAnswer: String): Long
 
     @Query("SELECT COUNT(*) FROM quizResult WHERE :type = type AND :correctAnswer = correctAnswer AND :userAnswer = userAnswer")
-    fun getCount(type: String, correctAnswer: String, userAnswer: String): Long
-
-    @Query("SELECT userAnswer FROM quizResult WHERE :type = type AND :correctAnswer = correctAnswer AND isCorrect = 0")
-    fun getUserAnswer(type: String, correctAnswer: String): List<String>
+    suspend fun getCount(type: String, correctAnswer: String, userAnswer: String): Long
 
     @Insert
-    fun insert(vararg quizResults: QuizResult): List<Long>
+    suspend fun insert(vararg quizResults: QuizResult): List<Long>
 
     @Query("DELETE FROM quizResult")
     suspend fun deleteAll()

@@ -34,7 +34,7 @@ abstract class MusicElements {
 interface MusicElement {
     val name: String
     val order: Int
-    val translation: Int
+    val stringResourceId: Int
     val quizType: QuizType
     fun getRange(): Map<String, Int>
     fun toNoteIds(baseNote: Int): List<Int>
@@ -44,7 +44,7 @@ interface MusicElement {
 data class Interval(
     override val name: String,
     override val order: Int,
-    override val translation: Int,
+    override val stringResourceId: Int,
     val halfSteps: Int,
 ) : MusicElement {
     override fun getRange() =
@@ -83,7 +83,7 @@ object Intervals : MusicElements() {
 data class Scale(
     override val name: String,
     override val order: Int,
-    override val translation: Int,
+    override val stringResourceId: Int,
     val halfSteps: List<Int>,
 ) : MusicElement {
 
@@ -114,7 +114,7 @@ object Scales : MusicElements() {
 data class Chord(
     override val name: String,
     override val order: Int,
-    override val translation: Int,
+    override val stringResourceId: Int,
     val halfSteps: List<Int>,
 ) : MusicElement {
     override fun getRange(): Map<String, Int> {

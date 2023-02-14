@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.earsensei.R
 import com.example.earsensei.databinding.FragmentIntervalsBinding
 import com.example.earsensei.quiz.ViewModel.QuizViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -116,7 +117,10 @@ class QuizFragment : Fragment() {
 
     private fun setupToastEventObserver() {
         viewModel.toastEvent.observe(viewLifecycleOwner) {
-            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+            val questionText = resources.getString(it)
+            val unlockedQuestionText = resources.getString(R.string.unlocked_question)
+            val formattedMessage = "$unlockedQuestionText $questionText"
+            Toast.makeText(requireContext(), formattedMessage, Toast.LENGTH_SHORT).show()
         }
     }
 }

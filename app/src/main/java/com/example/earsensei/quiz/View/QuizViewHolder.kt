@@ -6,7 +6,7 @@ import com.example.earsensei.R
 import com.example.earsensei.database.Answer
 import com.example.earsensei.databinding.ItemAnswerBinding
 
-class IntervalsQuizViewHolder(
+class QuizViewHolder(
     private val view: View,
     private val clickListener: (Answer) -> Unit,
 ) : RecyclerView.ViewHolder(view) {

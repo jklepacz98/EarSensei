@@ -61,6 +61,9 @@
     <string name="B">B</string>
 
 
+    <!--snackbar-->
+    <string name="unlocked_question">Odblokowano pytanie: </string>
+
     <string name="is_null">is null</string>
 
     <string-array name="quantity_array">

@@ -16,7 +16,7 @@ interface UnlockedQuestionDao {
     fun getByTypeAfterDate(type: String, after: Long): List<UnlockedQuestion>
 
     @Query("SELECT MAX(date) FROM unlockedQuestion WHERE :type = type")
-    fun getLatest(type: String): Long
+    fun getLatestDate(type: String): Long
 
     @Insert()
     suspend fun insert(vararg unlockedQuestions: UnlockedQuestion)

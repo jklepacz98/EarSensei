@@ -9,7 +9,7 @@ import com.example.earsensei.R
 import com.example.earsensei.database.Answer
 
 class QuizAdapter(private val clickListener: (Answer) -> Unit) :
-    RecyclerView.Adapter<IntervalsQuizViewHolder>() {
+    RecyclerView.Adapter<QuizViewHolder>() {
 
     private val diffCallback: DiffUtil.ItemCallback<Answer> =
         object : DiffUtil.ItemCallback<Answer>() {
@@ -29,14 +29,14 @@ class QuizAdapter(private val clickListener: (Answer) -> Unit) :
 //        AsyncListDiffer(this, diffCallback)
 //    }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IntervalsQuizViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QuizViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_answer, parent, false)
-        return IntervalsQuizViewHolder(view, clickListener)
+        return QuizViewHolder(view, clickListener)
     }
 
     override fun getItemCount() = asyncDiffer.currentList.size
 
-    override fun onBindViewHolder(holder: IntervalsQuizViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: QuizViewHolder, position: Int) {
         holder.bind(asyncDiffer.currentList[position])
     }
 
