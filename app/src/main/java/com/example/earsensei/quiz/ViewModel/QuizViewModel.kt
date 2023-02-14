@@ -44,7 +44,11 @@ class QuizViewModel(
             val musicElementList = unlockedQuestions.toMusicElementList()
             val musicElementListSorted = musicElementList.sortedBy { it.order }
             //todo
-            quizQuestions = generateQuestions(musicElementListSorted, 3, 3)
+            quizQuestions = generateQuestions(
+                musicElementListSorted,
+                NORMAL_QUESTIONS_NUMBER,
+                ADAPTIVE_QUESTIONS_NUMBER,
+            )
             maximumProgress.postValue(quizQuestions.size)
             iterateQuiz()
             isLoading.postValue(false)
@@ -53,47 +57,38 @@ class QuizViewModel(
 
     private suspend fun generateQuestions(
         musicElementList: List<MusicElement>,
-        numberOfQuestions: Int,
-        numberOfQuestions2: Int,
+        normalQuestionsNumber: Int,
+        adaptiveQuestionsNumber: Int,
     ): Queue<QuizQuestion> {
         val quizQuestions: Queue<QuizQuestion> = LinkedList()
-        for (i in 0..numberOfQuestions) {
-            val correctAnswer = musicElementList.random()
-            val baseNote = correctAnswer.getRange().entries.random()
-            val answerList = musicElementList.map { musicElement ->
-                Answer(
-                    musicElement.name,
-                    correctAnswer.name,
-                    musicElement.stringResourceId,
-                    baseNote.key,
-                    musicElement.name == correctAnswer.name,
-                    false,
-                )
-            }
-            val quizQuestion = QuizQuestion(answerList, correctAnswer, baseNote.value)
-            quizQuestions.add(quizQuestion)
+        for (i in 0..normalQuestionsNumber) {
+            quizQuestions.add(generateQuestion(musicElementList))
         }
         val worstRecord1 = getWorstRecord(quizType.name)
         val worstRecord2 = getMostCommonMistake(quizType.name, worstRecord1)
         val musicElementListWorst =
             musicElementList.filter { it.name == worstRecord1 || it.name == worstRecord2 }
-        for (i in 0..numberOfQuestions2) {
-            val correctAnswer = musicElementListWorst.random()
-            val baseNote = correctAnswer.getRange().entries.random()
-            val answerList = musicElementListWorst.map { musicElement ->
-                Answer(
-                    musicElement.name,
-                    correctAnswer.name,
-                    musicElement.stringResourceId,
-                    baseNote.key,
-                    musicElement.name == correctAnswer.name,
-                    false,
-                )
-            }
-            val quizQuestion = QuizQuestion(answerList, correctAnswer, baseNote.value)
-            quizQuestions.add(quizQuestion)
+        for (i in 0..adaptiveQuestionsNumber) {
+            quizQuestions.add(generateQuestion(musicElementListWorst))
         }
+
         return quizQuestions
+    }
+
+    private fun generateQuestion(musicElementPool: List<MusicElement>): QuizQuestion {
+        val correctAnswer = musicElementPool.random()
+        val baseNote = correctAnswer.getRange().entries.random()
+        val answerList = musicElementPool.map { musicElement ->
+            Answer(
+                musicElement.name,
+                correctAnswer.name,
+                musicElement.stringResourceId,
+                baseNote.key,
+                musicElement.name == correctAnswer.name,
+                false,
+            )
+        }
+        return QuizQuestion(answerList, correctAnswer, baseNote.value)
     }
 
     private fun iterateQuiz() {
@@ -182,13 +177,7 @@ class QuizViewModel(
     private fun canUnlockNewQuestion(results: List<QuizResult>): Boolean =
         results.all { it.isCorrect } && results.size == LIMIT
 
-    companion object {
-        const val LIMIT = 10
-        //const val MIN_UNLOCKED_QUESTIONS = 2
-    }
-
-
-    suspend fun getWorstRecord(type: String): String {
+    private suspend fun getWorstRecord(type: String): String {
         val unlockedQuestions = unlockedQuestionDao.getByType(type)
         val progressionsRatios = mutableMapOf<String, Float>()
         unlockedQuestions.forEach {
@@ -197,12 +186,10 @@ class QuizViewModel(
             val result = dividend.toFloat() / divider.toFloat()
             progressionsRatios.put(it.name, result)
         }
-        val worst =
-            progressionsRatios.minByOrNull { it.value }?.key ?: unlockedQuestions.first().name
-        return worst
+        return progressionsRatios.minByOrNull { it.value }?.key ?: unlockedQuestions.first().name
     }
 
-    suspend fun getMostCommonMistake(type: String, correctAnswer: String): String {
+    private suspend fun getMostCommonMistake(type: String, correctAnswer: String): String {
         val unlockedQuestions = unlockedQuestionDao.getByType(type).map { it.name }
         val userAnswer = quizResultDao.getUserAnswer(type, correctAnswer)
             .filter { userAnswer -> unlockedQuestions.contains(userAnswer) }
@@ -217,6 +204,12 @@ class QuizViewModel(
     override fun onCleared() {
         notesPlayer.clear()
         super.onCleared()
+    }
+
+    companion object {
+        const val LIMIT = 8
+        const val NORMAL_QUESTIONS_NUMBER = 16
+        const val ADAPTIVE_QUESTIONS_NUMBER = 16
     }
 }
 

@@ -35,7 +35,7 @@ val databaseModule = module {
     }
 }
 val notesPlayerModule = module {
-    single { NotesPlayer(androidApplication()) }
+    factory { NotesPlayer(androidApplication()) }
     factory { parameters -> MusicElementsFactory.get(parameters.get()) }
 }
 val othersModule = module {
