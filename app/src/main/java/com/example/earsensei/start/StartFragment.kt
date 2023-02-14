@@ -18,7 +18,7 @@ class StartFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = FragmentStartBinding.inflate(layoutInflater)
         setupButtons()
@@ -37,6 +37,9 @@ class StartFragment : Fragment() {
         }
         binding.buttonStats.setOnClickListener {
             safeNavigate(StartFragmentDirections.actionStartFragmentToStatsFragment())
+        }
+        binding.buttonMusicTheory.setOnClickListener {
+            safeNavigate(StartFragmentDirections.actionStartFragmentToMusicTheoryMenuFragment())
         }
     }
 }

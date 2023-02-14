@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_startFragment_to_statsFragment"
             app:destination="@id/statsFragment" />
+        <action
+            android:id="@+id/action_startFragment_to_musicTheoryMenuFragment"
+            app:destination="@id/musicTheoryMenuFragment" />
     </fragment>
     <fragment
         android:id="@+id/quizFragment"
@@ -40,15 +43,41 @@
         android:name="com.example.earsensei.graphs.View.GraphFragment"
         android:label="fragment_chart"
         tools:layout="@layout/fragment_chart">
-        <action
-            android:id="@+id/action_chartFragment_self"
-            app:destination="@id/chartFragment" />
         <argument
             android:name="quizType"
             app:argType="com.example.earsensei.QuizType" />
     </fragment>
     <fragment
-        android:id="@+id/chordsQuizFragment"
-        android:name="com.example.earsensei.quiz.View.ChordsQuizFragment"
-        android:label="ChordsQuizFragment" />
+        android:id="@+id/musicTheoryMenuFragment"
+        android:name="com.example.earsensei.stats.MusicTheoryMenuFragment"
+        android:label="MusicTheoryMenuFragment">
+        <action
+            android:id="@+id/action_musicTheoryMenuFragment_to_musicTheoryBasicsFragment"
+            app:destination="@id/musicTheoryBasicsFragment" />
+        <action
+            android:id="@+id/action_musicTheoryMenuFragment_to_musicTheoryChordsFragment"
+            app:destination="@id/musicTheoryChordsFragment" />
+        <action
+            android:id="@+id/action_musicTheoryMenuFragment_to_musicTheoryIntervalsFragment"
+            app:destination="@id/musicTheoryIntervalsFragment" />
+        <action
+            android:id="@+id/action_musicTheoryMenuFragment_to_musicTheoryScalesFragment"
+            app:destination="@id/musicTheoryScalesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/musicTheoryBasicsFragment"
+        android:name="com.example.earsensei.musictheory.View.MusicTheoryBasicsFragment"
+        android:label="MusicTheoryBasicsFragment" />
+    <fragment
+        android:id="@+id/musicTheoryChordsFragment"
+        android:name="com.example.earsensei.musictheory.View.MusicTheoryChordsFragment"
+        android:label="MusicTheoryChordsFragment" />
+    <fragment
+        android:id="@+id/musicTheoryIntervalsFragment"
+        android:name="com.example.earsensei.musictheory.View.MusicTheoryIntervalsFragment"
+        android:label="MusicTheoryIntervalsFragment" />
+    <fragment
+        android:id="@+id/musicTheoryScalesFragment"
+        android:name="com.example.earsensei.musictheory.View.MusicTheoryScalesFragment"
+        android:label="MusicTheoryScalesFragment" />
 </navigation>

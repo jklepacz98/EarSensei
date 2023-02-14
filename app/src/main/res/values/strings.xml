@@ -60,6 +60,12 @@
     <string name="Ais">Ais</string>
     <string name="B">B</string>
 
+    <!--music theory-->
+    <string name="basics">Podstawy</string>
+    <string name="music_theory_basics">basics description placeholder</string>
+    <string name="music_theory_intervals">Interwały oznaczają różnicę wysokości dźwięku między dwiema nutami. Interwały są nazywane i klasyfikowane według liczby stopni skali diatonicznej. Odległość między interwałami mierzona jest w półtonach.</string>
+    <string name="music_theory_chords">chords description placeholder</string>
+    <string name="music_theory_scales">scales description placeholder</string>
 
     <!--snackbar-->
     <string name="unlocked_question">Odblokowano pytanie: </string>
