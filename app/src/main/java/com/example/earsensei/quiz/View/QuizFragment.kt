@@ -21,7 +21,7 @@ class QuizFragment : Fragment() {
 
     private lateinit var binding: FragmentIntervalsBinding
     private val viewModel by viewModel<QuizViewModel> {
-        val type = args.type
+        val type = args.musicElementType
         parametersOf(type)
     }
     private val answersAdapter = QuizAdapter() { answer -> viewModel.onAnswerClick(answer) }

@@ -26,8 +26,8 @@
         android:label="fragment_intervals"
         tools:layout="@layout/fragment_intervals">
         <argument
-            android:name="type"
-            app:argType="com.example.earsensei.QuizType" />
+            android:name="musicElementType"
+            app:argType="com.example.earsensei.MusicElementType" />
     </fragment>
     <fragment
         android:id="@+id/statsFragment"
@@ -44,8 +44,8 @@
         android:label="fragment_chart"
         tools:layout="@layout/fragment_chart">
         <argument
-            android:name="quizType"
-            app:argType="com.example.earsensei.QuizType" />
+            android:name="musicElementType"
+            app:argType="com.example.earsensei.MusicElementType" />
     </fragment>
     <fragment
         android:id="@+id/musicTheoryMenuFragment"

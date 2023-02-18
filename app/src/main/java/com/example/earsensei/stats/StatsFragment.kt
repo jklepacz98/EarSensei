@@ -16,7 +16,7 @@ class StatsFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         binding = FragmentStatsBinding.inflate(layoutInflater)
         setupButtons()
@@ -26,13 +26,13 @@ class StatsFragment : Fragment() {
     private fun setupButtons() {
         binding.run {
             buttonIntervals.setOnClickListener {
-                safeNavigate(StatsFragmentDirections.actionStatsFragmentToChartFragment(Intervals.quizType))
+                safeNavigate(StatsFragmentDirections.actionStatsFragmentToChartFragment(Intervals.musicElementType))
             }
             buttonChords.setOnClickListener {
-                safeNavigate(StatsFragmentDirections.actionStatsFragmentToChartFragment(Chords.quizType))
+                safeNavigate(StatsFragmentDirections.actionStatsFragmentToChartFragment(Chords.musicElementType))
             }
             buttonScales.setOnClickListener {
-                safeNavigate(StatsFragmentDirections.actionStatsFragmentToChartFragment(Scales.quizType))
+                safeNavigate(StatsFragmentDirections.actionStatsFragmentToChartFragment(Scales.musicElementType))
             }
         }
     }

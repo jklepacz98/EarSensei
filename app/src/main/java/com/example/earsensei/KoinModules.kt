@@ -11,10 +11,10 @@ import org.koin.core.parameter.parametersOf
 import org.koin.dsl.module
 
 val viewModelModule = module {
-    viewModel { (type: QuizType) ->
+    viewModel { (type: MusicElementType) ->
         QuizViewModel(get(), get(), get(), get { parametersOf(type) }, type)
     }
-    viewModel { (type: QuizType) -> GraphViewModel(get(), get { parametersOf(type) }) }
+    viewModel { (type: MusicElementType) -> GraphViewModel(get(), get { parametersOf(type) }) }
     viewModel { SettingsViewModel() }
 }
 val databaseModule = module {
@@ -39,5 +39,5 @@ val notesPlayerModule = module {
     factory { parameters -> MusicElementsFactory.get(parameters.get()) }
 }
 val othersModule = module {
-    factory { (quizType: QuizType) -> MusicElementsFactory.get(quizType) }
+    factory { (musicElementType: MusicElementType) -> MusicElementsFactory.get(musicElementType) }
 }

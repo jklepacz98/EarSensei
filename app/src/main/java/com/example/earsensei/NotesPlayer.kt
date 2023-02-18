@@ -9,19 +9,19 @@ class NotesPlayer(val context: Context) {
     var job: Job = Job()
     private val mediaPlayers: MutableList<MediaPlayer> = mutableListOf()
 
-    private suspend fun MediaPlayer.playSingleNote() {
-        if (isPlaying) {
-            stop()
-            prepare()
+    private suspend fun playSingleNote(mediaPlayer: MediaPlayer) {
+        if (mediaPlayer.isPlaying) {
+            mediaPlayer.stop()
+            mediaPlayer.prepare()
         }
-        start()
+        mediaPlayer.start()
         delay(DELAY)
     }
 
     fun playMultipleNotes(scope: CoroutineScope) {
         job.cancel()
         job = scope.launch(Dispatchers.IO) {
-            mediaPlayers.forEach { it.playSingleNote() }
+            mediaPlayers.forEach { playSingleNote(it) }
         }
     }
 

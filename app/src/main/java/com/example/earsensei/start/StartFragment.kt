@@ -27,13 +27,13 @@ class StartFragment : Fragment() {
 
     private fun setupButtons() {
         binding.buttonIntervals.setOnClickListener {
-            safeNavigate(StartFragmentDirections.actionStartFragmentToQuizFragment(Intervals.quizType))
+            safeNavigate(StartFragmentDirections.actionStartFragmentToQuizFragment(Intervals.musicElementType))
         }
         binding.buttonChords.setOnClickListener {
-            safeNavigate(StartFragmentDirections.actionStartFragmentToQuizFragment(Chords.quizType))
+            safeNavigate(StartFragmentDirections.actionStartFragmentToQuizFragment(Chords.musicElementType))
         }
         binding.buttonScales.setOnClickListener {
-            safeNavigate(StartFragmentDirections.actionStartFragmentToQuizFragment(Scales.quizType))
+            safeNavigate(StartFragmentDirections.actionStartFragmentToQuizFragment(Scales.musicElementType))
         }
         binding.buttonStats.setOnClickListener {
             safeNavigate(StartFragmentDirections.actionStartFragmentToStatsFragment())

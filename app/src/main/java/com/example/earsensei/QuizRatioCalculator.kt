@@ -6,7 +6,7 @@ class QuizRatioCalculator {
     companion object {
         fun calculateSpecificAnswerRatio(
             quizResults: List<QuizResult>,
-            answer: String
+            answer: String,
         ): Float {
             val allQuizResults: Float = quizResults.size.toFloat()
             val matchingAnswersRatio: Float =

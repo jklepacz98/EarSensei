@@ -4,8 +4,8 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.earsensei.MusicElementType
 import com.example.earsensei.MusicElements
-import com.example.earsensei.QuizType
 import com.example.earsensei.database.quizResult.QuizResult
 import com.example.earsensei.database.quizResult.QuizResultDao
 import kotlinx.coroutines.Dispatchers
@@ -33,9 +33,9 @@ class GraphViewModel(
                 println("cos4")
                 viewModelScope.launch(Dispatchers.IO) {
                     val map = linkedMapOf<Int, Float>()
-                    musicElements.musicList.forEach {
+                    musicElements.musicElementsList.forEach {
                         println("cos5")
-                        val ratio = calculateRatio(musicElements.quizType, it.name)
+                        val ratio = calculateRatio(musicElements.musicElementType, it.name)
                         map[it.stringResourceId] = ratio
                     }
                     postValue(map)
@@ -46,9 +46,9 @@ class GraphViewModel(
         }
 
     //todo
-    private suspend fun calculateRatio(quizType: QuizType, name: String): Float {
-        val correctResults = resultDao.getCountCorrect(quizType.name, name)
-        val allResults = resultDao.getCount(quizType.name, name)
+    private suspend fun calculateRatio(musicElementType: MusicElementType, name: String): Float {
+        val correctResults = resultDao.getCountCorrect(musicElementType.name, name)
+        val allResults = resultDao.getCount(musicElementType.name, name)
         println("cos3 $name $correctResults / $allResults")
         return correctResults.toFloat() / allResults.toFloat()
     }

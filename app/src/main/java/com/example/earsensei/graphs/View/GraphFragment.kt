@@ -20,7 +20,7 @@ class GraphFragment : Fragment() {
     private val args: GraphFragmentArgs by navArgs()
 
     private val viewModel by viewModel<GraphViewModel> {
-        val type = args.quizType
+        val type = args.musicElementType
         parametersOf(type)
     }
 
