@@ -128,8 +128,8 @@ class QuizViewModel(
                 val type = musicElements.musicElementType.name
                 val latestUnlockDate = unlockedQuestionDao.getLatestDate(musicElementType.name)
                 val userAnswers = quizResultDao.getUserAnswer(type).sortedBy { it.date }
-                    .filter { latestUnlockDate < it.date }
                     .takeLast(CORRECT_QUESTIONS_NEEDED_TO_UNLOCK_NEW_QUESTION)
+                    .filter { latestUnlockDate < it.date }
                 if (canUnlockNewQuestion(userAnswers)) {
                     addUnlockedQuestion()
                 }

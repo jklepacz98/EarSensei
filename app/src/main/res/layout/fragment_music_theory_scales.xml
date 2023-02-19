@@ -5,13 +5,177 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_margin="16dp">
 
-        <TextView
-            android:layout_margin="48dp"
-            android:id="@+id/tv_description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"></TextView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:justificationMode="inter_word"
+                android:textSize="16sp"
+                android:text="@string/music_theory_scales" />
+
+            <TableLayout
+                android:layout_margin="32dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:stretchColumns="0.5">
+
+                <TableRow>
+
+                    <TextView
+                        android:padding="8dp"
+                        android:layout_weight="1"
+                        android:text="@string/scale_name"
+                        android:textAlignment="center"
+                        android:background="@drawable/border" />
+
+                    <TextView
+                        android:padding="8dp"
+                        android:layout_weight="1"
+                        android:text="@string/intervals"
+                        android:textAlignment="center"
+                        android:background="@drawable/border" />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:padding="8dp"
+                        android:layout_weight="1"
+                        android:text="@string/scale_major"
+                        android:textAlignment="center"
+                        android:background="@drawable/border" />
+
+                    <TextView
+                        android:padding="8dp"
+                        android:layout_weight="1"
+                        android:text="0, 2, 4, 6, 7, 9, 11"
+                        android:textAlignment="center"
+                        android:background="@drawable/border" />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:padding="8dp"
+                        android:layout_weight="1"
+                        android:text="@string/scale_pentatonic_major"
+                        android:textAlignment="center"
+                        android:background="@drawable/border" />
+
+                    <TextView
+                        android:padding="8dp"
+                        android:layout_weight="1"
+                        android:text="0, 2, 4, 7, 9"
+                        android:textAlignment="center"
+                        android:background="@drawable/border" />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:padding="8dp"
+                        android:layout_weight="1"
+                        android:text="@string/scale_blues_major"
+                        android:textAlignment="center"
+                        android:background="@drawable/border" />
+
+                    <TextView
+                        android:padding="8dp"
+                        android:layout_weight="1"
+                        android:text="0, 3, 5, 6, 7, 9"
+                        android:textAlignment="center"
+                        android:background="@drawable/border" />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:padding="8dp"
+                        android:layout_weight="1"
+                        android:text="@string/scale_natural_minor"
+                        android:textAlignment="center"
+                        android:background="@drawable/border" />
+
+                    <TextView
+                        android:padding="8dp"
+                        android:layout_weight="1"
+                        android:text="0, 2, 3, 5, 7, 8, 10"
+                        android:textAlignment="center"
+                        android:background="@drawable/border" />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:padding="8dp"
+                        android:layout_weight="1"
+                        android:text="@string/scale_melodic_minor"
+                        android:textAlignment="center"
+                        android:background="@drawable/border" />
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:padding="8dp"
+                        android:text="0, 2, 3, 5, 7, 9, 11"
+                        android:textAlignment="center"
+                        android:background="@drawable/border" />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:padding="8dp"
+                        android:layout_weight="1"
+                        android:text="@string/scale_harmonic_minor"
+                        android:textAlignment="center"
+                        android:background="@drawable/border" />
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:padding="8dp"
+                        android:text="0, 2, 3, 5, 7, 8, 11"
+                        android:textAlignment="center"
+                        android:background="@drawable/border" />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:padding="8dp"
+                        android:layout_weight="1"
+                        android:text="@string/scale_blues_minor"
+                        android:textAlignment="center"
+                        android:background="@drawable/border" />
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:padding="8dp"
+                        android:text="0, 3, 5, 6, 7, 10"
+                        android:textAlignment="center"
+                        android:background="@drawable/border" />
+
+                </TableRow>
+
+
+            </TableLayout>
+
+        </LinearLayout>
 
     </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

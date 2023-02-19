@@ -22,9 +22,9 @@ class MusicTheoryMenuFragment : Fragment() {
 
     private fun setupButtons() {
         binding.run {
-            buttonBasics.setOnClickListener {
-                safeNavigate(MusicTheoryMenuFragmentDirections.actionMusicTheoryMenuFragmentToMusicTheoryBasicsFragment())
-            }
+//            buttonBasics.setOnClickListener {
+//                safeNavigate(MusicTheoryMenuFragmentDirections.actionMusicTheoryMenuFragmentToMusicTheoryBasicsFragment())
+//            }
             buttonIntervals.setOnClickListener {
                 safeNavigate(MusicTheoryMenuFragmentDirections.actionMusicTheoryMenuFragmentToMusicTheoryIntervalsFragment())
             }

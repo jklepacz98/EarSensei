@@ -5,13 +5,315 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_margin="16dp">
 
-        <TextView
-            android:layout_margin="48dp"
-            android:id="@+id/tv_description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"></TextView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/tv_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/music_theory_intervals" />
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="32dp"
+                android:stretchColumns="0.5">
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:padding="8dp"
+                        android:text="@string/interval_name"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:padding="8dp"
+                        android:text="@string/semitones_number"
+                        android:textAlignment="center" />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:padding="8dp"
+                        android:text="@string/interval_perfect1st"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:padding="8dp"
+                        android:text="0"
+                        android:textAlignment="center" />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:padding="8dp"
+                        android:text="@string/interval_minor2nd"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:padding="8dp"
+                        android:text="1"
+                        android:textAlignment="center" />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:padding="8dp"
+                        android:text="@string/interval_major2nd"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:padding="8dp"
+                        android:text="2"
+                        android:textAlignment="center" />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:padding="8dp"
+                        android:text="@string/interval_minor3rd"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:padding="8dp"
+                        android:text="3"
+                        android:textAlignment="center" />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:padding="8dp"
+                        android:text="@string/interval_major3rd"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:padding="8dp"
+                        android:text="4"
+                        android:textAlignment="center" />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:padding="8dp"
+                        android:text="@string/interval_perfect4th"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:padding="8dp"
+                        android:text="5"
+                        android:textAlignment="center" />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:padding="8dp"
+                        android:text="@string/interval_tritone"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:padding="8dp"
+                        android:text="6"
+                        android:textAlignment="center" />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:padding="8dp"
+                        android:text="@string/interval_perfect5th"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:padding="8dp"
+                        android:text="7"
+                        android:textAlignment="center" />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:padding="8dp"
+                        android:text="@string/interval_minor6th"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:padding="8dp"
+                        android:text="8"
+                        android:textAlignment="center" />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:padding="8dp"
+                        android:text="@string/interval_major6th"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:padding="8dp"
+                        android:text="9"
+                        android:textAlignment="center" />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:padding="8dp"
+                        android:text="@string/interval_minor7th"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:padding="8dp"
+                        android:text="10"
+                        android:textAlignment="center" />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:padding="8dp"
+                        android:text="@string/interval_major7th"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:padding="8dp"
+                        android:text="11"
+                        android:textAlignment="center" />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:padding="8dp"
+                        android:text="@string/interval_octave"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:padding="8dp"
+                        android:text="12"
+                        android:textAlignment="center" />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:padding="8dp"
+                        android:text="@string/interval_minor9th"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:padding="8dp"
+                        android:text="13"
+                        android:textAlignment="center" />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:padding="8dp"
+                        android:text="@string/interval_major9th"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:background="@drawable/border"
+                        android:padding="8dp"
+                        android:text="14"
+                        android:textAlignment="center" />
+
+                </TableRow>
+
+            </TableLayout>
+        </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
