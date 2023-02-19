@@ -209,8 +209,8 @@ class QuizViewModel(
 
     companion object {
         const val CORRECT_QUESTIONS_NEEDED_TO_UNLOCK_NEW_QUESTION = 8
-        const val NORMAL_QUESTIONS_NUMBER = 16
-        const val ADAPTIVE_QUESTIONS_NUMBER = 16
+        const val NORMAL_QUESTIONS_NUMBER = 10
+        const val ADAPTIVE_QUESTIONS_NUMBER = 10
     }
 }
 
